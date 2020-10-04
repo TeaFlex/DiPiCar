@@ -4,10 +4,10 @@ const app = express();
 const port = 8060;
 
 app.set('view engine', 'ejs');
-app.use(express.static('style'));
+app.use(express.static('static_files'));
 
 app.get('/', (req, res)=>{
-    res.render("index");
+    res.render("template", { page:"home" });
 });
 
 app.listen(port, () => {
