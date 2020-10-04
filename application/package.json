@@ -1,0 +1,21 @@
+{
+  "name": "digicar",
+  "version": "0.0.1",
+  "description": "Web controller for remote car",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo test",
+    "start": "node ."
+  },
+  "keywords": [
+    "car"
+  ],
+  "author": "Teaflex and Iucapad",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.5"
+  },
+  "devDependencies": {
+    "express": "^4.17.1"
+  }
+}

@@ -1,6 +1,6 @@
 import os
 
-services = ["hostapd", "dnsmasq", "nodejs", "npm"]
+services = ["hostapd", "dnsmasq", "nodejs", "npm", "git"]
 
 os.system("sudo apt-get update && sudo apt-get upgrade")
 
