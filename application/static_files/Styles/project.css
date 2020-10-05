@@ -1,6 +1,6 @@
 html{
     height: 100vh;
-    background: linear-gradient(153deg, #FFFFFF00 0%, #F0D06B50 13%, #D95A407F 44%, #501E31 100%);
+    background: linear-gradient(153deg, #AEF0D050 0%, #4FE59BAA 13%, #27C18F7F 69%, #0EA272 100%);
 }
 body{
     margin: 0;
@@ -58,4 +58,5 @@ header{
     padding: 10px;
     max-height: 0;
     overflow: hidden;
+    box-shadow: 0 0 6px var(--color-grey);
 }
