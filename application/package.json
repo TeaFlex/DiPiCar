@@ -13,7 +13,8 @@
   "author": "Teaflex and Iucapad",
   "license": "ISC",
   "dependencies": {
-    "ejs": "^3.1.5"
+    "ejs": "^3.1.5",
+    "express-session": "^1.17.1"
   },
   "devDependencies": {
     "express": "^4.17.1"
