@@ -54,14 +54,7 @@ function appSettings(){
     this.clear = function(){
         localStorage.clear();
         localStorage.setItem("resetProcess", true);
-        document.getElementById("home_6").style.opacity="0";
-        setTimeout(function() {
-            document.getElementById("home_6").style.display="none";
-            document.getElementById("home_0").style.display="block";
-            setTimeout(function() {
-                document.getElementById("home_0").style.opacity="1";
-            }, 250);      
-        }, 250);
+        slide(document.getElementById("home_6"),document.getElementById("home_0"));
     }
 }
 
@@ -158,23 +151,32 @@ function slideViews(obj){                   //Réalise un fondu de transition en
         loadView();
     }
     if (target){
-        obj.parentElement.style.opacity="0";
-        setTimeout(function() {
-            obj.parentElement.style.display="none";
-            target.style.display="block";
-            setTimeout(function() {
-                target.style.opacity="1";
-            }, 250);      
-        }, 250);        
+            slide(obj.parentElement,target);
     }
+}
+function slide(src,trg){
+    src.style.opacity="0"; 
+    setTimeout(function() {
+        src.style.maxHeight="200px";                        
+        setTimeout(function() {
+            src.style.display="none";
+            trg.style.display="block";                
+            setTimeout(function() {
+                trg.style.maxHeight="500px";
+                trg.style.opacity="1";                    
+            }, 250);      
+        }, 250);  
+    }, 50); 
 }
 function hideView(obj){
     obj.style.display="none";
     obj.style.opacity="0";
+    obj.style.maxHeight="0";
 }
 function showView(obj){
     obj.style.display="block";
     obj.style.opacity="1";
+    obj.style.maxHeight="100%";
 }
 
 function loadView(){

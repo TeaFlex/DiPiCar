@@ -14,7 +14,7 @@ button:focus{background:var(--accent-color);}
 .activeTab{transition:border-width 0.05s linear;border-bottom:3px solid var(--accent-color);}
 .edge>.tabItem{margin:3px 8vw 3px 0;padding:4px 2px 4px 8px;border-bottom:none;border-left:3px solid transparent;}
 .edge>.tabItem:hover{border-bottom:none;border-left:3px solid var(--accent-color);}.slideView{margin:0 auto;max-width:600px;}
-.slideView div{transition:opacity 0.5s;}
+.slideView div{transition:opacity 0.5s,max-height 0.5s ease-out;}
 .slideView>div{text-align:center;}
 .slideView>div h1,p{text-align:left;}
 .settingsList{width:100%;background:var(--color-panel);border-radius:6px;}
