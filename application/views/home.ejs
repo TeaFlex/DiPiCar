@@ -1,11 +1,100 @@
-<section class="background flex-vertical">
-    <div class="frame flex-vertical">
-        <h1>Welcome !</h1>
-        <form action="" class="flex-vertical">
-            <label for="username">Username:</label>
-            <input type="text" name="username">
-            <label for="password">Password:</label>
-            <input type="password" name="password">
-        </form>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NICEcar</title>
+    <link rel="stylesheet" href="Styles/stencil.css">
+    <link rel="stylesheet" href="Styles/project.css">
+    <script src="Scripts/home.js"></script>
+    <script src="Scripts/app.js"></script>
+</head>
+<body>
+    <header>
+    <ul id="maintab" class="uiTab">            
+        <img class="tabNavigation">
+        <li class="tabItem" id="carTab"><a>carName</a></li>
+        <li class="tabItem" id="confTab"><a>Configuration</a></li>
+        <li class="tabItem" id="aboutTab"><a>A propos</a></li>
+    </ul>
+    </header>
+    <iframe id="carView">
+    </iframe>
+    <div class="slideView" id="confView">
+        <div id="home_0">
+            <h1>Se connecter</h1>
+            <p>Dans vos paramètres WiFi, sélectionnez "NICEcar" et entrez le mot de passe fourni dans le manuel.</p>
+            <button id="resetCar" class="checkHost" value="next">Continuer</button>
+        </div>   
+        <div id="home_1">
+            <h1>Bienvenue</h1>
+            <p>Vous êtes connecté au véhicule !<br><br>Cette NICEcar n'a pas encore été configurée. Tout d'abord, connectons la voiture au réseau local.</p>
+            <button class="slideViewBtn" value="next">Suivant</button>
+        </div>        
+        <div id="home_2">
+            <h1>Paramètres WiFi</h1>
+            <p>Pour utiliser le véhicule sur le réseau local, entrez vos paramètres de WiFi.</p>
+            <span class="form">
+                <label><span>Nom du WiFi</span><input class="inputSrc" type="text" name="ssid"></label>
+                <br>
+                <label><span>Mot de passe</span><input class="inputSrc" type="password" name="wpa"></label>
+            </span>
+            <button class="slideViewBtn" value="previous">Retour</button>
+            <button class="slideViewBtn" value="next">Suivant</button>
+        </div>
+        <div id="home_3">
+            <h1>Personnalisation</h1>
+            <p>Votre voiture mérite un nom unique. Comment souhaitez-vous la nommer ?</p>
+            <span class="form">
+                <label><span>Nom de l'appareil</span><input class="inputSrc" type="text" name="name"></label>                
+            </span>
+            <button class="slideViewBtn" value="previous">Retour</button>
+            <button id="inputsValidation" value="next">Suivant</button>
+        </div>
+        <div id="home_4">
+            <h1>Confirmer</h1>
+            <p>Souhaitez-vous valider cette configuration ?</p>
+            <span class="form">
+            <table class="settingsList">
+                <tr>
+                    <td>Nom</td><td><input class="inputTrg" name="name" id="carName" disabled></td>
+                </tr>
+                <tr>
+                    <td>SSID</td><td><input class="inputTrg" name="ssid" disabled></td>
+                </tr>
+                <tr>
+                    <td>Clé WPA</td><td><input class="inputTrg" name="wpa" type="password" disabled></td>
+                </tr>
+            </table>
+            </span>
+            <button class="slideViewBtn" value="previous">Retour</button>
+            <button class="checkHost stepAction" id="1" value="next">Valider</button>
+        </div>  
+        <div id="home_5">
+            <h1>Redémarrage</h1>
+            <p>Vous pouvez maintenant redémarrer la voiture afin d'appliquer la configuration.<br><br>Si vous ne voyez pas de message d'erreur, vous pouvez vous reconnecter sur votre réseau local et continuer.</p>
+            <button class="slideViewBtn" value="next">Continuer</button>
+        </div>
+        <div id="home_6">
+            <h1>Connexion au véhicule</h1>
+            <p>Veuillez insérer l'adresse de connexion de votre voiture afin de s'y connecter. Il s'agit des chiffres inscrits sur l'écran.</p>
+            <span class="form">
+                <label><span>Adresse IP</span><input type="text" name="address" id="setupAddress"></label>   
+            </span>
+            <button onclick="settings.clear()">Réinitialiser</button>
+            <button class="slideViewBtn stepAction" id="2" value="load" onclick="loadView()">Valider</button>
+        </div>
+        <div id="home_7">
+            <h1>Paramètres</h1>
+            
+        </div>
     </div>
-</section>
+    <div id="aboutView">
+        <h1>A propos du projet</h1>
+        <p>Le montage du véhicule ainsi que la création de l'application ont été réalisés par Nicolas JEUNIAUX et Luca VITALI en temps que travail de fin d'études à la Haute école en Hainaut.</p>
+    </div>
+</body>
+</html>
+<script>
+    iniPage();
+</script>
