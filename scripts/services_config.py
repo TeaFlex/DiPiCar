@@ -6,4 +6,4 @@ os.system()
 #for service in conf_files:
     #os.system("sudo cat {} > {}".format())
 
-#WIP
+#TODO: copy conf files in the correct location and restart services

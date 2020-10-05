@@ -7,3 +7,4 @@ sudo cp -r /tmp/resources/application/ $install_folder
 echo "$install_folder folder created."
 python3 /tmp/resources/scripts/services_install.py
 echo "Services installed."
+#TODO: link services configuration script
