@@ -1,16 +1,10 @@
 #!/bin/bash
 user=`whoami`
-folder="test" #TODO: change to "resources" in the final build, maybe change path to home directory of current user.
+install_folder="/usr/lib/digicar"
 
-cd / 
-
-if [ ! -e $folder ]
-then
-    sudo mkdir $folder
-    sudo chown $user $folder && sudo chgrp $user $folder
-    echo "/$folder folder created."
-    cd "/$folder"
-    #TODO: 
-else
-    echo "Something went wrong, please verify that any /$folder directory or file already exists."
-fi
+sudo cp -r /tmp/resources/application/ $install_folder
+#sudo chown -r $user $install_folder && sudo chgrp -r $user $install_folder
+echo "$install_folder folder created."
+python3 /tmp/resources/scripts/services_install.py
+echo "Services installed."
+#TODO: link services configuration script
