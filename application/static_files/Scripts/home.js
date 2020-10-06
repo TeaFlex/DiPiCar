@@ -4,11 +4,12 @@ settings = new appSettings();
 function appClient(){
     this.activeTab="confTab";
 
-    this.addComponent = function(node,type,cname=null,id=null,inner){
+    this.addComponent = function(node,type,cname,id,value,inner){
         var newElement = document.createElement(type);
         newElement.innerHTML=inner;
         newElement.setAttribute("class",cname);
         newElement.setAttribute("id",id);
+        newElement.setAttribute("value",value);
         newElement.addEventListener("click",function(){client.setTab(this.id);});
         document.getElementById(node).after(newElement);
     }
@@ -158,7 +159,7 @@ function setInterface(){                    //Détermine l'affichage de l'applic
         }
     }
     else{
-        checkConfiguration();        
+        showView(document.getElementById("home_0"));    
     }
 }
 
@@ -208,7 +209,7 @@ function loadView(){
     document.getElementById("confTab").innerHTML="Paramètres";
     carTab.innerHTML=settings.carName;
     carTab.style.display="block";
-    client.addComponent("carTab","li","tabItem","statTab","<a>Statistiques</a>")
+    client.addComponent("carTab","li","tabItem","statTab",null,"<a>Statistiques</a>")
     client.setTab("carTab");
     var carView = document.getElementById("carView");
     carView.src="http://"+document.getElementById("setupAddress").value+"/deviceview.html"; //TODO change for actual url for the view
@@ -217,9 +218,9 @@ function loadView(){
 
 function checkConfiguration(obj){                  //TODO Function that looks if the server is configured or not
     if (true){
-        client.addComponent("localMode","p",null,null,"Votre NICEcar est déjà configurée.");
+        client.addComponent("localMode1","p",null,null,null,"Votre NICEcar est déjà configurée. Vous pouvez la reconfigurer ou ignorer.");
     }else{
-        client.addComponent("localMode","p","Votre NICEcar n'a pas encore été configurée pour le réseau local.");
+        client.addComponent("localMode1","p",null,null,null,"Votre NICEcar n'a pas encore été configurée pour le réseau local.");
     }
     slideViews(obj);
 }
