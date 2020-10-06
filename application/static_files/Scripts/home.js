@@ -4,6 +4,14 @@ settings = new appSettings();
 function appClient(){
     this.activeTab="confTab";
 
+    this.addComponent = function(node,type,cname=null,id=null,inner){
+        var newElement = document.createElement(type);
+        newElement.innerHTML=inner;
+        newElement.setAttribute("class",cname);
+        newElement.setAttribute("id",id);
+        newElement.addEventListener("click",function(){client.setTab(this.id);});
+        document.getElementById(node).after(newElement);
+    }
     this.setTab = function(target){
         var current = document.getElementById(this.activeTab);
         current.classList.remove("activeTab");
@@ -148,7 +156,7 @@ function slideViews(obj){                   //Réalise un fondu de transition en
     }else if (obj.value=="previous"){
         var target = document.getElementById(view[0]+"_"+(ind-1));
     }else if (obj.value=="load"){
-        loadView();
+        loadView();        
     }
     if (target){
             slide(obj.parentElement,target);
@@ -184,6 +192,7 @@ function loadView(){
     document.getElementById("confTab").innerHTML="Paramètres";
     carTab.innerHTML=settings.carName;
     carTab.style.display="block";
+    client.addComponent("carTab","li","tabItem","statTab","<a>Statistiques</a>")
     client.setTab("carTab");
     var carView = document.getElementById("carView");
     carView.src="http://"+document.getElementById("setupAddress").value+"/deviceview.html"; //TODO change for actual url for the view

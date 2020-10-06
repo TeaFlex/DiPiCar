@@ -71,16 +71,28 @@
             <label><span>Adresse IP</span><input type="text" name="address" id="setupAddress"></label>   
         </span>
         <button onclick="settings.clear()">Réinitialiser</button>
-        <button class="slideViewBtn stepAction" id="2" value="load" onclick="loadView()">Valider</button>
+        <button class="slideViewBtn stepAction" id="2" value="next">Valider</button>
     </div>
-    <div id="home_7">
-        <h1>Paramètres</h1>
-        
+    <div class="uiCard" id="home_7">
+        <h1>Choix du profil</h1>
+        <p>TODO get users from car and connect to a profile</p>
+        <button class="slideViewBtn" value="load">Connexion</button>
     </div>
 </div>
 <div id="aboutView">
     <h1>A propos du projet</h1>
     <p>Le montage du véhicule ainsi que la création de l'application ont été réalisés par Nicolas JEUNIAUX et Luca VITALI en temps que travail de fin d'études à la Haute école en Hainaut.</p>
+</div>
+<div id="statView">
+    <div class="uiCard">
+        test12
+    </div>
+    <div class="uiCard">
+        test12
+    </div>
+    <div class="uiCard">
+        test12
+    </div>
 </div>
 <script>
     iniPage();

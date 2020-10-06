@@ -29,16 +29,19 @@ header{
     display: none;
     opacity: 0;
 }
-#aboutView{
+#aboutView,#statView{
     display: none;
 }
 #carTab{
     display: none;
 }
-#carView,#confView,#aboutView{
+#carView,#confView,#aboutView,#statView{
     transition: opacity 0.15s;
     margin: 0 auto;
     max-width: 600px;
+}
+#statView>.uiCard{
+max-height: none;
 }
 #carView{
     display: none;
