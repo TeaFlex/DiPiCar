@@ -120,6 +120,7 @@ function iniPage(){                 //Initialise les éléments et ajoute les ev
     for (var i=0;i<views.length;i++){
         hideView(views[i]);
     }
+    client.setTab(client.activeTab);
     tryConnexion(window.location,isP2P);
     showView(document.getElementById("confView"));
 }
@@ -144,7 +145,6 @@ function inputsValidation(){                 //Assigne les inputs dans un récap
     return error.length==0
 }
 function setInterface(){                    //Détermine l'affichage de l'application selon la situation
-    client.setTab(client.activeTab);
     if (localStorage.getItem("resetProcess")){
         showView(document.getElementById("home_0"));        
     }
