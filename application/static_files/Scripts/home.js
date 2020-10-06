@@ -155,9 +155,9 @@ function slideViews(obj){                   //Réalise un fondu de transition en
     }
 }
 function slide(src,trg){
-    src.style.opacity="0"; 
+    src.style.maxHeight="100px"; 
     setTimeout(function() {
-        src.style.maxHeight="200px";                        
+        src.style.opacity="0";                    
         setTimeout(function() {
             src.style.display="none";
             trg.style.display="block";                
@@ -166,7 +166,7 @@ function slide(src,trg){
                 trg.style.opacity="1";                    
             }, 250);      
         }, 250);  
-    }, 50); 
+    }, 150); 
 }
 function hideView(obj){
     obj.style.display="none";

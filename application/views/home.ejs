@@ -6,21 +6,21 @@
     <li class="tabItem" id="aboutTab"><a>A propos</a></li>
 </ul>
 </header>
-<div class="box"><div></div><div></div><div></div></div>
+<div id="animatedBackground"><div></div><div></div><div></div></div>
 <iframe id="carView">
 </iframe>
 <div class="slideView" id="confView">
-    <div id="home_0">
+    <div class="uiCard" id="home_0">
         <h1>Se connecter</h1>
         <p>Dans vos paramètres WiFi, sélectionnez "NICEcar" et entrez le mot de passe fourni dans le manuel.</p>
         <button id="resetCar" class="checkHost" value="next">Continuer</button>
     </div>   
-    <div id="home_1">
+    <div class="uiCard" id="home_1">
         <h1>Bienvenue</h1>
         <p>Vous êtes connecté au véhicule !<br><br>Cette NICEcar n'a pas encore été configurée. Tout d'abord, connectons la voiture au réseau local.</p>
         <button class="slideViewBtn" value="next">Suivant</button>
     </div>        
-    <div id="home_2">
+    <div class="uiCard" id="home_2">
         <h1>Paramètres WiFi</h1>
         <p>Pour utiliser le véhicule sur le réseau local, entrez vos paramètres de WiFi.</p>
         <span class="form">
@@ -31,7 +31,7 @@
         <button class="slideViewBtn" value="previous">Retour</button>
         <button class="slideViewBtn" value="next">Suivant</button>
     </div>
-    <div id="home_3">
+    <div class="uiCard" id="home_3">
         <h1>Personnalisation</h1>
         <p>Votre voiture mérite un nom unique. Comment souhaitez-vous la nommer ?</p>
         <span class="form">
@@ -40,7 +40,7 @@
         <button class="slideViewBtn" value="previous">Retour</button>
         <button id="inputsValidation" value="next">Suivant</button>
     </div>
-    <div id="home_4">
+    <div class="uiCard" id="home_4">
         <h1>Confirmer</h1>
         <p>Souhaitez-vous valider cette configuration ?</p>
         <span class="form">
@@ -59,12 +59,12 @@
         <button class="slideViewBtn" value="previous">Retour</button>
         <button class="checkHost stepAction" id="1" value="next">Valider</button>
     </div>  
-    <div id="home_5">
+    <div class="uiCard" id="home_5">
         <h1>Redémarrage</h1>
         <p>Vous pouvez maintenant redémarrer la voiture afin d'appliquer la configuration.<br><br>Si vous ne voyez pas de message d'erreur, vous pouvez vous reconnecter sur votre réseau local et continuer.</p>
         <button class="slideViewBtn" value="next">Continuer</button>
     </div>
-    <div id="home_6">
+    <div class="uiCard" id="home_6">
         <h1>Connexion au véhicule</h1>
         <p>Veuillez insérer l'adresse de connexion de votre voiture afin de s'y connecter. Il s'agit des chiffres inscrits sur l'écran.</p>
         <span class="form">
