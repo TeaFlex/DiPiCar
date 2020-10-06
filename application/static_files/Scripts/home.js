@@ -49,11 +49,14 @@ function appSettings(){
     this.saveProgress= function(step){
         switch (step) {
             case "1":
-                localStorage.setItem("setupState", "done");
+                localStorage.setItem("setupState", 1);
                 localStorage.removeItem("resetProcess");
                 localStorage.setItem("carName", document.getElementById("carName").value);
                 break;
-            case "2":   
+            case "2":
+                localStorage.setItem("setupState", 2);
+                break;
+            case "3":   
                 var setupAddress = document.getElementById("setupAddress").value;  
                 localStorage.setItem("setupAddress", setupAddress);
                 break;
@@ -62,7 +65,7 @@ function appSettings(){
     this.clear = function(){
         localStorage.clear();
         localStorage.setItem("resetProcess", true);
-        slide(document.getElementById("home_6"),document.getElementById("home_0"));
+        slide(document.getElementById("home_7"),document.getElementById("home_0"));
     }
 }
 
@@ -83,6 +86,13 @@ function hostReachable(parameters){
         alert("Vous n'êtes pas connecté au WiFi NICEcar");
     }
 }
+function isP2P(){
+    if (parameters[0]){
+        showView(document.getElementById("home_1"));
+    }else{
+        setInterface();
+    }
+}
 function iniPage(){                 //Initialise les éléments et ajoute les events listeners
     var tabItem=document.getElementsByClassName("tabItem");
     for(var i=0;i<tabItem.length;i++){
@@ -96,12 +106,21 @@ function iniPage(){                 //Initialise les éléments et ajoute les ev
     for(var i=0;i<checkHost.length;i++){
         checkHost[i].addEventListener("click",function(){tryConnexion(window.location,hostReachable,this);});
     }
+    var checkConfig=document.getElementsByClassName("checkConfig");
+    for(var i=0;i<checkConfig.length;i++){
+        checkConfig[i].addEventListener("click",function(){checkConfiguration(this)});
+    }
     document.getElementById("inputsValidation").addEventListener("click",function(){inputsValidation(this) ? slideViews(this) : alert("La configuration est incomplète")});
     var saveStep=document.getElementsByClassName("stepAction");
     for(var i=0;i<saveStep.length;i++){
         saveStep[i].addEventListener("click",function(){settings.saveProgress(this.id);});
     }
-    setInterface();
+    var views = document.getElementById("confView").children;
+    for (var i=0;i<views.length;i++){
+        hideView(views[i]);
+    }
+    tryConnexion(window.location,isP2P);
+    showView(document.getElementById("confView"));
 }
 
 function inputsValidation(){                 //Assigne les inputs dans un récapitulatif, vérifie les champs
@@ -124,10 +143,6 @@ function inputsValidation(){                 //Assigne les inputs dans un récap
     return error.length==0
 }
 function setInterface(){                    //Détermine l'affichage de l'application selon la situation
-    var views = document.getElementById("confView").children;
-    for (var i=0;i<views.length;i++){
-        hideView(views[i]);
-    }
     client.setTab(client.activeTab);
     if (localStorage.getItem("resetProcess")){
         showView(document.getElementById("home_0"));        
@@ -135,17 +150,16 @@ function setInterface(){                    //Détermine l'affichage de l'applic
     else if (settings.setupState)
     {
         var setupAddress = localStorage.getItem("setupAddress");
-        if (settings.setupState == "done"){
-            showView(document.getElementById("home_6"));  
+        if (settings.setupState >= 1){
+            showView(document.getElementById("home_7"));  
             document.getElementById("setupAddress").value=setupAddress;
         }else{
             showView(document.getElementById("home_1")); 
         }
     }
     else{
-        showView(document.getElementById("home_1")); 
+        checkConfiguration();        
     }
-    showView(document.getElementById("confView"));
 }
 
 function slideViews(obj){                   //Réalise un fondu de transition entre les écrans de paramétrage
@@ -155,7 +169,10 @@ function slideViews(obj){                   //Réalise un fondu de transition en
         var target = document.getElementById(view[0]+"_"+(ind+1));
     }else if (obj.value=="previous"){
         var target = document.getElementById(view[0]+"_"+(ind-1));
-    }else if (obj.value=="load"){
+    }else if (obj.value=="p2pMode"){
+        var target = document.getElementById(view[0]+"_8");
+    }
+    else if (obj.value=="load"){
         loadView();        
     }
     if (target){
@@ -186,7 +203,6 @@ function showView(obj){
     obj.style.opacity="1";
     obj.style.maxHeight="100%";
 }
-
 function loadView(){
     var carTab = document.getElementById("carTab");
     document.getElementById("confTab").innerHTML="Paramètres";
@@ -197,4 +213,13 @@ function loadView(){
     var carView = document.getElementById("carView");
     carView.src="http://"+document.getElementById("setupAddress").value+"/deviceview.html"; //TODO change for actual url for the view
     carView.style.display="block";
+}
+
+function checkConfiguration(obj){                  //TODO Function that looks if the server is configured or not
+    if (true){
+        client.addComponent("localMode","p",null,null,"Votre NICEcar est déjà configurée.");
+    }else{
+        client.addComponent("localMode","p","Votre NICEcar n'a pas encore été configurée pour le réseau local.");
+    }
+    slideViews(obj);
 }
