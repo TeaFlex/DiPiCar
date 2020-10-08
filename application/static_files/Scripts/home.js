@@ -1,5 +1,6 @@
 client = new appClient();
 settings = new appSettings();
+model = new appModel();
 
 function appClient(){
     this.activeTab="confTab";
@@ -70,16 +71,19 @@ function appSettings(){
     }
 }
 
-function tryConnexion(url,callback,obj)
-{
-    var req = new XMLHttpRequest();
-    req.open('HEAD', url);
-    req.onreadystatechange = function() {
-        parameters=[this.status,obj]
-        callback(parameters);
-    };
-    req.send();
+function appModel(){
+    this.tryConnexion = function (url,callback,obj)
+    {
+        var req = new XMLHttpRequest();
+        req.open('HEAD', url);
+        req.onreadystatechange = function() {
+            parameters=[this.status,obj]
+            callback(parameters);
+        };
+        req.send();
+    }
 }
+
 function hostReachable(parameters){
     if (parameters[0]){
         switch (parameters[1].id){
@@ -113,9 +117,11 @@ function sendConfiguration(obj){                    //A TESTER ET ADAPTER
     req.open("POST","URL-DU-CONTROLEUR");
     req.setRequestHeader("Content-Type","application/json;charset=UTF-8");
     req.onreadystatechange = function() {
-        if (req.status!=0){
+        if (req.status==200){
             settings.saveProgress(obj.id);
             slideViews(obj);
+        }else{
+            alert("Une erreur inattendue est survenue");
         }
     };
     req.send(JSON.stringify(conf)); //ON ENVOIE L'OBJET conf EN JSON
@@ -132,7 +138,7 @@ function iniPage(){                 //Initialise les éléments et ajoute les ev
     }
     var checkHost=document.getElementsByClassName("checkHost");
     for(var i=0;i<checkHost.length;i++){
-        checkHost[i].addEventListener("click",function(){tryConnexion(window.location,hostReachable,this);});
+        checkHost[i].addEventListener("click",function(){model.tryConnexion(window.location,hostReachable,this);});
     }
     var checkConfig=document.getElementsByClassName("checkConfig");
     for(var i=0;i<checkConfig.length;i++){
@@ -148,7 +154,7 @@ function iniPage(){                 //Initialise les éléments et ajoute les ev
         hideView(views[i]);
     }
     client.setTab(client.activeTab);
-    tryConnexion(window.location,isP2P);
+    model.tryConnexion(window.location,isP2P);
     showView(document.getElementById("confView"));
 }
 
