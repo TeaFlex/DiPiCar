@@ -72,17 +72,24 @@ function appSettings(){
 
 function tryConnexion(url,callback,obj)
 {
-    var http = new XMLHttpRequest();
-    http.open('HEAD', url);
-    http.onreadystatechange = function() {
+    var req = new XMLHttpRequest();
+    req.open('HEAD', url);
+    req.onreadystatechange = function() {
         parameters=[this.status,obj]
         callback(parameters);
     };
-    http.send();
+    req.send();
 }
 function hostReachable(parameters){
     if (parameters[0]){
-        slideViews(parameters[1]);
+        switch (parameters[1].id){
+            case "1":
+                sendConfiguration(parameters[1]);
+                break;
+            default:
+                slideViews(parameters[1]);
+                break;
+        }        
     }else{
         alert("Vous n'êtes pas connecté au WiFi NICEcar");
     }
@@ -93,6 +100,26 @@ function isP2P(){
     }else{
         setInterface();
     }
+}
+function sendConfiguration(obj){                    //A TESTER ET ADAPTER
+    var inputTrg=document.getElementsByClassName("inputTrg");
+    var conf = {
+        "hostname":inputTrg[0].value,
+        "ssid":inputTrg[1].value,
+        "wpa":inputTrg[2].value
+     }
+     //PAS SUR QUE LA REQUETE SOIT BONNE
+    var req = new XMLHttpRequest();
+    req.open("POST","URL-DU-CONTROLEUR");
+    req.setRequestHeader("Content-Type","application/json;charset=UTF-8");
+    req.onreadystatechange = function() {
+        if (req.status!=0){
+            settings.saveProgress(obj.id);
+            slideViews(obj);
+        }
+    };
+    req.send(JSON.stringify(conf)); //ON ENVOIE L'OBJET conf EN JSON
+    
 }
 function iniPage(){                 //Initialise les éléments et ajoute les events listeners
     var tabItem=document.getElementsByClassName("tabItem");
@@ -146,7 +173,7 @@ function inputsValidation(){                 //Assigne les inputs dans un récap
 }
 function setInterface(){                    //Détermine l'affichage de l'application selon la situation
     if (localStorage.getItem("resetProcess")){
-        showView(document.getElementById("home_0"));        
+        showView(document.getElementById("home_0"));
     }
     else if (settings.setupState)
     {
