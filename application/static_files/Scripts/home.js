@@ -4,7 +4,7 @@ model = new appModel();
 
 function appClient(){
     this.activeTab="confTab";
-
+    this.color="#0E8252";
     this.addComponent = function(node,type,cname,id,value,inner){
         var newElement = document.createElement(type);
         newElement.innerHTML=inner;
@@ -18,7 +18,7 @@ function appClient(){
         var current = document.getElementById(this.activeTab);
         current.classList.remove("activeTab");
         document.getElementById(target).classList.add("activeTab");        
-        if (target!=client.activeTab){            
+        if (target!=this.activeTab){            
             src=document.getElementById(this.activeTab.replace("Tab","View"));
             trg=document.getElementById(target.replace("Tab","View"));
             src.style.opacity="0";
@@ -32,7 +32,14 @@ function appClient(){
         }
         this.activeTab=target;
     }
-
+    this.setColor = function(value){
+        let root = document.documentElement;
+        root.style.setProperty('--accent-color', value);
+        root.style.setProperty('--accent-soft', value+"66");
+        root.style.setProperty('--gradient-80', value+"DD");
+        root.style.setProperty('--gradient-30', value+"50");
+        root.style.setProperty('--gradient-10', value+"20");
+    }
     this.updateInput=function(input){
         switch (input){
             case "gamepad":
@@ -155,6 +162,7 @@ function iniPage(){                 //Initialise les éléments et ajoute les ev
     }
     client.setTab(client.activeTab);
     model.tryConnexion(window.location,isP2P);
+    client.setColor(client.color);
     showView(document.getElementById("confView"));
 }
 
