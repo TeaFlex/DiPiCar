@@ -4,7 +4,7 @@ model = new appModel();
 
 function appClient(){
     this.activeTab="confTab";
-    this.color="#0E8252";
+    this.color="rust";
     this.addComponent = function(node,type,cname,id,value,inner){
         var newElement = document.createElement(type);
         newElement.innerHTML=inner;
@@ -34,11 +34,16 @@ function appClient(){
     }
     this.setColor = function(value){
         let root = document.documentElement;
-        root.style.setProperty('--accent-color', value);
-        root.style.setProperty('--accent-soft', value+"66");
-        root.style.setProperty('--gradient-80', value+"DD");
-        root.style.setProperty('--gradient-30', value+"50");
-        root.style.setProperty('--gradient-10', value+"20");
+        var colors = {
+            "mint1":"#AEF0D050","mint2":"#4FE59BAA","mint3":"#27C18F7F","mint4":"#0EA272",
+            "rust1":"#D95A4025","rust2":"#F0D06B50","rust3":"#D95A407F","rust4":"#501E31CD",
+            "lilac1":"#9683EC30","lilac2":"#B666D250","lilac3":"#B666D2BF","lilac4":"#9683ECDD"
+        }
+        root.style.setProperty('--accent-color', colors[value+4]);
+        root.style.setProperty('--accent-soft', colors[value+3]);
+        root.style.setProperty('--gradient-80', colors[value+4]);
+        root.style.setProperty('--gradient-30', colors[value+2]);
+        root.style.setProperty('--gradient-10', colors[value+1]);
     }
     this.updateInput=function(input){
         switch (input){
