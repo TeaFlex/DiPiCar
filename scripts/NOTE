@@ -1,0 +1,5 @@
+Lors de l'installation du package, les fichiers/dossiers suivants ne seront pas présents:
+-.git
+-.gitignore
+-build_packages.sh
+-packages
