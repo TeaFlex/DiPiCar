@@ -84,8 +84,10 @@ function appModel(){
         var req = new XMLHttpRequest();
         req.open('HEAD', url);
         req.onreadystatechange = function() {
-            parameters=[this.status,obj]
-            callback(parameters);
+            if (this.readyState==4){
+                parameters=[this.status,obj]
+                callback(parameters);
+            }
         };
         req.send();
     }
