@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo /usr/lib/digicar/scripts/digicar_install.sh

@@ -1,1 +1,3 @@
 /application/node_modules
+/scripts/packages/DigiCar/usr/lib/digicar/*
+*.deb
