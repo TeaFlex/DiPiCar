@@ -35,6 +35,27 @@ header{
 #carTab{
     display: none;
 }
+#settings{
+    display: block !important;
+    opacity: 1 !important;
+    max-height: min-content !important;
+}
+.uiThemePicker{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+.pickerItem{
+    width: 40px;
+    height: 40px;
+    border: 1px solid #CCCCCC;
+    margin: 5px auto;
+    border-radius: 5px;
+}
+.pickerSelected{
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--accent-color);
+}
 #carView,#confView,#aboutView,#statView{
     transition: opacity 0.15s;
     margin: 0 auto;

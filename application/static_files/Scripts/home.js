@@ -2,9 +2,16 @@ client = new appClient();
 settings = new appSettings();
 model = new appModel();
 
+colors = {
+    "Mint1":"#AEF0D050","Mint2":"#4FE59BAA","Mint3":"#27C18F7F","Mint4":"#0EA272","Mint5":"Mint",
+    "Rust1":"#D95A4025","Rust2":"#F0D06B50","Rust3":"#D95A407F","Rust4":"#501E31CD","Rust5":"Rust",
+    "Lilac1":"#9683EC30","Lilac2":"#B666D250","Lilac3":"#B666D2BF","Lilac4":"#9683EC","Lilac5":"Lilac",
+    "Surf1":"#B1E5C550","Surf2":"#B1E5C5","Surf3":"#5C9EA8","Surf4":"#1E4593","Surf5":"Surf"
+}
+
 function appClient(){
     this.activeTab="confTab";
-    this.color="rust";
+    this.color="Mint";
     this.addComponent = function(node,type,cname,id,value,inner){
         var newElement = document.createElement(type);
         newElement.innerHTML=inner;
@@ -34,16 +41,17 @@ function appClient(){
     }
     this.setColor = function(value){
         let root = document.documentElement;
-        var colors = {
-            "mint1":"#AEF0D050","mint2":"#4FE59BAA","mint3":"#27C18F7F","mint4":"#0EA272",
-            "rust1":"#D95A4025","rust2":"#F0D06B50","rust3":"#D95A407F","rust4":"#501E31CD",
-            "lilac1":"#9683EC30","lilac2":"#B666D250","lilac3":"#B666D2BF","lilac4":"#9683ECDD"
-        }
         root.style.setProperty('--accent-color', colors[value+4]);
         root.style.setProperty('--accent-soft', colors[value+3]);
         root.style.setProperty('--gradient-80', colors[value+4]);
         root.style.setProperty('--gradient-30', colors[value+2]);
         root.style.setProperty('--gradient-10', colors[value+1]);
+        for (a=0;a<Object.keys(colors).length;a++){
+            if (a%5==0){
+                document.getElementById("themepicker").innerHTML+="<div class=\"pickerItem\" style=\"background:linear-gradient(153deg,"+colors[Object.keys(colors)[a]]+" 0%, "+colors[Object.keys(colors)[a+1]]+" 20%,"+colors[Object.keys(colors)[a+2]]+" 69%,"+colors[Object.keys(colors)[a+3]]+" 100%);\"title="+colors[Object.keys(colors)[a+4]]+"\n id="+colors[Object.keys(colors)[a+4]]+"></div>";
+            }
+        }
+        document.getElementById(client.color).classList.add("pickerSelected");
     }
     this.updateInput=function(input){
         switch (input){
@@ -56,7 +64,6 @@ function appClient(){
         }
     }
 }
-
 function appSettings(){
     this.carName = localStorage.getItem("carName");
     this.setupState = localStorage.getItem("setupState");
