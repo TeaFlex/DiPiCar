@@ -11,7 +11,7 @@ colors = {
 
 function appClient(){
     this.activeTab="confTab";
-    this.color="Mint";
+    this.color="Surf";
     this.addComponent = function(node,type,cname,id,value,inner){
         var newElement = document.createElement(type);
         newElement.innerHTML=inner;
@@ -46,6 +46,8 @@ function appClient(){
         root.style.setProperty('--gradient-80', colors[value+4]);
         root.style.setProperty('--gradient-30', colors[value+2]);
         root.style.setProperty('--gradient-10', colors[value+1]);
+    }
+    this.setSettings = function(){
         for (a=0;a<Object.keys(colors).length;a++){
             if (a%5==0){
                 document.getElementById("themepicker").innerHTML+="<div class=\"pickerItem\" style=\"background:linear-gradient(153deg,"+colors[Object.keys(colors)[a]]+" 0%, "+colors[Object.keys(colors)[a+1]]+" 20%,"+colors[Object.keys(colors)[a+2]]+" 69%,"+colors[Object.keys(colors)[a+3]]+" 100%);\"title="+colors[Object.keys(colors)[a+4]]+"\n id="+colors[Object.keys(colors)[a+4]]+"></div>";
@@ -177,6 +179,7 @@ function iniPage(){                 //Initialise les éléments et ajoute les ev
     client.setTab(client.activeTab);
     model.tryConnexion(window.location,isP2P);
     client.setColor(client.color);
+    client.setSettings();
     showView(document.getElementById("confView"));
 }
 
