@@ -4,5 +4,6 @@ exports.isValidPassword = (inpass) => {
 }
 
 exports.isValidName = (inname) => {
-    return String.length(inname);
+    var reg = new RegExp("^[A-Za-z0-9]{5,20}$"); //Between 5 and 20 char, no special caracters
+    return reg.test(inname);
 }

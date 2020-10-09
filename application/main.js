@@ -13,12 +13,10 @@ app.get('/', (req, res)=>{
 });
 
 app.post('/jsonreception', bodyparser.json(), (req, res) => {
-    if(req.body == null) res.sendStatus(418);
+    if(req.body == null) res.sendStatus(404);
     else{
         var infos = req.body;
         console.log(`Hostname: ${infos['hostname']}\nSSID: ${infos['ssid']}\nPassword: ${infos['wpa']}`);
-        //TODO: call controller and send response according if the infos are correct or not.
-        console.log(form_control.isValidPassword(infos['wpa']));
         console.log(form_control.isValidName(infos['hostname']));
         res.status(200).send('OK');
     }
