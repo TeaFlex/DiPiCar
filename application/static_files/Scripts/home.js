@@ -121,8 +121,8 @@ function sendConfiguration(obj){                    //A TESTER ET ADAPTER
      }
      //PAS SUR QUE LA REQUETE SOIT BONNE
     var req = new XMLHttpRequest();
-    req.open("POST","URL-DU-CONTROLEUR");
-    req.setRequestHeader("Content-Type","application/json;charset=UTF-8");
+    req.open("POST","/jsonreception");
+    req.setRequestHeader("Content-Type","application/json");
     req.onreadystatechange = function() {
         if (req.status==200){
             settings.saveProgress(obj.id);
