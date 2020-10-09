@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyparser = require('body-parser');
+const form_control = require('./controller/form_control');
 const app = express();
 const port = 8060;
 
@@ -17,6 +18,8 @@ app.post('/jsonreception', bodyparser.json(), (req, res) => {
         var infos = req.body;
         console.log(`Hostname: ${infos['hostname']}\nSSID: ${infos['ssid']}\nPassword: ${infos['wpa']}`);
         //TODO: call controller and send response according if the infos are correct or not.
+        console.log(form_control.isValidPassword(infos['wpa']));
+        console.log(form_control.isValidName(infos['hostname']));
         res.status(200).send('OK');
     }
 });
