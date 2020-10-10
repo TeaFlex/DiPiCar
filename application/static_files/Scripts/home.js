@@ -131,7 +131,7 @@ function hostReachable(parameters){
                 break;
         }        
     }else{
-        alert("Vous n'êtes pas connecté au WiFi NICEcar");
+        alert("Vous n'êtes pas connecté au réseau de votre DiPi");
     }
 }
 function isP2P(){
@@ -288,9 +288,9 @@ function loadView(){
 
 function checkConfiguration(obj){                  //TODO Function that looks if the server is configured or not
     if (true){
-        client.addComponent("localMode1","p",null,null,null,"Votre NICEcar est déjà configurée. Vous pouvez la reconfigurer ou ignorer.");
+        client.addComponent("localMode1","p",null,null,null,"Votre DiPi est déjà configurée. Vous pouvez la reconfigurer ou ignorer.");
     }else{
-        client.addComponent("localMode1","p",null,null,null,"Votre NICEcar n'a pas encore été configurée pour le réseau local.");
+        client.addComponent("localMode1","p",null,null,null,"Votre DiPi n'a pas encore été configurée pour le réseau local.");
     }
     slideViews(obj);
 }
