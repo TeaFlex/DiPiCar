@@ -51,6 +51,7 @@ header{
     margin: 5px auto;
     border-radius: 5px;
 }
+#pickerTarget{display: none;}
 .pickerSelected{
     width: 36px;
     height: 36px;

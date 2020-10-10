@@ -18,8 +18,8 @@ function appClient(){
         newElement.setAttribute("class",cname);
         newElement.setAttribute("id",id);
         newElement.setAttribute("value",value);
-        newElement.addEventListener("click",function(){client.setTab(this.id);});
         document.getElementById(node).after(newElement);
+        return newElement;
     }
     this.setTab = function(target){
         var current = document.getElementById(this.activeTab);
@@ -40,6 +40,10 @@ function appClient(){
         this.activeTab=target;
     }
     this.setColor = function(value){
+        this.color=value;
+        var current = document.getElementsByClassName("pickerSelected");
+        current[0].classList.remove("pickerSelected");
+        document.getElementById(value).classList.add("pickerSelected");
         let root = document.documentElement;
         root.style.setProperty('--accent-color', colors[value+4]);
         root.style.setProperty('--accent-soft', colors[value+3]);
@@ -50,10 +54,13 @@ function appClient(){
     this.setSettings = function(){
         for (a=0;a<Object.keys(colors).length;a++){
             if (a%5==0){
-                document.getElementById("themepicker").innerHTML+="<div class=\"pickerItem\" style=\"background:linear-gradient(153deg,"+colors[Object.keys(colors)[a]]+" 0%, "+colors[Object.keys(colors)[a+1]]+" 20%,"+colors[Object.keys(colors)[a+2]]+" 69%,"+colors[Object.keys(colors)[a+3]]+" 100%);\"title="+colors[Object.keys(colors)[a+4]]+"\n id="+colors[Object.keys(colors)[a+4]]+"></div>";
+                var obj=client.addComponent("pickerTarget","div","pickerItem",colors[Object.keys(colors)[a+4]],null,null);
+                obj.addEventListener("click",function(){client.setColor(this.id);settings.setColor(this.id)});;
+                obj.style="background:linear-gradient(153deg,"+colors[Object.keys(colors)[a]]+" 0%, "+colors[Object.keys(colors)[a+1]]+" 20%,"+colors[Object.keys(colors)[a+2]]+" 69%,"+colors[Object.keys(colors)[a+3]]+" 100%);";
+                obj.title=colors[Object.keys(colors)[a+4]];
             }
         }
-        document.getElementById(client.color).classList.add("pickerSelected");
+        this.setColor(settings.getColor());
     }
     this.updateInput=function(input){
         switch (input){
@@ -84,6 +91,12 @@ function appSettings(){
                 localStorage.setItem("setupAddress", setupAddress);
                 break;
         }
+    }
+    this.setColor = function(value){
+        localStorage.setItem("colorTheme", value);
+    }
+    this.getColor = function(){
+        return localStorage.getItem("colorTheme");
     }
     this.clear = function(){
         localStorage.clear();
@@ -178,7 +191,6 @@ function iniPage(){                 //Initialise les éléments et ajoute les ev
     }
     client.setTab(client.activeTab);
     model.tryConnexion(window.location,isP2P);
-    client.setColor(client.color);
     client.setSettings();
     showView(document.getElementById("confView"));
 }
@@ -267,7 +279,7 @@ function loadView(){
     document.getElementById("confTab").innerHTML="Paramètres";
     carTab.innerHTML=settings.carName;
     carTab.style.display="block";
-    client.addComponent("carTab","li","tabItem","statTab",null,"<a>Statistiques</a>")
+    client.addComponent("carTab","li","tabItem","statTab",null,"<a>Statistiques</a>").addEventListener("click",function(){client.setTab(this.id);});;
     client.setTab("carTab");
     var carView = document.getElementById("carView");
     carView.src="http://"+document.getElementById("setupAddress").value+"/deviceview.html"; //TODO change for actual url for the view
