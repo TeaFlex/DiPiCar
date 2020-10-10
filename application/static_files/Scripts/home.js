@@ -51,7 +51,7 @@ function appClient(){
         root.style.setProperty('--gradient-30', colors[value+2]);
         root.style.setProperty('--gradient-10', colors[value+1]);
     }
-    this.setSettings = function(){
+    this.setSettings = function(){        
         for (a=0;a<Object.keys(colors).length;a++){
             if (a%5==0){
                 var obj=client.addComponent("pickerTarget","div","pickerItem",colors[Object.keys(colors)[a+4]],null,null);
@@ -60,7 +60,7 @@ function appClient(){
                 obj.title=colors[Object.keys(colors)[a+4]];
             }
         }
-        this.setColor(settings.getColor());
+        settings.getColor() ? this.setColor(settings.getColor()) : this.setColor(client.color);
     }
     this.updateInput=function(input){
         switch (input){
