@@ -2,7 +2,7 @@
 user=`whoami`
 
 #Installation path
-install_folder="/usr/lib/digicar"
+install_folder="/usr/lib/digicar"#TODO: DiPi_Car
 
 #Everthing is copied from /tmp/resources to the installation folder
 sudo chown -R $user $install_folder && sudo chgrp -R $user $install_folder
