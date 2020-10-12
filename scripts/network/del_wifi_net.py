@@ -1,7 +1,7 @@
 import os, sys
 from colormsg import ColorMsg
 
-path = "/etc/wpa_supplicant/wpa_supplicant.conf" #os.path.dirname(os.path.abspath(__file__))+"/test.conf" 
+path = "/etc/wpa_supplicant/wpa_supplicant.conf"
 exist = False
 length_args = len(sys.argv)
 args_required = 2
