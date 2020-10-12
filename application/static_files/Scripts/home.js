@@ -46,17 +46,21 @@ function keyPressed(e) {
     else if (e.keyCode == '39') {
         var trg=src.nextElementSibling;
     }
+    else if (e.keyCode=='18'){
+        var yt= focusableElements.indexOf(client.focusIndex)+1;
+        client.focusIndex=focusableElements[yt];
+        document.getElementById(client.focusIndex).childNodes[0].nextElementSibling.focus();
+    }
     if (trg){
         src.blur();
         trg.focus();
-    }else{
-        //src.parentElement.nextSibling.firstChild.focus();
     }
 }
 
 function appClient(){
     this.activeTab="confTab";
     this.color="Surf";
+    this.focusIndex="maintab";
     this.addComponent = function(node,type,cname,id,value,inner){
         var newElement = document.createElement(type);
         newElement.innerHTML=inner;
