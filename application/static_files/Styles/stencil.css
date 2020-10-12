@@ -7,11 +7,12 @@ button:focus{background:var(--accent-color);}
 .form span{display:block;text-align:left;font-weight:500;}
 .uiTab{position:absolute;display:flex;flex-flow:row;list-style-type:none;user-select:none;overflow:hidden;padding:0;}
 .edge>.tabNavigation{content:url(../images/assets/navigation.svg);display:block;width:40px;height:40px;background:var(--accent-soft);}
-.tabItem{float:left;white-space:nowrap;}
+.tabItem{outline:none;float:left;white-space:nowrap;}
 .uiTab.edge{flex-flow:column;width:40px;transition:width ease-in-out 0.3s;}
 .edge>.tabItem{float:none;text-align:left;position:relative;transition:left 0.5s;}.tabItem{display:inline-block;text-align:center;font-size:1.25em;padding:14px 2px 2px 2px;margin:0 14px;color:var(--color-text);text-decoration:none;border-bottom:3px solid transparent;}
 .tabItem:hover:not(.activeTab){border-bottom:1.5px solid var(--accent-color);}
-.activeTab,.tabItem:focus{outline:none;transition:border-width 0.05s linear;border-bottom:3px solid var(--accent-color);}
+.activeTab{transition:border-width 0.05s linear;border-bottom:3px solid var(--accent-color);}
+.tabItem:focus-visible{text-shadow:0 0 1px var(--accent-soft);border-bottom:2px solid var(--color-focus);}
 .edge>.tabItem{margin:3px 8vw 3px 0;padding:4px 2px 4px 8px;border-bottom:none;border-left:3px solid transparent;}
 .edge>.tabItem:hover{border-bottom:none;border-left:3px solid var(--accent-color);}.uiCard{border-radius: 15px;background-color:var(--backdrop-fill);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);margin:10px;padding:10px;max-height:0;overflow:hidden;box-shadow:0 0 6px var(--color-grey);}
 .slideView{margin:0 auto;max-width:600px;}

@@ -5,9 +5,9 @@ model = new appModel();
 colors = {
     "Mint1":"#AEF0D050","Mint2":"#4FE59BAA","Mint3":"#27C18F7F","Mint4":"#0EA272","Mint5":"Mint",
     "Rust1":"#D95A4025","Rust2":"#F0D06B50","Rust3":"#D95A407F","Rust4":"#501E31CD","Rust5":"Rust",
+    "Royal1":"#F8DE7E90","Royal2":"#F8DE7E","Royal3":"#FFD300A0","Royal4":"#FFD300CC","Suref5":"Royal",
     "Lilac1":"#9683EC30","Lilac2":"#B666D250","Lilac3":"#B666D2BF","Lilac4":"#9683EC","Lilac5":"Lilac",
-    "Surf1":"#B1E5C550","Surf2":"#B1E5C5","Surf3":"#5C9EA8","Surf4":"#1E4593","Surf5":"Surf",
-    "Suref1":"#CC00CC60","Suref2":"#FF00FF60","Suref3":"#CC10CC","Suref4":"#FF00FF","Suref5":"Suref"
+    "Surf1":"#B1E5C550","Surf2":"#B1E5C5","Surf3":"#5C9EA8","Surf4":"#1E4593","Surf5":"Surf"
 }
 
 function appClient(){
