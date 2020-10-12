@@ -12,13 +12,12 @@ colors = {
 
 function setTabIndex(){
     var focusnb=0;
-    focusableElements={
-        "maintab":null,
-        "themepicker":null
-    };
-    for (var i=0;i<Object.keys(focusableElements).length;i++){
-        alert(i);
-        var ls = Object.keys(focusableElements)[i].childNodes;
+    focusableElements=[
+        "maintab",
+        "themepicker"
+    ];
+    for (var i=0;i<focusableElements.length;i++){
+        var ls = document.getElementById(focusableElements[i]).childNodes;
         for (var j=0;j<ls.length;j++){
             ls[j].tabIndex=focusnb;
             focusnb++;
