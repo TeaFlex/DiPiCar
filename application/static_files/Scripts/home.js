@@ -1,13 +1,29 @@
 client = new appClient();
 settings = new appSettings();
 model = new appModel();
-
 colors = {
     "Mint1":"#AEF0D050","Mint2":"#4FE59BAA","Mint3":"#27C18F7F","Mint4":"#0EA272","Mint5":"Mint",
     "Rust1":"#D95A4025","Rust2":"#F0D06B50","Rust3":"#D95A407F","Rust4":"#501E31CD","Rust5":"Rust",
     "Royal1":"#F8DE7E90","Royal2":"#F8DE7E","Royal3":"#FFD300A0","Royal4":"#FFD300CC","Suref5":"Royal",
     "Lilac1":"#9683EC30","Lilac2":"#B666D250","Lilac3":"#B666D2BF","Lilac4":"#9683EC","Lilac5":"Lilac",
     "Surf1":"#B1E5C550","Surf2":"#B1E5C5","Surf3":"#5C9EA8","Surf4":"#1E4593","Surf5":"Surf"
+    //"Test1":"#FF000010","Test2":"#FF000030","Test3":"#FF000050","Test4":"#FF0000A0","Test5":"Test"
+}
+
+function setTabIndex(){
+    var focusnb=0;
+    focusableElements={
+        "maintab":null,
+        "themepicker":null
+    };
+    for (var i=0;i<Object.keys(focusableElements).length;i++){
+        alert(i);
+        var ls = Object.keys(focusableElements)[i].childNodes;
+        for (var j=0;j<ls.length;j++){
+            ls[j].tabIndex=focusnb;
+            focusnb++;
+        }
+    }
 }
 document.onkeydown = keyPressed;
 function keyPressed(e) {
@@ -34,6 +50,8 @@ function keyPressed(e) {
     if (trg){
         src.blur();
         trg.focus();
+    }else{
+        //src.parentElement.nextSibling.firstChild.focus();
     }
 }
 
@@ -84,7 +102,6 @@ function appClient(){
             if (a%5==0){
                 var obj=client.addComponent("pickerTarget","div","pickerItem",colors[Object.keys(colors)[a+4]],null,null);
                 obj.addEventListener("click",function(){client.setColor(this.id);settings.setColor(this.id)});;
-                obj.tabIndex=a%5;
                 obj.style="background:linear-gradient(153deg,"+colors[Object.keys(colors)[a]]+" 0%, "+colors[Object.keys(colors)[a+1]]+" 20%,"+colors[Object.keys(colors)[a+2]]+" 69%,"+colors[Object.keys(colors)[a+3]]+" 100%);";
                 obj.title=colors[Object.keys(colors)[a+4]];
             }
@@ -171,14 +188,13 @@ function isP2P(){
         setInterface();
     }
 }
-function sendConfiguration(obj){                    //A TESTER ET ADAPTER
+function sendConfiguration(obj){                     //On envoie l'objet conf en JSON
     var inputTrg=document.getElementsByClassName("inputTrg");
     var conf = {
         "hostname":inputTrg[0].value,
         "ssid":inputTrg[1].value,
         "wpa":inputTrg[2].value
      }
-     //PAS SUR QUE LA REQUETE SOIT BONNE
     var req = new XMLHttpRequest();
     req.open("POST","/jsonreception");
     req.setRequestHeader("Content-Type","application/json");
@@ -190,7 +206,7 @@ function sendConfiguration(obj){                    //A TESTER ET ADAPTER
             alert("Une erreur inattendue est survenue");
         }
     };
-    req.send(JSON.stringify(conf)); //ON ENVOIE L'OBJET conf EN JSON
+    req.send(JSON.stringify(conf));
     
 }
 function iniPage(){                 //Initialise les éléments et ajoute les events listeners
@@ -222,6 +238,7 @@ function iniPage(){                 //Initialise les éléments et ajoute les ev
     client.setTab(client.activeTab);
     model.tryConnexion(window.location,isP2P);
     client.setSettings();
+    setTabIndex();
     showView(document.getElementById("confView"));
 }
 
