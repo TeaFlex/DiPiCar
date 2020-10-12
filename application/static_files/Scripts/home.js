@@ -9,6 +9,33 @@ colors = {
     "Lilac1":"#9683EC30","Lilac2":"#B666D250","Lilac3":"#B666D2BF","Lilac4":"#9683EC","Lilac5":"Lilac",
     "Surf1":"#B1E5C550","Surf2":"#B1E5C5","Surf3":"#5C9EA8","Surf4":"#1E4593","Surf5":"Surf"
 }
+document.onkeydown = keyPressed;
+function keyPressed(e) {
+    var src=document.activeElement;
+    var trg;
+    if (e.keyCode == '38') {
+        trg=src.previousElementSibling;
+        for (var i=0;i<3 && trg.previousElementSibling;i++){
+            trg=trg.previousElementSibling;
+        }
+    }
+    else if (e.keyCode == '40') {
+        var trg=src.nextElementSibling;
+        for (var i=0;i<3 && trg.nextElementSibling;i++){
+            trg=trg.nextElementSibling;
+        }
+    }
+    else if (e.keyCode == '37') {
+        var trg=src.previousElementSibling;
+    }
+    else if (e.keyCode == '39') {
+        var trg=src.nextElementSibling;
+    }
+    if (trg){
+        src.blur();
+        trg.focus();
+    }
+}
 
 function appClient(){
     this.activeTab="confTab";
