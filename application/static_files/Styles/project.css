@@ -27,6 +27,9 @@ header{
     top: 0;
     margin: 0;
 }
+#tabTarget{
+    width: 5px;
+}
 #confView{
     display: none;
     opacity: 0;
@@ -38,6 +41,11 @@ header{
     display: none;
 }
 #settings{
+    display: block !important;
+    opacity: 1 !important;
+    max-height: min-content !important;
+}
+#testeView{
     display: block !important;
     opacity: 1 !important;
     max-height: min-content !important;

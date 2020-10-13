@@ -14,13 +14,13 @@ function setTabIndex(){
     var focusnb=0;
     focusableElements=[
         "maintab",
-        "themepicker"
+        "themepicker",
+        "teste"
     ];
     for (var i=0;i<focusableElements.length;i++){
         var ls = document.getElementById(focusableElements[i]).childNodes;
         for (var j=0;j<ls.length;j++){
-            ls[j].tabIndex=focusnb;
-            focusnb++;
+            ls[j].tabIndex=j;
         }
     }
 }
@@ -38,9 +38,9 @@ function keyPressed(e) {
         }else if(focusableElements[focusableElements.indexOf(client.focusIndex)-1]){
             var yt= focusableElements.indexOf(client.focusIndex)-1;
             client.focusIndex=focusableElements[yt];  
-            var limit=document.getElementById(client.focusIndex).querySelectorAll("[tabindex]").length+1;
-            trg=document.getElementById(client.focusIndex).childNodes[limit].nextElementSibling;
-            console.log(limit);
+            var limit=document.getElementById(client.focusIndex).querySelectorAll("[tabindex]").length;
+            trg=document.getElementById(document.getElementById(client.focusIndex).childNodes[limit].id);
+            console.log(document.getElementById(client.focusIndex).childNodes[limit]);
         }
     }
     else if (e.keyCode == '40') {
@@ -337,10 +337,8 @@ function showView(obj){
     obj.style.maxHeight="100%";
 }
 function loadView(){
-    var carTab = document.getElementById("carTab");
     document.getElementById("confTab").innerHTML="Paramètres";
-    carTab.innerHTML=settings.carName;
-    carTab.style.display="block";
+    client.addComponent("tabTarget","li","tabItem","carTab",null,"<a>"+settings.carName+"</a>").addEventListener("click",function(){client.setTab(this.id);});;
     client.addComponent("carTab","li","tabItem","statTab",null,"<a>Statistiques</a>").addEventListener("click",function(){client.setTab(this.id);});;
     client.setTab("carTab");
     var carView = document.getElementById("carView");
