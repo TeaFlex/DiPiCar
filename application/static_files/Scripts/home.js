@@ -26,7 +26,7 @@ function setTabIndex(){
 }
 document.onkeydown = keyPressed;
 function keyPressed(e) {
-    if(e.keyCode!='9' && e.keyCode!='16'){
+    if([37,38,39,40].includes(e.keyCode)){
     var src=document.activeElement;
     var trg;
     if (e.keyCode == '38') {
@@ -66,7 +66,6 @@ function keyPressed(e) {
         trg.focus();
     }
     client.focusIndex=trg.parentElement.id;
-    //console.log(client.focusIndex);
 }
 }
 
