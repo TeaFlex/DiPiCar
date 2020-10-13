@@ -26,18 +26,33 @@ function setTabIndex(){
 }
 document.onkeydown = keyPressed;
 function keyPressed(e) {
+    if(e.keyCode!='9' && e.keyCode!='16'){
     var src=document.activeElement;
     var trg;
     if (e.keyCode == '38') {
-        trg=src.previousElementSibling;
-        for (var i=0;i<3 && trg.previousElementSibling;i++){
-            trg=trg.previousElementSibling;
+        if (src.previousElementSibling){
+            var trg=src.previousElementSibling;
+            for (var i=0;i<3 && trg.previousElementSibling;i++){
+                trg=trg.previousElementSibling;
+            }
+        }else if(focusableElements[focusableElements.indexOf(client.focusIndex)-1]){
+            var yt= focusableElements.indexOf(client.focusIndex)-1;
+            client.focusIndex=focusableElements[yt];  
+            var limit=document.getElementById(client.focusIndex).querySelectorAll("[tabindex]").length+1;
+            trg=document.getElementById(client.focusIndex).childNodes[limit].nextElementSibling;
+            console.log(limit);
         }
     }
     else if (e.keyCode == '40') {
-        var trg=src.nextElementSibling;
-        for (var i=0;i<3 && trg.nextElementSibling;i++){
-            trg=trg.nextElementSibling;
+        if (src.nextElementSibling){
+            var trg=src.nextElementSibling;
+            for (var i=0;i<3 && trg.nextElementSibling;i++){
+                trg=trg.nextElementSibling;
+            }
+        }else if(focusableElements[focusableElements.indexOf(client.focusIndex)+1]){
+            var yt= focusableElements.indexOf(client.focusIndex)+1;
+            client.focusIndex=focusableElements[yt];
+            trg=document.getElementById(client.focusIndex).childNodes[0].nextElementSibling;
         }
     }
     else if (e.keyCode == '37') {
@@ -46,21 +61,19 @@ function keyPressed(e) {
     else if (e.keyCode == '39') {
         var trg=src.nextElementSibling;
     }
-    else if (e.keyCode=='18'){
-        var yt= focusableElements.indexOf(client.focusIndex)+1;
-        client.focusIndex=focusableElements[yt];
-        document.getElementById(client.focusIndex).childNodes[0].nextElementSibling.focus();
-    }
     if (trg){
         src.blur();
         trg.focus();
     }
+    client.focusIndex=trg.parentElement.id;
+    //console.log(client.focusIndex);
+}
 }
 
 function appClient(){
     this.activeTab="confTab";
     this.color="Surf";
-    this.focusIndex="maintab";
+    this.focusIndex=null;
     this.addComponent = function(node,type,cname,id,value,inner){
         var newElement = document.createElement(type);
         newElement.innerHTML=inner;
