@@ -18,7 +18,7 @@ function setTabIndex(){
         "teste"
     ];
     for (var i=0;i<focusableElements.length;i++){
-        var ls = document.getElementById(focusableElements[i]).childNodes;
+        var ls = document.getElementById(focusableElements[i]).children;
         for (var j=0;j<ls.length;j++){
             ls[j].tabIndex=j;
         }
@@ -39,8 +39,7 @@ function keyPressed(e) {
             var yt= focusableElements.indexOf(client.focusIndex)-1;
             client.focusIndex=focusableElements[yt];  
             var limit=document.getElementById(client.focusIndex).querySelectorAll("[tabindex]").length;
-            trg=document.getElementById(document.getElementById(client.focusIndex).childNodes[limit].id);
-            console.log(document.getElementById(client.focusIndex).childNodes[limit]);
+            trg=document.getElementById(client.focusIndex).children[limit-1];
         }
     }
     else if (e.keyCode == '40') {
@@ -52,7 +51,7 @@ function keyPressed(e) {
         }else if(focusableElements[focusableElements.indexOf(client.focusIndex)+1]){
             var yt= focusableElements.indexOf(client.focusIndex)+1;
             client.focusIndex=focusableElements[yt];
-            trg=document.getElementById(client.focusIndex).childNodes[0].nextElementSibling;
+            trg=document.getElementById(client.focusIndex).children[0];
         }
     }
     else if (e.keyCode == '37') {
