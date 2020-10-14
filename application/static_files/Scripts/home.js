@@ -13,11 +13,15 @@ colors = {
 }
 
 function setTabIndex(){
-    focusableElements=[
-        "maintab",
-        "themepicker",
-        "teste"
-    ];
+    switch (client.activeTab){
+        case "confTab":
+            focusableElements=["maintab","themepicker"];
+            break;
+        default:
+            focusableElements=["maintab"];
+            break;
+    }
+    
     for (let i=0;i<focusableElements.length;i++){
         let ls = document.getElementById(focusableElements[i]).children;
         for (let j=0;j<ls.length;j++){
@@ -29,26 +33,25 @@ document.onkeydown = keyPressed;
 function keyPressed(e) {
     if([37,38,39,40].includes(e.keyCode)){
         if (e.keyCode=='38'){
-            navigation.Up();
+            navigation.Up(document.activeElement);
         }
         else if (e.keyCode=='40'){
-            navigation.Down();
+            navigation.Down(document.activeElement);
         }
         else if (e.keyCode=='37'){
-            navigation.Left();
+            navigation.Left(document.activeElement);
         }
         else if (e.keyCode=='39'){
-            navigation.Right();
+            navigation.Right(document.activeElement);
         }
     }
 }
 
 function appNavigation(){
-    this.Up = function(){
-        let src=document.activeElement;
+    this.Up = function(src){
         var trg;
         if (src.previousElementSibling){
-            trg=src.previousElementSibling;
+            var trg=src.previousElementSibling;
             for (let i=0;i<3 && trg.previousElementSibling;i++){
                 trg=trg.previousElementSibling;
             }
@@ -64,11 +67,9 @@ function appNavigation(){
         }
         client.focusIndex=trg.parentElement.id;
     }
-    this.Down = function(){
-        let src=document.activeElement;
-        var trg;
+    this.Down = function(src){
         if (src.nextElementSibling){
-            trg=src.nextElementSibling;
+            var trg=src.nextElementSibling;
             for (let i=0;i<3 && trg.nextElementSibling;i++){
                 trg=trg.nextElementSibling;
             }
@@ -83,8 +84,7 @@ function appNavigation(){
         }
         client.focusIndex=trg.parentElement.id;
     }
-    this.Left = function(){
-        let src=document.activeElement;
+    this.Left = function(src){
         let trg=src.previousElementSibling;
         if (trg){
             src.blur();
@@ -92,8 +92,7 @@ function appNavigation(){
         }
         client.focusIndex=trg.parentElement.id;
     }
-    this.Right = function(){
-        let src=document.activeElement;
+    this.Right = function(src){
         let trg=src.nextElementSibling;
         if (trg){
             src.blur();
@@ -127,6 +126,7 @@ function appClient(){
             setView(src,trg,15);
         }
         this.activeTab=target;
+        setTabIndex();
     }
     this.setColor = function(value){
         this.color=value;

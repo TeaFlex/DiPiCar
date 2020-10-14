@@ -1,8 +1,9 @@
 html{
-    height: 100vh;
+    height: auto;
     background: linear-gradient(153deg, var(--gradient-10) 0%, var(--gradient-30) 13%, var(--accent-soft) 69%, var(--gradient-80) 100%);
 }
 body{
+    min-height: 100vh;
     margin: 0;
     user-select: none;  
     -webkit-user-select: none;  
