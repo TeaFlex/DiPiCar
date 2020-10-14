@@ -1,6 +1,8 @@
 client = new appClient();
 settings = new appSettings();
 model = new appModel();
+navigation = new appNavigation();
+
 colors = {
     "Mint1":"#AEF0D050","Mint2":"#4FE59BAA","Mint3":"#27C18F7F","Mint4":"#0EA272","Mint5":"Mint",
     "Rust1":"#D95A4025","Rust2":"#F0D06B50","Rust3":"#D95A407F","Rust4":"#501E31CD","Rust5":"Rust",
@@ -11,7 +13,6 @@ colors = {
 }
 
 function setTabIndex(){
-    var focusnb=0;
     focusableElements=[
         "maintab",
         "themepicker",
@@ -27,45 +28,79 @@ function setTabIndex(){
 document.onkeydown = keyPressed;
 function keyPressed(e) {
     if([37,38,39,40].includes(e.keyCode)){
-    var src=document.activeElement;
-    var trg;
-    if (e.keyCode == '38') {
+        if (e.keyCode=='38'){
+            navigation.Up();
+        }
+        else if (e.keyCode=='40'){
+            navigation.Down();
+        }
+        else if (e.keyCode=='37'){
+        navigation.Left();
+        }
+        else if (e.keyCode=='39'){
+            navigation.Right();
+        }
+    }
+}
+
+function appNavigation(){
+    this.Up = function(){
+        var src=document.activeElement;
+        var trg;
         if (src.previousElementSibling){
             var trg=src.previousElementSibling;
             for (var i=0;i<3 && trg.previousElementSibling;i++){
                 trg=trg.previousElementSibling;
             }
         }else if(focusableElements[focusableElements.indexOf(client.focusIndex)-1]){
-            var yt= focusableElements.indexOf(client.focusIndex)-1;
-            client.focusIndex=focusableElements[yt];  
-            var limit=document.getElementById(client.focusIndex).querySelectorAll("[tabindex]").length;
+            let ftrg= focusableElements.indexOf(client.focusIndex)-1;
+            client.focusIndex=focusableElements[ftrg];  
+            let limit=document.getElementById(client.focusIndex).querySelectorAll("[tabindex]").length;
             trg=document.getElementById(client.focusIndex).children[limit-1];
         }
+        if (trg){
+            src.blur();
+            trg.focus();
+        }
+        client.focusIndex=trg.parentElement.id;
     }
-    else if (e.keyCode == '40') {
+    this.Down = function(){
+        var src=document.activeElement;
+        var trg;
         if (src.nextElementSibling){
             var trg=src.nextElementSibling;
             for (var i=0;i<3 && trg.nextElementSibling;i++){
                 trg=trg.nextElementSibling;
             }
         }else if(focusableElements[focusableElements.indexOf(client.focusIndex)+1]){
-            var yt= focusableElements.indexOf(client.focusIndex)+1;
-            client.focusIndex=focusableElements[yt];
+            let ftrg= focusableElements.indexOf(client.focusIndex)+1;
+            client.focusIndex=focusableElements[ftrg];
             trg=document.getElementById(client.focusIndex).children[0];
         }
+        if (trg){
+            src.blur();
+            trg.focus();
+        }
+        client.focusIndex=trg.parentElement.id;
     }
-    else if (e.keyCode == '37') {
+    this.Left = function(){
+        var src=document.activeElement;
         var trg=src.previousElementSibling;
+        if (trg){
+            src.blur();
+            trg.focus();
+        }
+        client.focusIndex=trg.parentElement.id;
     }
-    else if (e.keyCode == '39') {
+    this.Right = function(){
+        var src=document.activeElement;
         var trg=src.nextElementSibling;
+        if (trg){
+            src.blur();
+            trg.focus();
+        }
+        client.focusIndex=trg.parentElement.id;
     }
-    if (trg){
-        src.blur();
-        trg.focus();
-    }
-    client.focusIndex=trg.parentElement.id;
-}
 }
 
 function appClient(){
