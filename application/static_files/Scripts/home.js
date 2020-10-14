@@ -18,9 +18,9 @@ function setTabIndex(){
         "themepicker",
         "teste"
     ];
-    for (var i=0;i<focusableElements.length;i++){
-        var ls = document.getElementById(focusableElements[i]).children;
-        for (var j=0;j<ls.length;j++){
+    for (let i=0;i<focusableElements.length;i++){
+        let ls = document.getElementById(focusableElements[i]).children;
+        for (let j=0;j<ls.length;j++){
             ls[j].tabIndex=j;
         }
     }
@@ -35,7 +35,7 @@ function keyPressed(e) {
             navigation.Down();
         }
         else if (e.keyCode=='37'){
-        navigation.Left();
+            navigation.Left();
         }
         else if (e.keyCode=='39'){
             navigation.Right();
@@ -45,11 +45,11 @@ function keyPressed(e) {
 
 function appNavigation(){
     this.Up = function(){
-        var src=document.activeElement;
+        let src=document.activeElement;
         var trg;
         if (src.previousElementSibling){
-            var trg=src.previousElementSibling;
-            for (var i=0;i<3 && trg.previousElementSibling;i++){
+            trg=src.previousElementSibling;
+            for (let i=0;i<3 && trg.previousElementSibling;i++){
                 trg=trg.previousElementSibling;
             }
         }else if(focusableElements[focusableElements.indexOf(client.focusIndex)-1]){
@@ -65,11 +65,11 @@ function appNavigation(){
         client.focusIndex=trg.parentElement.id;
     }
     this.Down = function(){
-        var src=document.activeElement;
+        let src=document.activeElement;
         var trg;
         if (src.nextElementSibling){
-            var trg=src.nextElementSibling;
-            for (var i=0;i<3 && trg.nextElementSibling;i++){
+            trg=src.nextElementSibling;
+            for (let i=0;i<3 && trg.nextElementSibling;i++){
                 trg=trg.nextElementSibling;
             }
         }else if(focusableElements[focusableElements.indexOf(client.focusIndex)+1]){
@@ -84,8 +84,8 @@ function appNavigation(){
         client.focusIndex=trg.parentElement.id;
     }
     this.Left = function(){
-        var src=document.activeElement;
-        var trg=src.previousElementSibling;
+        let src=document.activeElement;
+        let trg=src.previousElementSibling;
         if (trg){
             src.blur();
             trg.focus();
@@ -93,8 +93,8 @@ function appNavigation(){
         client.focusIndex=trg.parentElement.id;
     }
     this.Right = function(){
-        var src=document.activeElement;
-        var trg=src.nextElementSibling;
+        let src=document.activeElement;
+        let trg=src.nextElementSibling;
         if (trg){
             src.blur();
             trg.focus();
@@ -108,7 +108,7 @@ function appClient(){
     this.color="Surf";
     this.focusIndex=null;
     this.addComponent = function(node,type,cname,id,value,inner){
-        var newElement = document.createElement(type);
+        let newElement = document.createElement(type);
         newElement.innerHTML=inner;
         newElement.setAttribute("class",cname);
         newElement.setAttribute("id",id);
@@ -117,26 +117,20 @@ function appClient(){
         return newElement;
     }
     this.setTab = function(target){
-        var current = document.getElementById(this.activeTab);
+        let current = document.getElementById(this.activeTab);
         current.classList.remove("activeTab");
         document.getElementById(target).classList.add("activeTab");        
         if (target!=this.activeTab){            
             src=document.getElementById(this.activeTab.replace("Tab","View"));
             trg=document.getElementById(target.replace("Tab","View"));
             src.style.opacity="0";
-            setTimeout(function() {
-                src.style.display="none";
-                trg.style.display="block";
-                setTimeout(function() {
-                    trg.style.opacity="1";
-                }, 75);      
-            }, 75); 
+            setView(src,trg,15);
         }
         this.activeTab=target;
     }
     this.setColor = function(value){
         this.color=value;
-        var current = document.getElementsByClassName("pickerSelected");
+        let current = document.getElementsByClassName("pickerSelected");
         current[0].classList.remove("pickerSelected");
         document.getElementById(value).classList.add("pickerSelected");
         let root = document.documentElement;
@@ -149,7 +143,7 @@ function appClient(){
     this.setSettings = function(){        
         for (a=0;a<Object.keys(colors).length;a++){
             if (a%5==0){
-                var obj=client.addComponent("pickerTarget","div","pickerItem",colors[Object.keys(colors)[a+4]],null,null);
+                let obj=client.addComponent("pickerTarget","div","pickerItem",colors[Object.keys(colors)[a+4]],null,null);
                 obj.addEventListener("click",function(){client.setColor(this.id);settings.setColor(this.id)});;
                 obj.style="background:linear-gradient(153deg,"+colors[Object.keys(colors)[a]]+" 0%, "+colors[Object.keys(colors)[a+1]]+" 20%,"+colors[Object.keys(colors)[a+2]]+" 69%,"+colors[Object.keys(colors)[a+3]]+" 100%);";
                 obj.title=colors[Object.keys(colors)[a+4]];
@@ -183,7 +177,7 @@ function appSettings(){
                 localStorage.setItem("setupState", 2);
                 break;
             case "3":   
-                var setupAddress = document.getElementById("setupAddress").value;  
+                let setupAddress = document.getElementById("setupAddress").value;  
                 localStorage.setItem("setupAddress", setupAddress);
                 break;
         }
@@ -197,14 +191,14 @@ function appSettings(){
     this.clear = function(){
         localStorage.clear();
         localStorage.setItem("resetProcess", true);
-        slide(document.getElementById("home_7"),document.getElementById("home_0"));
+        setView(document.getElementById("home_7"),document.getElementById("home_0"),50);
     }
 }
 
 function appModel(){
     this.tryConnexion = function (url,callback,obj)
     {
-        var req = new XMLHttpRequest();
+        let req = new XMLHttpRequest();
         req.open('HEAD', url);
         req.onreadystatechange = function() {
             if (this.readyState==4){
@@ -238,13 +232,13 @@ function isP2P(){
     }
 }
 function sendConfiguration(obj){                     //On envoie l'objet conf en JSON
-    var inputTrg=document.getElementsByClassName("inputTrg");
-    var conf = {
+    let inputTrg=document.getElementsByClassName("inputTrg");
+    let conf = {
         "hostname":inputTrg[0].value,
         "ssid":inputTrg[1].value,
         "wpa":inputTrg[2].value
      }
-    var req = new XMLHttpRequest();
+    let req = new XMLHttpRequest();
     req.open("POST","/jsonreception");
     req.setRequestHeader("Content-Type","application/json");
     req.onreadystatechange = function() {
@@ -259,29 +253,29 @@ function sendConfiguration(obj){                     //On envoie l'objet conf en
     
 }
 function iniPage(){                 //Initialise les éléments et ajoute les events listeners
-    var tabItem=document.getElementsByClassName("tabItem");
-    for(var i=0;i<tabItem.length;i++){
+    let tabItem=document.getElementsByClassName("tabItem");
+    for(let i=0;i<tabItem.length;i++){
         tabItem[i].addEventListener("click",function(){client.setTab(this.id);});
     }
-    var btn=document.getElementsByClassName("slideViewBtn");
-    for(var i=0;i<btn.length;i++){
+    let btn=document.getElementsByClassName("slideViewBtn");
+    for(let i=0;i<btn.length;i++){
         btn[i].addEventListener("click",function(){slideViews(this);});
     }
-    var checkHost=document.getElementsByClassName("checkHost");
-    for(var i=0;i<checkHost.length;i++){
+    let checkHost=document.getElementsByClassName("checkHost");
+    for(let i=0;i<checkHost.length;i++){
         checkHost[i].addEventListener("click",function(){model.tryConnexion(window.location,hostReachable,this);});
     }
-    var checkConfig=document.getElementsByClassName("checkConfig");
-    for(var i=0;i<checkConfig.length;i++){
+    let checkConfig=document.getElementsByClassName("checkConfig");
+    for(let i=0;i<checkConfig.length;i++){
         checkConfig[i].addEventListener("click",function(){checkConfiguration(this)});
     }
     document.getElementById("inputsValidation").addEventListener("click",function(){inputsValidation(this) ? slideViews(this) : alert("La configuration est incomplète")});
-    var saveStep=document.getElementsByClassName("stepAction");
-    for(var i=0;i<saveStep.length;i++){
+    let saveStep=document.getElementsByClassName("stepAction");
+    for(let i=0;i<saveStep.length;i++){
         saveStep[i].addEventListener("click",function(){settings.saveProgress(this.id);});
     }
-    var views = document.getElementById("confView").children;
-    for (var i=0;i<views.length;i++){
+    let views = document.getElementById("confView").children;
+    for (let i=0;i<views.length;i++){
         hideView(views[i]);
     }
     client.setTab(client.activeTab);
@@ -292,9 +286,9 @@ function iniPage(){                 //Initialise les éléments et ajoute les ev
 }
 
 function inputsValidation(){                 //Assigne les inputs dans un récapitulatif, vérifie les champs
-    var inputSrc=document.getElementsByClassName("inputSrc");
-    var inputTrg=document.getElementsByClassName("inputTrg");
-    var error=[];
+    let inputSrc=document.getElementsByClassName("inputSrc");
+    let inputTrg=document.getElementsByClassName("inputTrg");
+    let error=[];
     for (var i=0;i<inputSrc.length;i++){        
         if (!inputSrc[i].value){
             error.push(inputSrc[i].name);
@@ -316,7 +310,7 @@ function setInterface(){                    //Détermine l'affichage de l'applic
     }
     else if (settings.setupState)
     {
-        var setupAddress = localStorage.getItem("setupAddress");
+        let setupAddress = localStorage.getItem("setupAddress");
         if (settings.setupState >= 1){
             showView(document.getElementById("home_7"));  
             document.getElementById("setupAddress").value=setupAddress;
@@ -330,8 +324,8 @@ function setInterface(){                    //Détermine l'affichage de l'applic
 }
 
 function slideViews(obj){                   //Réalise un fondu de transition entre les écrans de paramétrage
-    var view=obj.parentElement.id.split("_");
-    var ind = parseInt(view[1],10);
+    let view=obj.parentElement.id.split("_");
+    let ind = parseInt(view[1],10);
     if (obj.value=="next"){
         var target = document.getElementById(view[0]+"_"+(ind+1));
     }else if (obj.value=="previous"){
@@ -343,10 +337,10 @@ function slideViews(obj){                   //Réalise un fondu de transition en
         loadView();        
     }
     if (target){
-            slide(obj.parentElement,target);
+            setView(obj.parentElement,target,50);
     }
 }
-function slide(src,trg){
+function setView(src,trg,speed){
     src.style.maxHeight="100px"; 
     setTimeout(function() {
         src.style.opacity="0";                    
@@ -356,9 +350,9 @@ function slide(src,trg){
             setTimeout(function() {
                 trg.style.maxHeight="500px";
                 trg.style.opacity="1";                    
-            }, 250);      
-        }, 250);  
-    }, 150); 
+            }, 5*speed);      
+        }, 5*speed);  
+    }, 3*speed); 
 }
 function hideView(obj){
     obj.style.display="none";
@@ -375,7 +369,7 @@ function loadView(){
     client.addComponent("tabTarget","li","tabItem","carTab",null,"<a>"+settings.carName+"</a>").addEventListener("click",function(){client.setTab(this.id);});;
     client.addComponent("carTab","li","tabItem","statTab",null,"<a>Statistiques</a>").addEventListener("click",function(){client.setTab(this.id);});;
     client.setTab("carTab");
-    var carView = document.getElementById("carView");
+    let carView = document.getElementById("carView");
     carView.src="http://"+document.getElementById("setupAddress").value+"/deviceview.html"; //TODO change for actual url for the view
     carView.style.display="block";
 }
