@@ -168,18 +168,15 @@ function appSettings(){
     this.carName = localStorage.getItem("carName");
     this.setupState = localStorage.getItem("setupState");
     this.saveProgress= function(step){
+        localStorage.setItem("setupState", step);
         switch (step) {
             case "1":
-                localStorage.setItem("setupState", 1);
                 localStorage.removeItem("resetProcess");
                 localStorage.setItem("carName", document.getElementById("carName").value);
                 break;
-            case "2":
-                localStorage.setItem("setupState", 2);
-                break;
             case "3":
                 client.targetUrl = "http://"+document.getElementById("setupAddress").value+":8060";
-                localStorage.setItem("setupAddress", client.targetUrl);
+                localStorage.setItem("setupAddress", document.getElementById("setupAddress").value);
                 break;
         }
     }
@@ -225,7 +222,7 @@ function hostReachable(parameters){                 //If the code is 200=OK do t
         alert("Vous n'êtes pas connecté au réseau de votre DiPi");
     }
 }
-function isP2P(){
+function isP2P(){                   //If the client is used in p2p mode, direct connect to car possible
     if (parameters[0]){
         showView(document.getElementById("home_1"));
     }else{
@@ -306,6 +303,7 @@ function inputsValidation(){                 //Assigne les inputs dans un récap
     return error.length==0
 }
 function setInterface(){                    //Set the interface of the client and show the appropriate configuration state
+    console.log(settings.setupState);
     if (localStorage.getItem("resetProcess")){
         showView(document.getElementById("home_0"));
     }
