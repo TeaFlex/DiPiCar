@@ -103,7 +103,7 @@ function appNavigation(){
 }
 
 function appClient(){
-    this.address = window.location;
+    this.targetUrl = window.location;
     this.activeTab="confTab";
     this.color="Surf";
     this.focusIndex=null;
@@ -178,8 +178,8 @@ function appSettings(){
                 localStorage.setItem("setupState", 2);
                 break;
             case "3":
-                client.address = "http://"+document.getElementById("setupAddress").value+":8060";
-                localStorage.setItem("setupAddress", client.address);
+                client.targetUrl = "http://"+document.getElementById("setupAddress").value+":8060";
+                localStorage.setItem("setupAddress", client.targetUrl);
                 break;
         }
     }
@@ -200,7 +200,7 @@ function appModel(){
     this.tryConnexion = function (callback,obj)                 //Try to reach the target url of the settings object
     {
         let req = new XMLHttpRequest();
-        req.open('HEAD', client.address);
+        req.open('HEAD', client.targetUrl);
         req.onreadystatechange = function() {
             if (this.readyState==4){
                 parameters=[this.status,obj]
@@ -374,7 +374,7 @@ function loadView(){
         client.addComponent("carTab","li","tabItem","statTab",null,"<a>Statistiques</a>").addEventListener("click",function(){client.setTab(this.id);});;
         client.setTab("carTab");
         let carView = document.getElementById("carView");
-        carView.src="http://"+document.getElementById("setupAddress").value+"/deviceview.html"; //TODO change for actual url for the view
+        carView.src=client.targetUrl; //TODO change for actual url for the view
         carView.style.display="block";
 }
 
