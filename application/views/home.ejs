@@ -1,9 +1,8 @@
 <header>
-<ul id="maintab" class="uiTab">            
-    <img class="tabNavigation">
-    <li class="tabItem" tabindex="0" id="carTab"><a>carName</a></li>
-    <li class="tabItem" tabindex="1" id="confTab"><a>Configuration</a></li>
-    <li class="tabItem" tabindex="2" id="aboutTab"><a>A propos</a></li>
+<ul class="uiTab" id="maintab">            
+    <img class="tabNavigation" id="tabTarget">
+    <li class="tabItem" id="confTab"><a>Configuration</a></li>
+    <li class="tabItem" id="aboutTab"><a>A propos</a></li>
 </ul>
 </header>
 <div id="animatedBackground"><div></div><div></div><div></div></div>
@@ -11,6 +10,8 @@
 </iframe>
 <div class="slideView" id="confView">
     <div class="uiCard" id="settings">
+        <h1>Personnalisation</h1>
+        <h2>Couleurs</h2>
         <div class="uiThemePicker" id="themepicker">
             <span id="pickerTarget" class="pickerSelected"></span>
         </div>

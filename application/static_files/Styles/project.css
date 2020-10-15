@@ -1,8 +1,9 @@
 html{
-    height: 100vh;
+    height: auto;
     background: linear-gradient(153deg, var(--gradient-10) 0%, var(--gradient-30) 13%, var(--accent-soft) 69%, var(--gradient-80) 100%);
 }
 body{
+    min-height: 100vh;
     margin: 0;
     user-select: none;  
     -webkit-user-select: none;  
@@ -27,6 +28,9 @@ header{
     top: 0;
     margin: 0;
 }
+#tabTarget{
+    width: 5px;
+}
 #confView{
     display: none;
     opacity: 0;
@@ -38,6 +42,11 @@ header{
     display: none;
 }
 #settings{
+    display: block !important;
+    opacity: 1 !important;
+    max-height: min-content !important;
+}
+#testeView{
     display: block !important;
     opacity: 1 !important;
     max-height: min-content !important;

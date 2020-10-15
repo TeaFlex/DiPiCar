@@ -1,5 +1,5 @@
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js')
-    	.then((reg) => console.log('service worker registered', reg))
-    	.catch((err) => console.log('service worker error', err));
+    navigator.serviceWorker.register('dipiservice.js')
+    	.then((reg) => console.log('Service installation SUCCESS:', reg))
+    	.catch((err) => console.log('Service installation FAIL:', err));
   }
