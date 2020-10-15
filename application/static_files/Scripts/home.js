@@ -103,6 +103,7 @@ function appNavigation(){
 }
 
 function appClient(){
+    this.address = window.location;
     this.activeTab="confTab";
     this.color="Surf";
     this.focusIndex=null;
@@ -176,9 +177,9 @@ function appSettings(){
             case "2":
                 localStorage.setItem("setupState", 2);
                 break;
-            case "3":   
-                let setupAddress = document.getElementById("setupAddress").value;  
-                localStorage.setItem("setupAddress", setupAddress);
+            case "3":
+                client.address = "http://"+document.getElementById("setupAddress").value+":8060";
+                localStorage.setItem("setupAddress", client.address);
                 break;
         }
     }
@@ -196,10 +197,10 @@ function appSettings(){
 }
 
 function appModel(){
-    this.tryConnexion = function (url,callback,obj)
+    this.tryConnexion = function (callback,obj)                 //Try to reach the target url of the settings object
     {
         let req = new XMLHttpRequest();
-        req.open('HEAD', url);
+        req.open('HEAD', client.address);
         req.onreadystatechange = function() {
             if (this.readyState==4){
                 parameters=[this.status,obj]
@@ -210,14 +211,14 @@ function appModel(){
     }
 }
 
-function hostReachable(parameters){
-    if (parameters[0]){
+function hostReachable(parameters){                 //If the code is 200=OK do the action
+    if (parameters[0]==200){
         switch (parameters[1].id){
             case "1":
                 sendConfiguration(parameters[1]);
                 break;
             default:
-                slideViews(parameters[1]);
+                configurationState(parameters[1]);
                 break;
         }        
     }else{
@@ -244,7 +245,7 @@ function sendConfiguration(obj){                     //On envoie l'objet conf en
     req.onreadystatechange = function() {
         if (req.status==200){
             settings.saveProgress(obj.id);
-            slideViews(obj);
+            configurationState(obj);
         }else{
             alert("Une erreur inattendue est survenue");
         }
@@ -259,27 +260,27 @@ function iniPage(){                 //Initialise les éléments et ajoute les ev
     }
     let btn=document.getElementsByClassName("slideViewBtn");
     for(let i=0;i<btn.length;i++){
-        btn[i].addEventListener("click",function(){slideViews(this);});
+        btn[i].addEventListener("click",function(){configurationState(this);});
+    }
+    let saveStep=document.getElementsByClassName("stepAction");
+    for(let i=0;i<saveStep.length;i++){
+        saveStep[i].addEventListener("click",function(){settings.saveProgress(this.id);});
     }
     let checkHost=document.getElementsByClassName("checkHost");
     for(let i=0;i<checkHost.length;i++){
-        checkHost[i].addEventListener("click",function(){model.tryConnexion(window.location,hostReachable,this);});
+        checkHost[i].addEventListener("click",function(){model.tryConnexion(hostReachable,this);});
     }
     let checkConfig=document.getElementsByClassName("checkConfig");
     for(let i=0;i<checkConfig.length;i++){
         checkConfig[i].addEventListener("click",function(){checkConfiguration(this)});
     }
-    document.getElementById("inputsValidation").addEventListener("click",function(){inputsValidation(this) ? slideViews(this) : alert("La configuration est incomplète")});
-    let saveStep=document.getElementsByClassName("stepAction");
-    for(let i=0;i<saveStep.length;i++){
-        saveStep[i].addEventListener("click",function(){settings.saveProgress(this.id);});
-    }
+    document.getElementById("inputsValidation").addEventListener("click",function(){inputsValidation(this) ? configurationState(this) : alert("La configuration est incomplète")});
     let views = document.getElementById("confView").children;
     for (let i=0;i<views.length;i++){
         hideView(views[i]);
     }
     client.setTab(client.activeTab);
-    model.tryConnexion(window.location,isP2P);
+    model.tryConnexion(isP2P);
     client.setSettings();
     setTabIndex();
     showView(document.getElementById("confView"));
@@ -304,7 +305,7 @@ function inputsValidation(){                 //Assigne les inputs dans un récap
     }
     return error.length==0
 }
-function setInterface(){                    //Détermine l'affichage de l'application selon la situation
+function setInterface(){                    //Set the interface of the client and show the appropriate configuration state
     if (localStorage.getItem("resetProcess")){
         showView(document.getElementById("home_0"));
     }
@@ -312,6 +313,7 @@ function setInterface(){                    //Détermine l'affichage de l'applic
     {
         let setupAddress = localStorage.getItem("setupAddress");
         if (settings.setupState >= 1){
+            document.getElementById("confTab").innerHTML="Connexion";
             showView(document.getElementById("home_7"));  
             document.getElementById("setupAddress").value=setupAddress;
         }else{
@@ -323,18 +325,20 @@ function setInterface(){                    //Détermine l'affichage de l'applic
     }
 }
 
-function slideViews(obj){                   //Réalise un fondu de transition entre les écrans de paramétrage
+function configurationState(obj){                   //Set the configuration state depending different cases
     let view=obj.parentElement.id.split("_");
     let ind = parseInt(view[1],10);
     if (obj.value=="next"){
         var target = document.getElementById(view[0]+"_"+(ind+1));
     }else if (obj.value=="previous"){
         var target = document.getElementById(view[0]+"_"+(ind-1));
-    }else if (obj.value=="p2pMode"){
+    }else if ((obj.value=="p2pMode")||(obj.value=="bridge")){
+        document.getElementById("confTab").innerHTML="Connexion";
         var target = document.getElementById(view[0]+"_8");
     }
     else if (obj.value=="load"){
-        loadView(); 
+        loadView("connect");
+        document.getElementById("confTab").innerHTML="Paramètres";
         var target = document.getElementById(view[0]+"_9");       
     }
     if (target){
@@ -366,13 +370,12 @@ function showView(obj){
     obj.style.maxHeight="100%";
 }
 function loadView(){
-    document.getElementById("confTab").innerHTML="Paramètres";
-    client.addComponent("tabTarget","li","tabItem","carTab",null,"<a>"+settings.carName+"</a>").addEventListener("click",function(){client.setTab(this.id);});;
-    client.addComponent("carTab","li","tabItem","statTab",null,"<a>Statistiques</a>").addEventListener("click",function(){client.setTab(this.id);});;
-    client.setTab("carTab");
-    let carView = document.getElementById("carView");
-    carView.src="http://"+document.getElementById("setupAddress").value+"/deviceview.html"; //TODO change for actual url for the view
-    carView.style.display="block";
+        client.addComponent("tabTarget","li","tabItem","carTab",null,"<a>"+settings.carName+"</a>").addEventListener("click",function(){client.setTab(this.id);});;
+        client.addComponent("carTab","li","tabItem","statTab",null,"<a>Statistiques</a>").addEventListener("click",function(){client.setTab(this.id);});;
+        client.setTab("carTab");
+        let carView = document.getElementById("carView");
+        carView.src="http://"+document.getElementById("setupAddress").value+"/deviceview.html"; //TODO change for actual url for the view
+        carView.style.display="block";
 }
 
 function checkConfiguration(obj){                  //TODO Function that looks if the server is configured or not
@@ -381,5 +384,5 @@ function checkConfiguration(obj){                  //TODO Function that looks if
     }else{
         client.addComponent("localMode1","p",null,null,null,"Votre DiPi n'a pas encore été configurée pour le réseau local.");
     }
-    slideViews(obj);
+    configurationState(obj);
 }
