@@ -334,7 +334,8 @@ function slideViews(obj){                   //Réalise un fondu de transition en
         var target = document.getElementById(view[0]+"_8");
     }
     else if (obj.value=="load"){
-        loadView();        
+        loadView(); 
+        var target = document.getElementById(view[0]+"_9");       
     }
     if (target){
             setView(obj.parentElement,target,50);

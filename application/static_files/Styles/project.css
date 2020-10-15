@@ -41,11 +41,6 @@ header{
 #carTab{
     display: none;
 }
-#settings{
-    display: block !important;
-    opacity: 1 !important;
-    max-height: min-content !important;
-}
 #testeView{
     display: block !important;
     opacity: 1 !important;

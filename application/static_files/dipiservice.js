@@ -1,23 +1,20 @@
-const precacheVersion = 0.9;
+const precacheVersion = 0.10;
 const precacheName = 'dipilink-' + precacheVersion;
 const precacheFiles = ['/','manifest.json','/Styles/stencil.css','/Styles/project.css','/Scripts/home.js','/Scripts/inputs.js'];
 
 self.addEventListener('install', (e) => {
-  console.log('[ServiceWorker] Installed');
-
+  console.log('[DiPi Service] Installed');
   self.skipWaiting();
-
   e.waitUntil(
     caches.open(precacheName).then((cache) => {
-      console.log('[ServiceWorker] Precaching files');
+      console.log('[DiPi Service] Adding files to the cache');
       return cache.addAll(precacheFiles);
     })
   );
 });
 
 self.addEventListener('activate', (e) => {
-  console.log('[ServiceWorker] Activated');
-
+  console.log('[DiPi Service] Activated');
   e.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(cacheNames.map((thisCacheName) => {
@@ -30,12 +27,10 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  console.log('[ServiceWorker] Fetch event for ', e.request.url);
-
+  console.log('[DiPi Service] Fetch ', e.request.url);
   e.respondWith(
       caches.match(e.request).then((cachedResponse) => {
           if (cachedResponse){
-              console.log('found');
               return cachedResponse;
           }
           return fetch(e.request)
