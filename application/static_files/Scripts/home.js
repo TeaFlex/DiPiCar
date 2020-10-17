@@ -206,49 +206,47 @@ function appModel(){
         };
         req.send();
     }
-}
-
-function hostReachable(parameters){                 //If the code is 200=OK do the action
-    if (parameters[0]==200){
-        switch (parameters[1].id){
-            case "1":
-                sendConfiguration(parameters[1]);
-                break;
-            default:
-                configurationState(parameters[1]);
-                break;
-        }        
-    }else{
-        alert("Vous n'êtes pas connecté au réseau de votre DiPi");
-    }
-}
-function isP2P(){                   //If the client is used in p2p mode, direct connect to car possible
-    if (parameters[0]){
-        showView(document.getElementById("home_1"));
-    }else{
-        setInterface();
-    }
-}
-function sendConfiguration(obj){                     //On envoie l'objet conf en JSON
-    let inputTrg=document.getElementsByClassName("inputTrg");
-    let conf = {
-        "hostname":inputTrg[0].value,
-        "ssid":inputTrg[1].value,
-        "wpa":inputTrg[2].value
-     }
-    let req = new XMLHttpRequest();
-    req.open("POST","/jsonreception");
-    req.setRequestHeader("Content-Type","application/json");
-    req.onreadystatechange = function() {
-        if (req.status==200){
-            settings.saveProgress(obj.id);
-            configurationState(obj);
-        }else{
-            alert("Une erreur inattendue est survenue");
+    this.sendConfiguration = function(obj){                     //On envoie l'objet conf en JSON
+        let inputTrg=document.getElementsByClassName("inputTrg");
+        let conf = {
+            "hostname":inputTrg[0].value,
+            "ssid":inputTrg[1].value,
+            "wpa":inputTrg[2].value
         }
-    };
-    req.send(JSON.stringify(conf));
-    
+        let req = new XMLHttpRequest();
+        req.open("POST","/jsonreception");
+        req.setRequestHeader("Content-Type","application/json");
+        req.onreadystatechange = function() {
+            if (req.status==200){
+                settings.saveProgress(obj.id);
+                configurationState(obj);
+            }else{
+                alert("Une erreur inattendue est survenue");
+            }
+        };
+        req.send(JSON.stringify(conf));
+    }
+    this.hostReachable = function(parameters){
+        if (parameters[0]==200){
+            switch (parameters[1].id){
+                case "1":
+                    this.sendConfiguration(parameters[1]);
+                    break;
+                default:
+                    configurationState(parameters[1]);
+                    break;
+            }        
+        }else{
+            alert("Vous n'êtes pas connecté au réseau de votre DiPi");
+        }
+    }
+    this.isP2P = function (){                   //If the client is used in p2p mode, direct connect to car possible
+        if (parameters[0]){
+            showView(document.getElementById("home_1"));
+        }else{
+            setInterface();
+        }
+    }
 }
 function iniPage(){                 //Initialise les éléments et ajoute les events listeners
     let tabItem=document.getElementsByClassName("tabItem");
@@ -265,7 +263,7 @@ function iniPage(){                 //Initialise les éléments et ajoute les ev
     }
     let checkHost=document.getElementsByClassName("checkHost");
     for(let i=0;i<checkHost.length;i++){
-        checkHost[i].addEventListener("click",function(){model.tryConnexion(hostReachable,this);});
+        checkHost[i].addEventListener("click",function(){model.tryConnexion(model.hostReachable,this);});
     }
     let checkConfig=document.getElementsByClassName("checkConfig");
     for(let i=0;i<checkConfig.length;i++){
@@ -277,7 +275,7 @@ function iniPage(){                 //Initialise les éléments et ajoute les ev
         hideView(views[i]);
     }
     client.setTab(client.activeTab);
-    model.tryConnexion(isP2P);
+    model.tryConnexion(model.isP2P);
     client.setSettings();
     setTabIndex();
     showView(document.getElementById("confView"));
