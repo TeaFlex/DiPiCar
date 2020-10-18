@@ -29,9 +29,10 @@ function setTabIndex(){
         }
     }
 }
+
 document.onkeydown = keyPressed;
 function keyPressed(e) {
-    if([37,38,39,40].includes(e.keyCode)){
+    if([13,37,38,39,40].includes(e.keyCode)){
         if (e.keyCode=='38'){
             navigation.Up(document.activeElement);
         }
@@ -44,10 +45,21 @@ function keyPressed(e) {
         else if (e.keyCode=='39'){
             navigation.Right(document.activeElement);
         }
+        else if (e.keyCode=='13'){
+            navigation.clickPress(document.activeElement);
+        }
     }
 }
 
 function appNavigation(){
+    this.clickPress = function (elem) {
+        var evt = new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            view: window
+        });
+        var canceled = !elem.dispatchEvent(evt);
+    };
     this.Up = function(src){
         var trg;
         if (src.previousElementSibling){

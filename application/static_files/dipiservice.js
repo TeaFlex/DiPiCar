@@ -1,4 +1,4 @@
-const precacheVersion = 0.12;
+const precacheVersion = 0.13;
 const precacheName = 'dipilink-' + precacheVersion;
 const precacheFiles = ['/','manifest.json','/Styles/stencil.css','/Styles/project.css','/Scripts/home.js','/Scripts/inputs.js'];
 
