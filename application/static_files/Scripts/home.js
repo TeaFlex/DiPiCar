@@ -1,6 +1,6 @@
 client = new appClient();
 settings = new appSettings();
-model = new appModel();
+bridge = new deviceBridge();
 navigation = new appNavigation();
 
 colors = {
@@ -115,7 +115,7 @@ function appNavigation(){
 }
 
 function appClient(){
-    this.targetUrl = window.location;
+    this.targetUrl = "http://dipi.car:8060";
     this.activeTab="confTab";
     this.color="Surf";
     this.focusIndex=null;
@@ -205,7 +205,7 @@ function appSettings(){
     }
 }
 
-function appModel(){
+function deviceBridge(){
     this.tryConnexion = function (callback,obj)                 //Try to reach the target url of the settings object
     {
         let req = new XMLHttpRequest();
@@ -256,6 +256,13 @@ function appModel(){
         if (parameters[0]){
             showView(document.getElementById("home_1"));
         }else{
+            bridge.tryConnexion(bridge.isIpConnected);
+        }
+    }
+    this.isIpConnected = function (){
+        if (String(window.location).includes("192.168.")){
+            showView(document.getElementById("home_8"));                //If the client is connected through the IP address   
+        }else{
             setInterface();
         }
     }
@@ -275,7 +282,7 @@ function iniPage(){                 //Initialise les éléments et ajoute les ev
     }
     let checkHost=document.getElementsByClassName("checkHost");
     for(let i=0;i<checkHost.length;i++){
-        checkHost[i].addEventListener("click",function(){model.tryConnexion(model.hostReachable,this);});
+        checkHost[i].addEventListener("click",function(){bridge.tryConnexion(bridge.hostReachable,this);});
     }
     let checkConfig=document.getElementsByClassName("checkConfig");
     for(let i=0;i<checkConfig.length;i++){
@@ -287,7 +294,7 @@ function iniPage(){                 //Initialise les éléments et ajoute les ev
         hideView(views[i]);
     }
     client.setTab(client.activeTab);
-    model.tryConnexion(model.isP2P);
+    bridge.tryConnexion(bridge.isP2P);
     client.setSettings();
     setTabIndex();
     showView(document.getElementById("confView"));

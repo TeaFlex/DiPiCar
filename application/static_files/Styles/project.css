@@ -10,12 +10,10 @@ body{
     -webkit-touch-callout:none; 
     background: transparent; 
 }
-body>*:not(header){
-    padding-top: 50px;
-}
 header{
+    padding-top: env(safe-area-inset-top);
     top: 0;
-    position: fixed;
+    position: sticky;
     width: 100%;
     height: 50px;
     z-index: 900;
@@ -25,7 +23,7 @@ header{
 }
 .uiTab{
     left: 0;
-    top: 0;
+    bottom: 5px;
     margin: 0;
 }
 #tabTarget{
