@@ -293,6 +293,24 @@ function iniPage(){                 //Initialise les éléments et ajoute les ev
     for (let i=0;i<views.length;i++){
         hideView(views[i]);
     }
+    for (let i=0;i<30;i++){
+        let random=i*4;
+        let random2=Math.floor(Math.random() * 20);
+        let length = Math.abs(50-random);
+        let obj=client.addComponent("backgroundTarget","div",null,null,null,null);
+        obj.style.width=obj.style.height="20px";
+        if (length>3){
+            obj.style.animation="animate "+length+"s linear infinite";
+        }else{
+            obj.style.animation="animate 8s linear infinite";
+        }
+        obj.style.setProperty('--translate-x',50-random+"px");
+        obj.style.setProperty('--translate-y',2*((Math.random() * 11)-5)+"px");
+        obj.style.left=random+"%";
+        obj.style.opacity=random2%100;
+        obj.style.bottom=1.5*i+(random2+Math.sin(random/10)*3)+"%";        
+        obj.style.filter="blur("+length/10+"px)";
+    }
     client.setTab(client.activeTab);
     bridge.tryConnexion(bridge.isP2P);
     client.setSettings();
