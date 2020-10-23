@@ -2,6 +2,8 @@ client = new appClient();
 settings = new appSettings();
 bridge = new deviceBridge();
 navigation = new appNavigation();
+const DEV = true;
+
 
 colors = {
     "Mint1":"#AEF0D050","Mint2":"#4FE59BAA","Mint3":"#27C18F7F","Mint4":"#0EA272","Mint5":"Mint",
@@ -15,7 +17,7 @@ colors = {
 function setTabIndex(){
     switch (client.activeTab){
         case "confTab":
-            focusableElements=["maintab","themepicker"];
+            focusableElements=["maintab","focusableElements","themepicker"];
             break;
         default:
             focusableElements=["maintab"];
@@ -229,7 +231,7 @@ function deviceBridge(){
         req.open("POST","/jsonreception");
         req.setRequestHeader("Content-Type","application/json");
         req.onreadystatechange = function() {
-            if (req.status==200){
+            if (req.status==200 || DEV==true){
                 settings.saveProgress(obj.id);
                 configurationState(obj);
             }else{
@@ -239,7 +241,7 @@ function deviceBridge(){
         req.send(JSON.stringify(conf));
     }
     this.hostReachable = function(parameters){
-        if (parameters[0]==200){
+        if (parameters[0]==200 || DEV==true){
             switch (parameters[1].id){
                 case "1":
                     this.sendConfiguration(parameters[1]);
