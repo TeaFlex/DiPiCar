@@ -239,10 +239,11 @@ function deviceBridge(){
         req.send(JSON.stringify(conf));
     }
     this.hostReachable = function(parameters){
+        console.log(this);
         if (parameters[0]==200){
             switch (parameters[1].id){
-                case "1":
-                    this.sendConfiguration(parameters[1]);
+                case "1":             
+                    new deviceBridge().sendConfiguration(parameters[1]);
                     break;
                 default:
                     configurationState(parameters[1]);
