@@ -15,7 +15,7 @@ colors = {
 function setTabIndex(){
     switch (client.activeTab){
         case "confTab":
-            focusableElements=["maintab","themepicker"];
+            focusableElements=["maintab","focusableElements","themepicker"];
             break;
         default:
             focusableElements=["maintab"];
@@ -115,7 +115,7 @@ function appNavigation(){
 }
 
 function appClient(){
-    this.targetUrl = "http://dipi.car:8060";
+    this.targetUrl = "https://dipi.car:8060";
     this.activeTab="confTab";
     this.color="Surf";
     this.focusIndex=null;
@@ -187,7 +187,7 @@ function appSettings(){
                 localStorage.setItem("carName", document.getElementById("carName").value);
                 break;
             case "3":
-                client.targetUrl = "http://"+document.getElementById("setupAddress").value+":8060";
+                client.targetUrl = "https://"+document.getElementById("setupAddress").value+":8060";
                 localStorage.setItem("setupAddress", document.getElementById("setupAddress").value);
                 break;
         }
