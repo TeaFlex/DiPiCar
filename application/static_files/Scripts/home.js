@@ -2,8 +2,6 @@ client = new appClient();
 settings = new appSettings();
 bridge = new deviceBridge();
 navigation = new appNavigation();
-const DEV = true;
-
 
 colors = {
     "Mint1":"#AEF0D050","Mint2":"#4FE59BAA","Mint3":"#27C18F7F","Mint4":"#0EA272","Mint5":"Mint",
@@ -117,7 +115,7 @@ function appNavigation(){
 }
 
 function appClient(){
-    this.targetUrl = "http://dipi.car:8060";
+    this.targetUrl = "https://dipi.car:8060";
     this.activeTab="confTab";
     this.color="Surf";
     this.focusIndex=null;
@@ -189,7 +187,7 @@ function appSettings(){
                 localStorage.setItem("carName", document.getElementById("carName").value);
                 break;
             case "3":
-                client.targetUrl = "http://"+document.getElementById("setupAddress").value+":8060";
+                client.targetUrl = "https://"+document.getElementById("setupAddress").value+":8060";
                 localStorage.setItem("setupAddress", document.getElementById("setupAddress").value);
                 break;
         }
@@ -231,7 +229,7 @@ function deviceBridge(){
         req.open("POST","/jsonreception");
         req.setRequestHeader("Content-Type","application/json");
         req.onreadystatechange = function() {
-            if (req.status==200 || DEV==true){
+            if (req.status==200){
                 settings.saveProgress(obj.id);
                 configurationState(obj);
             }else{
@@ -241,7 +239,7 @@ function deviceBridge(){
         req.send(JSON.stringify(conf));
     }
     this.hostReachable = function(parameters){
-        if (parameters[0]==200 || DEV==true){
+        if (parameters[0]==200){
             switch (parameters[1].id){
                 case "1":
                     this.sendConfiguration(parameters[1]);
