@@ -1,1 +1,0 @@
-These files need to be located somewhere else on the computer. They're not final keys and cert anyways.
