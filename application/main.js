@@ -1,7 +1,5 @@
 const express = require('express');
-const path = require('path');
 const bodyparser = require('body-parser');
-const form_control = require('./controller/form_control');
 const app = express();
 const port = 8060;
 
@@ -11,18 +9,32 @@ app.use(express.static('static_files'));
 
 //root
 app.get('/', (req, res)=>{
-    res.render("template", { page:"home" });
+    res.header('Access-Control-Allow-Origin', '*');
+    res.render("template", {page:"home"});
 });
-
-//json reception handler
-app.post('/jsonreception', bodyparser.json(), (req, res) => {
-    if(req.body == null) res.sendStatus(404);
+app.post('/config', bodyparser.json(), (req, res)=>{
+    res.header('Access-Control-Allow-Origin', '*');
+    if(req.body == null) res.status(500).send({error:'Incomplete configuration'});
     else{
         var infos = req.body;
         console.log(`Hostname: ${infos['hostname']}\nSSID: ${infos['ssid']}\nPassword: ${infos['wpa']}`);
-        console.log(form_control.isValidName(infos['hostname']));
-        res.status(200).send('OK');
+        res.status(200);
     }
+});
+app.get('/user', (req, res)=>{
+    res.header('Access-Control-Allow-Origin', '*');
+    console.log(`get stats from user${req.query.id}`);
+    res.status(200);//.sendFile(STATS FROM THIS USER IN JSON);
+});
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+
+    app.options('*', (req, res) => {
+        res.header('Access-Control-Allow-Methods', 'GET, PATCH, PUT, POST, DELETE, OPTIONS');
+        res.send();
+    });
 });
 
 app.listen(port, () => {
