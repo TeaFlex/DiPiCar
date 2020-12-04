@@ -18,7 +18,7 @@ app.post('/config', bodyparser.json(), (req, res)=>{
     else{
         var infos = req.body;
         console.log(`Hostname: ${infos['hostname']}\nSSID: ${infos['ssid']}\nPassword: ${infos['wpa']}`);
-        res.status(200);
+        res.status(200).send();
     }
 });
 app.get('/user', (req, res)=>{
