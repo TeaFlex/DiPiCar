@@ -23,8 +23,12 @@ app.post('/config', bodyparser.json(), (req, res)=>{
         res.status(200).send();
     }
 });
-
-app.get('/user', (req, res)=>{
+app.get('/users',(req,res)=>{
+    res.header('Access-Control-Allow-Origin', '*');
+    console.log('Should return users list to client');
+    res.status(200).json([{id:123,name:'Jean'}]);
+});
+app.get('/stats', (req, res)=>{
     res.header('Access-Control-Allow-Origin', '*');
     console.log(`get stats from user${req.query.id}`);
     res.status(200);//.sendFile(STATS FROM THIS USER IN JSON);
