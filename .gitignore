@@ -2,3 +2,4 @@ node_modules
 /scripts/packages/DigiCar/usr
 *.deb
 __pycache__
+dist

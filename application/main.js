@@ -1,8 +1,13 @@
 const express = require('express');
 const bodyparser = require('body-parser');
 const app = express();
-const pistreamer = require('pistreamer');
-const stream = pistreamer.createServer(app);
+const server = require('http').createServer(app);
+const PiStream = require('pistreamer').PiStream;
+const Ws = require('ws').Server;
+const ws_server = new Ws({server});
+const stream = new PiStream(ws_server);
+const {GPIO_control} = require('./core/gpio_control');
+const control = new GPIO_control(ws_server);
 const port = 8060;
 
 //Settings and static files
@@ -45,7 +50,8 @@ app.use((req, res, next) => {
     });
 });
 
-stream.listen(port, () => {
-    pistreamer.createClient('./static_files/Scripts');
+
+server.listen(port, () => {
+    //require('pistreamer').createClient('./static_files/Scripts');
     console.log(`The app is running and listening to the port ${port}.`);
 });
