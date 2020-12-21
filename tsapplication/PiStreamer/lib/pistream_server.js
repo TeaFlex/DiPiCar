@@ -24,9 +24,9 @@ class PiStream_server {
         //options of stream and default values if there no option input
         this.options = merge({}, options);
         this.default_values = {
-            height: 240,
-            width: 480,
-            fps: 12
+            height: 280,
+            width: 560,
+            fps: 60
         };
 
         Object.keys(this.default_values).forEach(key => {
