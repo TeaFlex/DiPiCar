@@ -9,7 +9,7 @@ const app = express();
 const server = createServer(app);
 const ws_server = new Server({server});
 const ws_control = new Ws_control(ws_server);
-const stream = new PiStream(ws_server);
+const stream = new PiStream(ws_server, {heigth: 280, width: 560, fps: 60});
 const port = 8060;
 
 //Settings and static files
