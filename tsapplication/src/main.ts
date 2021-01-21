@@ -1,8 +1,9 @@
 import express from 'express';
-import {Ws_control} from './core/application/ws_control';
+import {Ws_control} from './model/websocket/ws_control';
 import bodyparser from 'body-parser';
 import {createServer} from 'http';
 import {Server} from 'ws';
+import {AppDB} from './model/database/AppDB';
 const PiStream = require('pistreamer').PiStream;
 
 const app = express();
@@ -11,6 +12,7 @@ const ws_server = new Server({server});
 const ws_control = new Ws_control(ws_server);
 const stream = new PiStream(ws_server, {heigth: 280, width: 560, fps: 30, limit: 1});
 const port = 8060;
+const db = new AppDB('./test.db');
 
 //Settings and static files
 app.use(express.static('static_files'));

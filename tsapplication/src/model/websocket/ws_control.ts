@@ -1,5 +1,5 @@
 import {Server} from 'ws';
-import {GPIO_control} from '../domain/gpio_control';
+import {GPIO_control} from '../gpio/gpio_control';
 
 export class Ws_control {
 
