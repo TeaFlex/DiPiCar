@@ -1,6 +1,6 @@
 export interface UserStats {
     id: number;
     gameTime: number;
-    firstConnection: Date;
+    firstConnection?: Date;
     lastConnection: Date;
 }

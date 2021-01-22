@@ -26,7 +26,7 @@ export class UserDAO extends BaseDAO{
     getAllUsers(): Promise<Array<User>> {
         return new Promise((resolve, reject) => {
             var res = new Array<User>();
-            this.db.all(`SELECT id, name FROM ${this.tableName};`, (error, rows) => {
+            this.db.all(`SELECT userID, name FROM ${this.tableName};`, (error, rows) => {
                 if(error)
                     throw new Error(error.message);
                 rows.forEach((row) => {
@@ -39,9 +39,9 @@ export class UserDAO extends BaseDAO{
 
     createTable(): void{
         super.initTable({
-            id: ["integer"],
+            userID: ["integer"],
             name: ["text", "not null", "unique"],
-            pk: ["id"] 
+            pk: ["userID"] 
         });
     }
 }

@@ -36,14 +36,15 @@ export abstract class BaseDAO {
                 switch (column.toLowerCase()) {
                     case "pk":
                         for(let option in current)
-                            options += ` ${current[option]}`;
-                        content += ` PRIMARY KEY (${options})`;
+                            options += ` ${current[option]},`;
+                        options = options.slice(0, -1);
+                        content += ` PRIMARY KEY(${options})`;
                         break;
                     case "fk":
                         var sliced = current.slice(3);
                         for(let option in sliced) 
-                            options += ` ${sliced[option].toUpperCase()}`;
-                        content += ` FOREIGN KEY (${current[0]}) REFERENCES ${current[1]} (${current[2]}) ${options}`;
+                            options += `${sliced[option].toUpperCase()}`;
+                        content += ` FOREIGN KEY(${current[0]}) REFERENCES ${current[1]}(${current[2]}) ${options}`;
                         break
                     default:
                         content += column;
@@ -63,5 +64,6 @@ export abstract class BaseDAO {
                 console.log(`Table "${this.tableName}" created.`);
             });
         }
+        this.db.run("PRAGMA foreign_keys = ON;");
     }
 }

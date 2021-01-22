@@ -18,12 +18,12 @@ const db = new AppDB();
 app.use(express.static('static_files'));
 
 //root
-app.get('/', (req: any, res: any)=>{
+app.get('/', (req, res)=>{
     res.header('Access-Control-Allow-Origin', '*');
     res.send("Connected !");
 });
 
-app.post('/config', bodyparser.json(), (req: any, res: any)=>{
+app.post('/config', bodyparser.json(), (req, res)=>{
     res.header('Access-Control-Allow-Origin', '*');
     if(req.body == null) res.status(500).send({error:'Incomplete configuration'});
     else{
@@ -32,25 +32,24 @@ app.post('/config', bodyparser.json(), (req: any, res: any)=>{
         res.status(200).send();
     }
 });
-app.get('/users',(req: any ,res: any)=>{
+app.get('/users',(req, res)=>{
     res.header('Access-Control-Allow-Origin', '*');
     db.userDAO.getAllUsers().then((value) => {
         res.status(200).json(value);
     });
 });
-app.get('/stats', (req: any, res: any)=>{
+app.get('/stats', bodyparser.json(), (req, res)=>{
     res.header('Access-Control-Allow-Origin', '*');
-    console.log(`get stats from user${req.query.id}`);
     res.status(200);
     //TODO: send stats of user.
 });
 
-app.use((req: any, res: any, next: any) => {
+app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 
-    app.options('*', (req: any, res: any) => {
+    app.options('*', (req, res) => {
         res.header('Access-Control-Allow-Methods', 'GET, PATCH, PUT, POST, DELETE, OPTIONS');
         res.send();
     });
