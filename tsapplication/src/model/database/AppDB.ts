@@ -3,11 +3,12 @@ import {UserDAO} from './DAOs/UserDAO';
 
 export class AppDB {
 
+    private dbPath: string = './data/dbapp.db';
     private db: sqlite3.Database;
     public  userDAO: UserDAO;
 
-    constructor(dbPath: string) { 
-        this.db = new sqlite3.Database(dbPath, error => {
+    constructor() { 
+        this.db = new sqlite3.Database(this.dbPath, error => {
             if(error) 
                 throw new Error(`Connection impossible: ${error.message}`);
             console.log("Connection to database successful.");
@@ -16,11 +17,19 @@ export class AppDB {
         this.userDAO = new UserDAO(this.db);
     }
 
-    closeDB() {
+    closeDB(): void {
         this.db.close(error => {
             if(error) 
                 throw new Error(error.message);
             console.log("Database closed.");
         });
     } 
+
+    setPath(path: string): void {
+        this.dbPath = path;
+    }
+
+    getPath(): string {
+        return this.dbPath;
+    }
 }

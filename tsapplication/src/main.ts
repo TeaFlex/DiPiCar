@@ -12,7 +12,7 @@ const ws_server = new Server({server});
 const ws_control = new Ws_control(ws_server);
 const stream = new PiStream(ws_server, {heigth: 280, width: 560, fps: 30, limit: 1});
 const port = 8060;
-const db = new AppDB('./test.db');
+const db = new AppDB();
 
 //Settings and static files
 app.use(express.static('static_files'));
@@ -34,13 +34,15 @@ app.post('/config', bodyparser.json(), (req: any, res: any)=>{
 });
 app.get('/users',(req: any ,res: any)=>{
     res.header('Access-Control-Allow-Origin', '*');
-    console.log('Should return users list to client');
-    res.status(200).json([{id:123,name:'Jean'}]);
+    db.userDAO.getAllUsers().then((value) => {
+        res.status(200).json(value);
+    });
 });
 app.get('/stats', (req: any, res: any)=>{
     res.header('Access-Control-Allow-Origin', '*');
     console.log(`get stats from user${req.query.id}`);
-    res.status(200);//.sendFile(STATS FROM THIS USER IN JSON);
+    res.status(200);
+    //TODO: send stats of user.
 });
 
 app.use((req: any, res: any, next: any) => {

@@ -19,7 +19,11 @@ export abstract class BaseDAO {
             cols += `${key} ${tableColumns[key]},`
         }
         cols = cols.slice(0, -1);
-        this.db.run(`CREATE TABLE IF NOT EXISTS ${this.tableName}(${cols});`);
-        console.log(`Table "${this.tableName}" initialized.`);
+        this.db.run(`CREATE TABLE IF NOT EXISTS ${this.tableName}(${cols});`, 
+        (error) => {
+            if(error)
+                throw new Error(error.message);
+            console.log(`Table "${this.tableName}" initialized.`);
+        });
     }
 }

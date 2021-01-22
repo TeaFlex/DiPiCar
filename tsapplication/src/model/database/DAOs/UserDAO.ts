@@ -2,6 +2,7 @@ import {Database} from 'sqlite3';
 import sqlite3 from 'sqlite3';
 import {BaseDAO} from './BaseDAO';
 import {User} from '../Entities/User';
+import { resolveModuleName } from 'typescript';
 
 export class UserDAO extends BaseDAO{
 
@@ -10,23 +11,38 @@ export class UserDAO extends BaseDAO{
     }
 
     saveUser(user: User) {
-        //this.db.run(`INSERT INTO ${this.tableName} ()`)
+        this.db.run(`INSERT INTO ${this.tableName} (name) VALUES (?);`, [user.name], 
+        (error) => {
+            if(error)
+                throw new Error(error.message);
+            console.log(`User "${user.name}" created.`);
+        });
     }
 
     getUserById(dbId: number): User{
         return {id: dbId, 
-            firstname:"test",
-            lastname: "test",
-            password: "test"
+            name:"test"
         }
+    }
+
+    getAllUsers(): Promise<Array<User>> {
+        return new Promise((resolve, reject) => {
+            var res = new Array<User>();
+            this.db.all(`SELECT id, name FROM ${this.tableName};`, (error, rows) => {
+                if(error)
+                    throw new Error(error.message);
+                rows.forEach((row) => {
+                    res.push({id: row.id, name: row.name});
+                });
+                resolve(res);
+            });
+        });
     }
 
     createTable(): void{
         super.initTable({
             id: "integer PRIMARY KEY",
-            fisrtname: "text NOT NULL",
-            lastname: "text NOT NULL",
-            password: "text NOT NULL"
+            name: "text NOT NULL"        
         });
     }
 }
