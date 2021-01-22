@@ -1,8 +1,6 @@
-import {Database} from 'sqlite3';
 import sqlite3 from 'sqlite3';
 import {BaseDAO} from './BaseDAO';
 import {User} from '../Entities/User';
-import { resolveModuleName } from 'typescript';
 
 export class UserDAO extends BaseDAO{
 
@@ -41,8 +39,9 @@ export class UserDAO extends BaseDAO{
 
     createTable(): void{
         super.initTable({
-            id: "integer PRIMARY KEY",
-            name: "text NOT NULL"        
+            id: ["integer"],
+            name: ["text", "not null", "unique"],
+            pk: ["id"] 
         });
     }
 }

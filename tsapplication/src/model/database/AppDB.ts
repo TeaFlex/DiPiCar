@@ -1,11 +1,13 @@
 import sqlite3 from 'sqlite3';
 import {UserDAO} from './DAOs/UserDAO';
+import {UserStatsDAO} from './DAOs/UserStatsDAO';
 
 export class AppDB {
 
     private dbPath: string = './data/dbapp.db';
     private db: sqlite3.Database;
     public  userDAO: UserDAO;
+    public  userStatsDAO: UserStatsDAO;
 
     constructor() { 
         this.db = new sqlite3.Database(this.dbPath, error => {
@@ -15,6 +17,7 @@ export class AppDB {
         });
         //DAOs
         this.userDAO = new UserDAO(this.db);
+        this.userStatsDAO = new UserStatsDAO(this.db);
     }
 
     closeDB(): void {
