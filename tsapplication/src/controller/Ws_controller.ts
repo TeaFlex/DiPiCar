@@ -1,12 +1,16 @@
 import {Server} from 'ws';
-import {GPIO_control} from '../gpio/gpio_control';
+import {GPIO_control} from '../model/gpio/Gpio_control';
+const PiStream = require("pistreamer").PiStream;
 
-export class Ws_control {
+export class Ws_controller {
 
-    ws_server: any;
+    private ws_server: Server;
+    private pistream: any;
 
     constructor(ws_server: Server) {
         this.ws_server = ws_server;
+        this.pistream = new PiStream(this.ws_server, {heigth: 280, width: 560, fps: 30, limit: 1});
+
         this.ws_server.on("connection", this.new_client);
     }
 
