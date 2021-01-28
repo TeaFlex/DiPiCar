@@ -30,12 +30,31 @@ export class Route_controller{
                 res.status(200).send();
             }
         });
+
         this.app.get('/users',(req, res)=>{
             res.header('Access-Control-Allow-Origin', '*');
-            this.db.userDAO.getAllUsers().then((value) => {
+            this.db.userDAO.getAllUsers()
+            .then((value) => {
                 res.status(200).json(value);
+            })
+            .catch((reason) => {
+                console.log(reason);
+                res.status(500).send();
             });
         });
+
+        this.app.post('/users', bodyparser.json(), (req, res) => {
+            console.log(req.body);
+            this.db.userDAO.saveUser({name: req.body["name"]})
+            .then(() => {
+                res.status(200);
+            })
+            .catch((reason) => {
+                console.log(reason);
+                res.status(500).send();
+            });
+        });
+
         this.app.get('/stats', bodyparser.json(), (req, res)=>{
             res.header('Access-Control-Allow-Origin', '*');
             res.status(200);
@@ -52,9 +71,5 @@ export class Route_controller{
                 res.send();
             });
         });
-    }
-
-    public getExpressApp(): Express {
-        return this.app;
     }
 }

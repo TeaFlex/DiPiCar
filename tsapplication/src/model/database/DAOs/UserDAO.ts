@@ -8,19 +8,22 @@ export class UserDAO extends BaseDAO{
         super(db, "User");
     }
 
-    saveUser(user: User) {
-        this.db.run(`INSERT INTO ${this.tableName} (name) VALUES (?);`, [user.name], 
-        (error) => {
-            if(error)
-                throw new Error(error.message);
-            console.log(`User "${user.name}" created.`);
-        });
+    saveUser(user: User): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.db.run(`INSERT INTO ${this.tableName} (name) VALUES (?);`, [user.name], 
+            (error) => {
+                if(error)
+                    reject(error.message);
+                console.log(`User "${user.name}" created.`);
+                resolve();
+            });
+        })
     }
 
-    getUserById(dbId: number): User{
-        return {id: dbId, 
-            name:"test"
-        }
+    getUserById(dbId: number): Promise<User>{
+        return new Promise((resolve, reject) => {
+            
+        });
     }
 
     getAllUsers(): Promise<Array<User>> {
@@ -28,7 +31,7 @@ export class UserDAO extends BaseDAO{
             var res = new Array<User>();
             this.db.all(`SELECT userID, name FROM ${this.tableName};`, (error, rows) => {
                 if(error)
-                    throw new Error(error.message);
+                    reject(error.message);
                 rows.forEach((row) => {
                     res.push({id: row.id, name: row.name});
                 });
