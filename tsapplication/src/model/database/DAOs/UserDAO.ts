@@ -9,42 +9,26 @@ export class UserDAO extends BaseDAO{
     }
 
     saveUser(user: User): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.db.run(`INSERT INTO ${this.tableName} (name) VALUES (?);`, [user.name], 
-            (error) => {
-                if(error)
-                    reject(error.message);
-                console.log(`User "${user.name}" created.`);
-                resolve();
-            });
-        })
+        return this.saveEntry<User>(user);
     }
 
-    getUserById(dbId: number): Promise<User>{
-        return new Promise((resolve, reject) => {
-            
-        });
+    deleteUser(id: number): Promise<void> {
+        return this.deleteEntry(id);
+    }
+
+    getUserById(id: number): Promise<User>{
+        return this.getEntryById<User>(id);
     }
 
     getAllUsers(): Promise<Array<User>> {
-        return new Promise((resolve, reject) => {
-            var res = new Array<User>();
-            this.db.all(`SELECT userID AS id, name FROM ${this.tableName};`, (error, rows) => {
-                if(error)
-                    reject(error.message);
-                rows.forEach((row) => {
-                    res.push(row);
-                });
-                resolve(res);
-            });
-        });
+        return this.getAllEntries<User>();
     }
 
     createTable(): void{
         super.initTable({
-            userID: ["integer"],
+            id: ["integer"],
             name: ["text", "not null", "unique"],
-            pk: ["userID"] 
+            pk: ["id"] 
         });
     }
 }

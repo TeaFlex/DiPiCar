@@ -19,16 +19,16 @@ export class UserStatsDAO extends BaseDAO {
         this.timeFormat = timeFormat;
     }
 
-    async saveStats(stats: UserStats) {
+    /*async saveStats(stats: UserStats) {
         var now = new Date().toLocaleString(this.timeFormat, {timeZone: this.timeZone});
-        if(await this.doesStatsExists(stats.id)) {
+        if(await this.doesStatsExists(stats.userID)) {
             this.db.run(`UPDATE ${this.tableName} 
             SET lastConnection = ?,
             gameTime = ? 
             WHERE userID = ?;`, [
                 stats.lastConnection.toLocaleString(this.timeFormat, {timeZone: this.timeZone}),
                 stats.gameTime,
-                stats.id
+                stats.userID
             ],(error) => {
                 if(error)
                     throw new Error(error.message);
@@ -37,7 +37,7 @@ export class UserStatsDAO extends BaseDAO {
         else {
             this.db.run(`INSERT INTO ${this.tableName} (userID, firstConnection, lastConnection, gameTime) 
             VALUES ( $id , $firstConnection , $lastConnection , $gameTime );`, {
-                $id: stats.id,
+                $id: stats.userID,
                 $firstConnection: now,
                 $lastConnection: now,
                 $gameTime: 0
@@ -54,7 +54,7 @@ export class UserStatsDAO extends BaseDAO {
                 resolve(row ? true : false);
             });
         });
-    }
+    }*/
 
     createTable(): void {
         super.initTable({
@@ -63,7 +63,7 @@ export class UserStatsDAO extends BaseDAO {
             lastConnection: ["text", "not null"],
             gameTime: ["text", "not null"],
             pk: ["userID"],
-            fk: ["userID", "User", "userID", "on delete cascade"]
+            fk: ["userID", "User", "id", "on delete cascade"]
         });
     }
 }

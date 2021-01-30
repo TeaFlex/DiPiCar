@@ -4,11 +4,13 @@ export abstract class BaseDAO {
 
     protected tableName: string;
     protected db: sqlite3.Database;
+    protected columns: Array<string>;
 
     constructor(db: sqlite3.Database, tableName: string) {
         this.db = db;
         this.tableName = tableName;
         this.createTable();
+        this.columns = new Array();
     }
 
     private doesTableExist(): Promise<boolean> {
@@ -18,6 +20,81 @@ export abstract class BaseDAO {
                 if(error)
                     throw new Error(error.message);
                 resolve(row? true : false);
+            });
+        });
+    }
+    
+    protected doesEntryExist(rowid: number): Promise<boolean> {
+        return new Promise ((resolve, reject) => {
+            this.db.get(`SELECT * FROM ${this.tableName} WHERE rowid = ?;`, [rowid],
+            (error, row) => {
+                if(error)
+                    reject(error.message);
+                resolve(row ? true : false);
+            });
+        });
+    }
+
+    protected saveEntry<T extends Object>(entry: T): Promise<void> {
+        return new Promise((resolve, reject) => {
+            var cols = Object.keys(entry).join(', ');
+            var vals = Object.values(entry);
+            this.db.run(`INSERT INTO ${this.tableName} (${cols}) VALUES (${'?'.repeat(vals.length)});`, vals, 
+            (error) => {
+                if(error)
+                    reject(error.message);
+                console.log(`"${entry.toString()}" created.`);
+                resolve();
+            });
+        })
+    }
+
+    protected deleteEntry(rowid: number): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.db.run(`DELETE FROM ${this.tableName} WHERE rowid = ?;`, [rowid],
+            (error) => {
+                if(error)
+                    reject(error.message);
+                resolve();
+            });
+        });
+    }
+
+    protected getEntryById<T>(rowid: number): Promise<T> {
+        return new Promise((resolve, reject) => {
+            this.db.get(`SELECT * FROM ${this.tableName} WHERE rowid = ?;`, [rowid],
+            (error, row) => {
+                if(error)
+                    reject(error.message);
+                resolve(row);
+            });
+        });
+    }
+
+    protected getAllEntries<T>(): Promise<Array<T>> {
+        return new Promise((resolve, reject) => {
+            var res = new Array<T>();
+            this.db.all(`SELECT * FROM ${this.tableName};`, (error, rows) => {
+                    if(error)
+                        reject(error.message);
+                    rows.forEach((row) => {
+                        res.push(row);
+                });
+                resolve(res);
+            });
+        });
+    }
+
+    protected updateEntry<T extends Object>(rowid: number, updatedEntry: T): Promise<void> {
+        return new Promise ((resolve, reject) => {
+            var fields = [];
+            for(var key in updatedEntry)
+                fields.push(`${key} = '${updatedEntry[key]}'`);
+            this.db.get(`UPDATE ${this.tableName} SET ${fields.join(', ')} WHERE rowid = ?;`, [rowid],
+            (error, row) => {
+                if(error)
+                    reject(error.message);
+                resolve(row);
             });
         });
     }

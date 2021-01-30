@@ -1,5 +1,5 @@
 export interface UserStats {
-    id: number;
+    userID: number;
     gameTime: number;
     firstConnection?: Date;
     lastConnection: Date;

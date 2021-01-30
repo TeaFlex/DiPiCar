@@ -20,7 +20,7 @@ export class Route_controller{
 
         //Home Page
         this.app.get('/', (req, res)=>{
-            res.send("Connected !");
+            res.send(`Welcome ${req.ip} !`);
         });
         
         //Post of config (LAN mode only)
