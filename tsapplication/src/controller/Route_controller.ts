@@ -1,5 +1,6 @@
 import express from 'express';
 import { Express } from 'express';
+import cors from 'cors';
 import bodyparser from 'body-parser';
 import {AppDB} from '../model/database/AppDB';
 
@@ -12,17 +13,18 @@ export class Route_controller{
     constructor(app: Express) {
 
         this.app = app;
-        this.db = new AppDB();
+        this.db = AppDB.getInstance();
 
         this.app.use(express.static('static_files'));
+        this.app.use(cors());
 
+        //Home Page
         this.app.get('/', (req, res)=>{
-            res.header('Access-Control-Allow-Origin', '*');
             res.send("Connected !");
         });
         
+        //Post of config (LAN mode only)
         this.app.post('/config', bodyparser.json(), (req, res)=>{
-            res.header('Access-Control-Allow-Origin', '*');
             if(req.body == null) res.status(500).send({error:'Incomplete configuration'});
             else{
                 var infos = req.body;
@@ -31,8 +33,8 @@ export class Route_controller{
             }
         });
 
+        //Get all users
         this.app.get('/users',(req, res)=>{
-            res.header('Access-Control-Allow-Origin', '*');
             this.db.userDAO.getAllUsers()
             .then((value) => {
                 res.status(200).json(value);
@@ -43,9 +45,10 @@ export class Route_controller{
             });
         });
 
+        //Post a user from JSON
         this.app.post('/users', bodyparser.json(), (req, res) => {
             console.log(req.body);
-            this.db.userDAO.saveUser({name: req.body["name"]})
+            this.db.userDAO.saveUser(req.body)
             .then(() => {
                 res.status(200);
             })
@@ -55,21 +58,10 @@ export class Route_controller{
             });
         });
 
+        //Get stats of a user
         this.app.get('/stats', bodyparser.json(), (req, res)=>{
-            res.header('Access-Control-Allow-Origin', '*');
             res.status(200);
             //TODO: send stats of user.
-        });
-        
-        this.app.use((req, res, next) => {
-            res.header('Access-Control-Allow-Origin', '*');
-            res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-            next();
-        
-            this.app.options('*', (req, res) => {
-                res.header('Access-Control-Allow-Methods', 'GET, PATCH, PUT, POST, DELETE, OPTIONS');
-                res.send();
-            });
         });
     }
 }

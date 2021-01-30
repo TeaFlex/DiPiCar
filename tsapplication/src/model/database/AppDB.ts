@@ -4,13 +4,14 @@ import {UserStatsDAO} from './DAOs/UserStatsDAO';
 
 export class AppDB {
 
-    private dbPath: string = './data/dbapp.db';
+    public static dbPath: string = './data/dbapp.db';
     private db: sqlite3.Database;
-    public  userDAO: UserDAO;
-    public  userStatsDAO: UserStatsDAO;
+    private static appDB: AppDB;
+    public userDAO: UserDAO;
+    public userStatsDAO: UserStatsDAO;
 
-    constructor() { 
-        this.db = new sqlite3.Database(this.dbPath, error => {
+    private constructor() { 
+        this.db = new sqlite3.Database(AppDB.dbPath, error => {
             if(error) 
                 throw new Error(`Connection impossible: ${error.message}`);
             console.log("Connection to database successful.");
@@ -20,19 +21,17 @@ export class AppDB {
         this.userStatsDAO = new UserStatsDAO(this.db);
     }
 
-    closeDB(): void {
+    public closeDB(): void {
         this.db.close(error => {
             if(error) 
                 throw new Error(error.message);
             console.log("Database closed.");
         });
-    } 
-
-    setPath(path: string): void {
-        this.dbPath = path;
     }
 
-    getPath(): string {
-        return this.dbPath;
+    public static getInstance(): AppDB {
+        if(AppDB.appDB == null)
+            AppDB.appDB = new AppDB();
+        return this.appDB;
     }
 }

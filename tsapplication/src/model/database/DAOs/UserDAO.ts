@@ -29,11 +29,11 @@ export class UserDAO extends BaseDAO{
     getAllUsers(): Promise<Array<User>> {
         return new Promise((resolve, reject) => {
             var res = new Array<User>();
-            this.db.all(`SELECT userID, name FROM ${this.tableName};`, (error, rows) => {
+            this.db.all(`SELECT userID AS id, name FROM ${this.tableName};`, (error, rows) => {
                 if(error)
                     reject(error.message);
                 rows.forEach((row) => {
-                    res.push({id: row.id, name: row.name});
+                    res.push(row);
                 });
                 resolve(res);
             });

@@ -57,7 +57,7 @@ export abstract class BaseDAO {
     
             content = content.slice(0, -1);
             var fullQuery = `CREATE TABLE IF NOT EXISTS ${this.tableName}(${content});`
-            console.log(fullQuery);
+            //console.log(fullQuery);
             this.db.run(fullQuery, (error) => {
                 if(error)
                     throw new Error(error.message);
