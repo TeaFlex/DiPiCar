@@ -4,15 +4,8 @@ import { BaseDAO } from './BaseDAO';
 
 export class UserStatsDAO extends BaseDAO {
 
-
     constructor(db: sqlite.Database) {
         super(db, "UserStats");
-    }
-
-    setTimeZone(timeZone: string) {
-    }
-
-    setTimeFormat(timeFormat: string) {
     }
 
     async initStats(id: number): Promise<void> {
