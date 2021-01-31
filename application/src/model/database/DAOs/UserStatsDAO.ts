@@ -1,4 +1,4 @@
-import sqlite3 from 'sqlite3';
+import sqlite from 'sqlite';
 import { UserStats } from '../Entities/UserStats';
 import { BaseDAO } from './BaseDAO';
 
@@ -7,7 +7,7 @@ export class UserStatsDAO extends BaseDAO {
     private timeFormat: string = "en-GB";
     private timeZone: string = "Europe/Brussels";
 
-    constructor(db: sqlite3.Database) {
+    constructor(db: sqlite.Database) {
         super(db, "UserStats");
     }
 
@@ -56,8 +56,8 @@ export class UserStatsDAO extends BaseDAO {
         });
     }*/
 
-    createTable(): void {
-        super.initTable({
+    async createTable(): Promise<void> {
+        await super.initTable({
             userID: ["integer"],
             firstConnection: ["text", "not null"],
             lastConnection: ["text", "not null"],

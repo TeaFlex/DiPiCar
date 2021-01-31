@@ -7,24 +7,19 @@ import {AppDB} from '../model/database/AppDB';
 
 export class Route_controller{
 
-    private app: Express;
-    private db: AppDB;
+    static async init(app: Express) {
+        var db: AppDB = await AppDB.getInstance();
 
-    constructor(app: Express) {
-
-        this.app = app;
-        this.db = AppDB.getInstance();
-
-        this.app.use(express.static('static_files'));
-        this.app.use(cors());
+        app.use(express.static('static_files'));
+        app.use(cors());
 
         //Home Page
-        this.app.get('/', (req, res)=>{
+        app.get('/', (req, res)=>{
             res.send(`Welcome ${req.ip} !`);
         });
         
         //Post of config (LAN mode only)
-        this.app.post('/config', bodyparser.json(), (req, res)=>{
+        app.post('/config', bodyparser.json(), (req, res)=>{
             if(req.body == null) res.status(500).send({error:'Incomplete configuration'});
             else{
                 var infos = req.body;
@@ -34,32 +29,29 @@ export class Route_controller{
         });
 
         //Get all users
-        this.app.get('/users',(req, res)=>{
-            this.db.userDAO.getAllUsers()
-            .then((value) => {
-                res.status(200).json(value);
-            })
-            .catch((reason) => {
-                console.log(reason);
+        app.get('/users', async (req, res)=>{
+            try {
+                var json = await db.userDAO.getAllUsers();
+                res.status(200).json(json);
+            } catch (error) {
+                console.error(error);
                 res.status(500).send();
-            });
+            }
         });
 
         //Post a user from JSON
-        this.app.post('/users', bodyparser.json(), (req, res) => {
-            console.log(req.body);
-            this.db.userDAO.saveUser(req.body)
-            .then(() => {
-                res.status(200);
-            })
-            .catch((reason) => {
-                console.log(reason);
+        app.post('/users', bodyparser.json(), async (req, res) => {
+            try {
+                await db.userDAO.saveUser(req.body);
+                res.status(200).send();
+            } catch (error) {
+                console.error(error);
                 res.status(500).send();
-            });
+            }
         });
 
         //Get stats of a user
-        this.app.get('/stats', bodyparser.json(), (req, res)=>{
+        app.get('/stats', bodyparser.json(), (req, res)=>{
             res.status(200);
             //TODO: send stats of user.
         });

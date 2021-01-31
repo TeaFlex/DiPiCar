@@ -14,7 +14,7 @@ class Main {
         const ws_server = new Server({server});
 
         const ws_controller = new Ws_controller(ws_server);
-        const route_controller = new Route_controller(app);
+        Route_controller.init(app);
 
         server.listen(port, () => {
             console.log(`The app is running and listening to the port ${port}.`);

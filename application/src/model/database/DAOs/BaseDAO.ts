@@ -1,108 +1,73 @@
-import sqlite3 from 'sqlite3';
+import sqlite from 'sqlite';
 
 export abstract class BaseDAO {
 
     protected tableName: string;
-    protected db: sqlite3.Database;
-    protected columns: Array<string>;
+    protected db: sqlite.Database;
 
-    constructor(db: sqlite3.Database, tableName: string) {
+    constructor(db: sqlite.Database, tableName: string) {
         this.db = db;
         this.tableName = tableName;
-        this.createTable();
-        this.columns = new Array();
     }
 
-    private doesTableExist(): Promise<boolean> {
-        return new Promise((resolve, reject) => {
-            this.db.get(`SELECT name FROM sqlite_master WHERE type='table' AND name='${this.tableName}';`,
-            (error, row) => {
-                if(error)
-                    throw new Error(error.message);
-                resolve(row? true : false);
-            });
-        });
+    public async doesTableExist(): Promise<boolean> {
+        var query = `SELECT name FROM sqlite_master 
+                    WHERE type='table' 
+                    AND name='${this.tableName}';`;
+        var s = await this.db.get(query);
+        return s != null;
     }
     
-    protected doesEntryExist(rowid: number): Promise<boolean> {
-        return new Promise ((resolve, reject) => {
-            this.db.get(`SELECT * FROM ${this.tableName} WHERE rowid = ?;`, [rowid],
-            (error, row) => {
-                if(error)
-                    reject(error.message);
-                resolve(row ? true : false);
-            });
-        });
+    protected async doesEntryExist(rowid: number): Promise<boolean> {
+        var query = `SELECT * 
+                    FROM ${this.tableName} 
+                    WHERE rowid = ?;`;
+        var s = await this.db.get(query , [rowid]);
+        return s != null;
     }
 
-    protected saveEntry<T extends Object>(entry: T): Promise<void> {
-        return new Promise((resolve, reject) => {
-            var cols = Object.keys(entry).join(', ');
-            var vals = Object.values(entry);
-            this.db.run(`INSERT INTO ${this.tableName} (${cols}) VALUES (${'?'.repeat(vals.length)});`, vals, 
-            (error) => {
-                if(error)
-                    reject(error.message);
-                console.log(`"${entry.toString()}" created.`);
-                resolve();
-            });
-        })
+    protected async saveEntry<T extends Object>(entry: T): Promise<void> {
+        var cols = Object.keys(entry).join(', ');
+        var vals = Object.values(entry);
+        var query = `INSERT INTO ${this.tableName} (${cols}) 
+                    VALUES (${'?,'.repeat(vals.length).slice(0, -1)});`;
+        await this.db.run(query, vals);
     }
 
-    protected deleteEntry(rowid: number): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.db.run(`DELETE FROM ${this.tableName} WHERE rowid = ?;`, [rowid],
-            (error) => {
-                if(error)
-                    reject(error.message);
-                resolve();
-            });
-        });
+    protected async deleteEntry(rowid: number): Promise<void> {
+        var query = `DELETE FROM ${this.tableName} WHERE rowid = ?;`;
+        await this.db.run(query, [rowid]);
     }
 
-    protected getEntryById<T>(rowid: number): Promise<T> {
-        return new Promise((resolve, reject) => {
-            this.db.get(`SELECT * FROM ${this.tableName} WHERE rowid = ?;`, [rowid],
-            (error, row) => {
-                if(error)
-                    reject(error.message);
-                resolve(row);
-            });
-        });
+    protected async getEntryById<T>(rowid: number): Promise<T> {
+        var query = `SELECT * FROM ${this.tableName} WHERE rowid = ?;`;
+        var s = await this.db.get(query, [rowid]);
+        return s;
     }
 
-    protected getAllEntries<T>(): Promise<Array<T>> {
-        return new Promise((resolve, reject) => {
-            var res = new Array<T>();
-            this.db.all(`SELECT * FROM ${this.tableName};`, (error, rows) => {
-                    if(error)
-                        reject(error.message);
-                    rows.forEach((row) => {
-                        res.push(row);
-                });
-                resolve(res);
-            });
+    protected async getAllEntries<T>(): Promise<Array<T>> {
+        var res = new Array<T>();
+        var query = `SELECT * FROM ${this.tableName};`;
+        var s = await this.db.all(query);
+        s.forEach((row) => {
+            res.push(row);
         });
+        return res;
     }
 
-    protected updateEntry<T extends Object>(rowid: number, updatedEntry: T): Promise<void> {
-        return new Promise ((resolve, reject) => {
-            var fields = [];
-            for(var key in updatedEntry)
-                fields.push(`${key} = '${updatedEntry[key]}'`);
-            this.db.get(`UPDATE ${this.tableName} SET ${fields.join(', ')} WHERE rowid = ?;`, [rowid],
-            (error, row) => {
-                if(error)
-                    reject(error.message);
-                resolve(row);
-            });
-        });
+    protected async updateEntry<T extends Object>(rowid: number, updatedEntry: T): Promise<void> {
+        var fields = [];
+        for(var key in updatedEntry)
+            fields.push(`${key} = '${updatedEntry[key]}'`);
+        var query = `UPDATE ${this.tableName} 
+                    SET ${fields.join(', ')} 
+                    WHERE rowid = ?;`;
+        await this.db.get(query, [rowid]);
     }
     
-    abstract createTable(): void;
+    abstract createTable(): Promise<void>;
 
-    protected async initTable(tableColumns: {[columnName: string] : Array<string>}) {
-
+    protected async initTable(tableColumns: {[columnName: string] : Array<string>}): Promise<void> {
         if(!await this.doesTableExist()){
             var content = "";
             for(let column in tableColumns) {
@@ -133,14 +98,10 @@ export abstract class BaseDAO {
             }
     
             content = content.slice(0, -1);
-            var fullQuery = `CREATE TABLE IF NOT EXISTS ${this.tableName}(${content});`
-            //console.log(fullQuery);
-            this.db.run(fullQuery, (error) => {
-                if(error)
-                    throw new Error(error.message);
-                console.log(`Table "${this.tableName}" created.`);
-            });
+            var query = `CREATE TABLE IF NOT EXISTS ${this.tableName}(${content});`;
+            await this.db.run(query);
+            console.log(`Table ${this.tableName} created.`);
         }
-        this.db.run("PRAGMA foreign_keys = ON;");
+        await this.db.run("PRAGMA foreign_keys = ON;");
     }
 }

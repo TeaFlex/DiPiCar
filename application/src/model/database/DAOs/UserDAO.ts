@@ -1,10 +1,10 @@
-import sqlite3 from 'sqlite3';
+import sqlite from 'sqlite';
 import {BaseDAO} from './BaseDAO';
 import {User} from '../Entities/User';
 
 export class UserDAO extends BaseDAO{
 
-    constructor(db: sqlite3.Database) {
+    constructor(db: sqlite.Database) {
         super(db, "User");
     }
 
@@ -24,8 +24,8 @@ export class UserDAO extends BaseDAO{
         return this.getAllEntries<User>();
     }
 
-    createTable(): void{
-        super.initTable({
+    async createTable(): Promise<void>{
+        await super.initTable({
             id: ["integer"],
             name: ["text", "not null", "unique"],
             pk: ["id"] 
