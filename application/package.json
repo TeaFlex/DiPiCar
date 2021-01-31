@@ -9,6 +9,7 @@
     "@types/ws": "^7.4.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "helmet": "^4.4.1",
     "pistreamer": "file:PiStreamer",
     "sqlite": "^4.0.19",
     "sqlite3": "^5.0.1",

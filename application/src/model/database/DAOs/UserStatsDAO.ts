@@ -18,12 +18,12 @@ export class UserStatsDAO extends BaseDAO {
         await this.saveEntry<UserStats>(stats);
     }
 
-    async getStats(id: number): Promise<UserStats> {
+    async getStatsById(id: number): Promise<UserStats> {
         var s = await this.getEntryById<UserStats>(id);
         return s;
     }
 
-    async updateStats(stats: UserStats) {
+    async updateStats(stats: UserStats): Promise<void>{
         await this.updateEntry(stats.userID, stats);
     }
 
