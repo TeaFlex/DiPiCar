@@ -8,7 +8,7 @@ export class UserDAO extends BaseDAO{
         super(db, "User");
     }
 
-    saveUser(user: User): Promise<void> {
+    saveUser(user: User): Promise<number> {
         return this.saveEntry<User>(user);
     }
 

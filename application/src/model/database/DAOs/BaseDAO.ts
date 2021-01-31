@@ -26,12 +26,14 @@ export abstract class BaseDAO {
         return s != null;
     }
 
-    protected async saveEntry<T extends Object>(entry: T): Promise<void> {
+    protected async saveEntry<T extends Object>(entry: T): Promise<number> {
         var cols = Object.keys(entry).join(', ');
         var vals = Object.values(entry);
         var query = `INSERT INTO ${this.tableName} (${cols}) 
-                    VALUES (${'?,'.repeat(vals.length).slice(0, -1)});`;
+                    VALUES (${'?,'.repeat(vals.length).slice(0, -1)});`;          
         await this.db.run(query, vals);
+        var s = await this.db.get('SELECT last_insert_rowid() as last_id;');
+        return s["last_id"];
     }
 
     protected async deleteEntry(rowid: number): Promise<void> {

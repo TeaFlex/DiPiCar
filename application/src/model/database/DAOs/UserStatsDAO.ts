@@ -4,57 +4,35 @@ import { BaseDAO } from './BaseDAO';
 
 export class UserStatsDAO extends BaseDAO {
 
-    private timeFormat: string = "en-GB";
-    private timeZone: string = "Europe/Brussels";
 
     constructor(db: sqlite.Database) {
         super(db, "UserStats");
     }
 
     setTimeZone(timeZone: string) {
-        this.timeZone = timeZone;
     }
 
     setTimeFormat(timeFormat: string) {
-        this.timeFormat = timeFormat;
     }
 
-    /*async saveStats(stats: UserStats) {
-        var now = new Date().toLocaleString(this.timeFormat, {timeZone: this.timeZone});
-        if(await this.doesStatsExists(stats.userID)) {
-            this.db.run(`UPDATE ${this.tableName} 
-            SET lastConnection = ?,
-            gameTime = ? 
-            WHERE userID = ?;`, [
-                stats.lastConnection.toLocaleString(this.timeFormat, {timeZone: this.timeZone}),
-                stats.gameTime,
-                stats.userID
-            ],(error) => {
-                if(error)
-                    throw new Error(error.message);
-            });
+    async initStats(id: number): Promise<void> {
+        var stats: UserStats = {
+            userID: id,
+            gameTime: 0,
+            firstConnection: new Date(),
+            lastConnection: new Date()
         }
-        else {
-            this.db.run(`INSERT INTO ${this.tableName} (userID, firstConnection, lastConnection, gameTime) 
-            VALUES ( $id , $firstConnection , $lastConnection , $gameTime );`, {
-                $id: stats.userID,
-                $firstConnection: now,
-                $lastConnection: now,
-                $gameTime: 0
-            });
-        }
+        await this.saveEntry<UserStats>(stats);
     }
 
-    private doesStatsExists(id: number): Promise<boolean> {
-        return new Promise((resolve, reject) => {
-            this.db.get(`SELECT * from ${this.tableName} WHERE userID = ? ;`, [id], 
-            (error, row) => {
-                if(error)
-                    throw new Error(error.message);
-                resolve(row ? true : false);
-            });
-        });
-    }*/
+    async getStats(id: number): Promise<UserStats> {
+        var s = await this.getEntryById<UserStats>(id);
+        return s;
+    }
+
+    async updateStats(stats: UserStats) {
+        await this.updateEntry(stats.userID, stats);
+    }
 
     async createTable(): Promise<void> {
         await super.initTable({

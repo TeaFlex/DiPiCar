@@ -3,6 +3,7 @@ import { Express } from 'express';
 import cors from 'cors';
 import bodyparser from 'body-parser';
 import {AppDB} from '../model/database/AppDB';
+import { User } from '../model/database/Entities/User';
 
 
 export class Route_controller{
@@ -35,25 +36,32 @@ export class Route_controller{
                 res.status(200).json(json);
             } catch (error) {
                 console.error(error);
-                res.status(500).send();
+                res.status(500).send(error);
             }
         });
 
         //Post a user from JSON
         app.post('/users', bodyparser.json(), async (req, res) => {
             try {
-                await db.userDAO.saveUser(req.body);
+                var tempUser: User = req.body;
+                var id = await db.userDAO.saveUser(tempUser);
+                await db.userStatsDAO.initStats(id);
                 res.status(200).send();
             } catch (error) {
                 console.error(error);
-                res.status(500).send();
+                res.status(500).send(error);
             }
         });
 
         //Get stats of a user
-        app.get('/stats', bodyparser.json(), (req, res)=>{
-            res.status(200);
-            //TODO: send stats of user.
+        app.get('/stats', bodyparser.json(), async (req, res)=>{
+            try {
+                var json = await db.userStatsDAO.getStats(req.body["id"]);
+                res.status(200).json(json);
+            } catch (error) {
+                console.error(error);
+                res.status(500).send(error);
+            }
         });
     }
 }
