@@ -36,4 +36,12 @@ export class AppDB {
         }
         return this.appDB;
     }
+
+    public static getSyncInstance(): AppDB | undefined {
+        var r = undefined;
+        this.getInstance().then((value)=> {
+            r = value;
+        });
+        return r;
+    }
 }
