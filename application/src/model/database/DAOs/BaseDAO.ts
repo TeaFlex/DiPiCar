@@ -18,7 +18,7 @@ export abstract class BaseDAO {
         return s != null;
     }
     
-    protected async doesEntryExist(rowid: number): Promise<boolean> {
+    public async doesEntryExist(rowid: number): Promise<boolean> {
         var query = `SELECT * 
                     FROM ${this.tableName} 
                     WHERE rowid = ?;`;
@@ -44,6 +44,12 @@ export abstract class BaseDAO {
     protected async getEntryById<T>(rowid: number): Promise<T> {
         var query = `SELECT * FROM ${this.tableName} WHERE rowid = ?;`;
         var s = await this.db.get(query, [rowid]);
+        return s;
+    }
+
+    protected async getEntryByColumn<T>(column: string, value: string): Promise<T> {
+        var query = `SELECT * FROM ${this.tableName} WHERE ${column.trim()} = ?;`;
+        var s = await this.db.get(query, [value.trim()]);
         return s;
     }
 

@@ -16,8 +16,22 @@ export class UserDAO extends BaseDAO{
         return this.deleteEntry(id);
     }
 
+    async doesUserNameExist(name: string): Promise<boolean> {
+        try {
+            if(await this.getUserByName(name) === undefined)
+                return new Promise((resolve) => resolve(false));
+            return new Promise((resolve) => resolve(true));
+        } catch (error) {
+            return new Promise((resolve) => resolve(false));
+        }
+    }
+
     getUserById(id: number): Promise<User>{
         return this.getEntryById<User>(id);
+    }
+
+    getUserByName(name: string): Promise<User> {
+        return this.getEntryByColumn<User>("name", name);
     }
 
     getAllUsers(): Promise<Array<User>> {

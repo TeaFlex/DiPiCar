@@ -6,6 +6,9 @@ import cors from 'cors';
 import helmet from 'helmet';
 import { UsersRoute } from './routes/UsersRoute';
 import { StatsRoute } from './routes/StatsRoute';
+import errorHandler from './middlewares/errorHandlers';
+import {logger} from './utilities/logger/Logger';
+import successHandler from './middlewares/successHandler';
 
 class Main {
     constructor() {
@@ -15,18 +18,23 @@ class Main {
         const app = express();
         const server = createServer(app);
 
+        
         app.use(express.static('static_files'));
         app.use(cors());
         app.use(helmet());
         app.use(express.json());
+        
         MainRoute.init(app);
         UsersRoute.init(app);
         StatsRoute.init(app);
 
+        app.use(errorHandler);
+        app.use(successHandler);
+
         const ws_server = new Server({server});
         
         server.listen(port, () => {
-            console.log(`The app is running and listening to the port ${port}.`);
+            logger.info(`The app is running and listening to the port ${port}.`);
         });
     }
 }

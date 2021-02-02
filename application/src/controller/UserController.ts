@@ -1,55 +1,80 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+import { HttpError } from "../utilities/errors/HttpError";
+import { NotFoundError } from "../utilities/errors/NotFoundError";
 import { AppDB } from "../model/database/AppDB";
 import { User } from "../model/database/Entities/User";
+import { logger } from "../utilities/logger/Logger"
 
 export class UserController {
 
-    async initUser(req: Request, res: Response) {
+    async initUser(req: Request, res: Response, next: NextFunction) {
         try {
             const db = await AppDB.getInstance()
             var u: User = req.body;
-            var id = await db.userDAO.saveUser(u);
-            await db.userStatsDAO.initStats(id);
-            res.status(200).send();
+            if(await db.userDAO.doesUserNameExist(u.name))
+                next(new HttpError(409, `User "${u.name}" already exists.`));
+            else {
+                var id = await db.userDAO.saveUser(u);
+                await db.userStatsDAO.initStats(id);
+                res.locals.message = `User "${u.name}" created`
+                res.locals.status = 201;
+                next();
+            }
         } catch (error) {
-            console.error(error);
-            res.status(500).send(error.message);
+            next(new HttpError(500));
         }
     }
 
-    async getUser(req: Request, res: Response) {
+    async getUser(req: Request, res: Response, next: NextFunction) {
         try {
             const db = await AppDB.getInstance()
             var id = parseInt(req.params["id"], 10);
-            var json = await db.userDAO.getUserById(id);
-            res.status(200).json(json);
+            if (!await db.userDAO.getUserById(id))
+                next(new NotFoundError(`User of id "${id}" doesn't exist.`));
+            else {
+                var json = await db.userDAO.getUserById(id);
+                res.locals.message = `User "${id}" sent.`
+                res.locals.status = 200;
+                res.locals.json = json;
+                next();
+            }
         } catch (error) {
-            console.error(error);
-            res.status(404).send(error.message);
+            next(new HttpError(500));
         }
     }
 
-    async getAllUsers(req: Request, res: Response) {
+    async getAllUsers(req: Request, res: Response, next: NextFunction) {
         try {
             const db = await AppDB.getInstance()
             var json = await db.userDAO.getAllUsers();
-            res.status(200).json(json);
+            if(json.length == 0)
+                res.status(204).send();
+            else{
+                res.locals.message = `All users sent.`
+                res.locals.status = 200;
+                res.locals.json = json;
+                next();
+            }
         } catch (error) {
-            console.error(error);
-            res.status(404).send(error.message);
+            next(new HttpError(500));
         }
     }
 
-    async deleteUser(req: Request, res: Response) {
+    async deleteUser(req: Request, res: Response, next: NextFunction) {
         try {
             //TODO: Token needed
             const db = await AppDB.getInstance()
             var id = parseInt(req.params["id"], 10);
-            await db.userDAO.deleteUser(id);
-            res.status(200).send();
+            if(!await db.userDAO.getUserById(id))
+                next(new NotFoundError(`User of id "${id}" doesn't exist.`));
+            else {
+                await db.userDAO.deleteUser(id);
+                res.locals.message = `Users ${id} deleted.`
+                res.locals.status = 200;
+                next();
+            }
         } catch (error) {
-            console.error(error);
-            res.status(500).send(error.message);
+            next(new HttpError(500));
         }
     }
 }
