@@ -9,6 +9,7 @@ import { StatsRoute } from './routes/StatsRoute';
 import errorHandler from './middlewares/errorHandlers';
 import {logger} from './utilities/logger/Logger';
 import successHandler from './middlewares/successHandler';
+import logHandler from './middlewares/logHandler';
 
 class Main {
     constructor() {
@@ -30,6 +31,7 @@ class Main {
 
         app.use(errorHandler);
         app.use(successHandler);
+        app.use(logHandler);
 
         const ws_server = new Server({server});
         
