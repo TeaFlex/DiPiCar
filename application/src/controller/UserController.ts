@@ -3,7 +3,6 @@ import { HttpError } from "../utilities/errors/HttpError";
 import { NotFoundError } from "../utilities/errors/NotFoundError";
 import { AppDB } from "../model/database/AppDB";
 import { User } from "../model/database/Entities/User";
-import { logger } from "../utilities/logger/Logger"
 
 export class UserController {
 
@@ -47,14 +46,16 @@ export class UserController {
         try {
             const db = await AppDB.getInstance()
             var json = await db.userDAO.getAllUsers();
-            if(json.length == 0)
-                res.status(204).send();
+            if(json.length == 0) {
+                res.locals.status = 204;
+                res.locals.message = 'There\'s no user to send.';
+            }
             else{
                 res.locals.message = `All users sent.`
                 res.locals.status = 200;
                 res.locals.json = json;
-                next();
             }
+            next();
         } catch (error) {
             next(new HttpError(500));
         }
@@ -69,7 +70,7 @@ export class UserController {
                 next(new NotFoundError(`User of id "${id}" doesn't exist.`));
             else {
                 await db.userDAO.deleteUser(id);
-                res.locals.message = `Users ${id} deleted.`
+                res.locals.message = `User of id "${id}" deleted.`
                 res.locals.status = 200;
                 next();
             }
