@@ -2,6 +2,7 @@ import { Express, Router } from "express";
 import { UserController } from "../controller/UserController";
 import { bodyControl, userSchema } from "../middlewares/bodyControl";
 import { checkSchema, param} from "express-validator";
+import { catchError } from "../middlewares/errorHandlers";
 
 export class UsersRoute {
     
@@ -11,16 +12,16 @@ export class UsersRoute {
         var user = new UserController();
 
         //Get all users
-        router.get('/', user.getAllUsers);
+        router.get('/', catchError(user.getAllUsers));
 
         //Get a User by id
-        router.get('/:id', param('id').isInt(), user.getUser);
+        router.get('/:id', param('id').isInt(), catchError(user.getUser));
 
         //Post a user from JSON
-        router.post('/', checkSchema(userSchema), bodyControl, user.initUser);
+        router.post('/', checkSchema(userSchema), bodyControl, catchError(user.initUser));
 
         //Delete a User
-        router.delete('/:id', param('id').isInt(), user.deleteUser);
+        router.delete('/:id', param('id').isInt(), catchError(user.deleteUser));
 
         app.use('/users', router);
     }

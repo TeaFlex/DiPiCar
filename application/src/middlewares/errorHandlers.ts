@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { HttpError } from "../utilities/errors/HttpError";
 import { param, validationResult } from "express-validator";
 
-export default function errorHandler (err: HttpError, req: Request, res: Response, next: NextFunction) {
+export  function errorHandler (err: HttpError, req: Request, res: Response, next: NextFunction) {
     const message = err.shortmsg || "Oops, something went wrong...";
     var errors = validationResult(req);
     res.locals.status = err.status || 500;
@@ -16,4 +16,12 @@ export default function errorHandler (err: HttpError, req: Request, res: Respons
     }
     
     next();
+}
+
+export function catchError(
+    func: (req: Request, res: Response, next: NextFunction) => Promise<any> 
+    ) {     
+    return (req: Request, res: Response, next: NextFunction) => {
+        return func(req, res, next).catch(next);
+    };
 }

@@ -6,7 +6,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import { UsersRoute } from './routes/UsersRoute';
 import { StatsRoute } from './routes/StatsRoute';
-import errorHandler from './middlewares/errorHandlers';
+import { errorHandler } from './middlewares/errorHandlers';
 import {logger} from './utilities/logger/Logger';
 import successHandler from './middlewares/successHandler';
 import logHandler from './middlewares/logHandler';

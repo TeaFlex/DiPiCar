@@ -31,6 +31,6 @@ export var statsSchema: Record<string, ParamSchema> = {
 
 export var bodyControl = (req: Request, res: Response, next: NextFunction) => {
     if(!validationResult(req).isEmpty())
-        next(new HttpError(400, "Request Error."))
+        next(new HttpError("Request Error.", 400));
     next();
 }
