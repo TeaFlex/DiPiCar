@@ -11,6 +11,7 @@ import {logger} from './utilities/logger/Logger';
 import successHandler from './middlewares/successHandler';
 import logHandler from './middlewares/logHandler';
 import { bodyControl } from './middlewares/bodyControl';
+import { Ws_controller } from './controller/WsController';
 
 class Main {
     constructor() {
@@ -35,6 +36,7 @@ class Main {
         app.use(logHandler);
         
         const ws_server = new Server({server});
+        const ws_controller = new Ws_controller(ws_server);
         
         server.listen(port, () => {
             logger.info(`The app is running and listening to the port ${port}.`);
