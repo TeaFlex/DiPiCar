@@ -3,3 +3,7 @@ node_modules
 *.deb
 __pycache__
 dist
+*.db
+logs/
+*.log
+*/old
