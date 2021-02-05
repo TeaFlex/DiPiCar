@@ -4,7 +4,7 @@ export class MainRoute {
 
     static init(app: Express){
 
-        var router = Router();
+        const router = Router();
 
         //Home Page
         router.get('/', (req, res)=>{

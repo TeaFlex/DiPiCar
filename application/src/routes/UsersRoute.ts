@@ -8,8 +8,8 @@ export class UsersRoute {
     
     static init(app: Express): void {
 
-        var router = Router();
-        var user = new UserController();
+        const router = Router();
+        const user = new UserController();
 
         //Get all users
         router.get('/', catchError(user.getAllUsers));

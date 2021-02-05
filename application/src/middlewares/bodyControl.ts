@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { body, checkSchema, ParamSchema, validationResult } from "express-validator";
 import { HttpError } from "../utilities/errors/HttpError";
 
-export var userSchema: Record<string, ParamSchema> = {
+export const userSchema: Record<string, ParamSchema> = {
     name: {
         isString: true,
         trim: true,
@@ -16,7 +16,7 @@ export var userSchema: Record<string, ParamSchema> = {
     }
 };
 
-export var statsSchema: Record<string, ParamSchema> = {
+export const statsSchema: Record<string, ParamSchema> = {
     userID: {
         isInt: true,
         toInt: true
@@ -29,7 +29,7 @@ export var statsSchema: Record<string, ParamSchema> = {
     }
 };
 
-export var bodyControl = (req: Request, res: Response, next: NextFunction) => {
+export const bodyControl = (req: Request, res: Response, next: NextFunction) => {
     if(!validationResult(req).isEmpty())
         next(new HttpError("Request Error.", 400));
     next();

@@ -8,8 +8,8 @@ export class StatsRoute {
     
     static init(app: Express): void {
 
-        var router = Router();
-        var stats = new StatsController();
+        const router = Router();
+        const stats = new StatsController();
 
         //Get stats of a user
         router.get('/:id', param('id').isInt(), catchError(stats.getStatsOfUser));
