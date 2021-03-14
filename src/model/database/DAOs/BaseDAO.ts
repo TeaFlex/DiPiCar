@@ -2,7 +2,6 @@ import StormDB from 'stormdb';
 import { AppDB } from '../AppDB';
 import {Base} from '../Entities/Base';
 
-
 export abstract class BaseDAO {
 
     protected tableName: string;

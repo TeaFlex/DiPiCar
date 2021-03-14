@@ -1,4 +1,5 @@
 import {UserDAO} from './DAOs/UserDAO';
+import fs from 'fs';
 import StormDB from 'stormdb';
 
 export class AppDB {
@@ -17,11 +18,12 @@ export class AppDB {
 
     public static async getInstance(): Promise<AppDB> {
         if(AppDB.appDB == null){ 
+            if(!fs.existsSync('./data'))
+                fs.mkdirSync('./data');
             const engine = new StormDB.localFileEngine(this.dbPath, {
                 serialize: (data: any) => JSON.stringify(data, undefined, 4)
             });
             this.db = new StormDB(engine);
-            
             AppDB.appDB = new AppDB();
             this.db.default(this.structure);
             await this.db.save();

@@ -1,9 +1,0 @@
-Nothing to see here part'ner,
-just a lil' reminder: this folder will contain your .db files !
-
-   ___
-  /   \
----------
- | ' ' |
-  \ ‿ /
-  / U  \

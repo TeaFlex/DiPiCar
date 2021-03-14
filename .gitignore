@@ -10,4 +10,4 @@ logs/
 build/
 package-lock.json
 yarn.lock
-data/*json
+data/
