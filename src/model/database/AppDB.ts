@@ -17,7 +17,9 @@ export class AppDB {
 
     public static async getInstance(): Promise<AppDB> {
         if(AppDB.appDB == null){ 
-            const engine = new StormDB.localFileEngine(this.dbPath);
+            const engine = new StormDB.localFileEngine(this.dbPath, {
+                serialize: (data: any) => JSON.stringify(data, undefined, 4)
+            });
             this.db = new StormDB(engine);
             
             AppDB.appDB = new AppDB();
