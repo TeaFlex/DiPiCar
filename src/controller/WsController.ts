@@ -1,6 +1,6 @@
 import {Server} from 'ws';
 import {GPIO_control} from '../model/gpio/Gpio_control';
-import {PiStreamServer} from 'pistreamer';
+import {ImageEffects, PiStreamServer} from 'pistreamer';
 import {logger} from '../utilities/logger/Logger';
 
 export class Ws_controller {
@@ -31,7 +31,7 @@ export class Ws_controller {
                 data = JSON.parse(data);
                 console.log(data.request);
             } catch (error) {
-                console.log("Unsupported request");
+                logger.info("GPIO CONTROL: Unsupported request");
             }
         });
     }

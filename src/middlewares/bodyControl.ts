@@ -17,13 +17,6 @@ export const userSchema: Record<string, ParamSchema> = {
 };
 
 export const statsSchema: Record<string, ParamSchema> = {
-    userID: {
-        isInt: true,
-        toInt: true
-    },
-    lastConnection: {
-        isDate: true
-    },
     gameTime: {
         isInt: true
     }

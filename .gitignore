@@ -7,3 +7,7 @@ dist
 logs/
 *.log
 */old
+build/
+package-lock.json
+yarn.lock
+data/*json

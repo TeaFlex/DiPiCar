@@ -1,14 +1,22 @@
-import sqlite from 'sqlite';
+import StormDB from 'stormdb';
 import {BaseDAO} from './BaseDAO';
-import {User} from '../Entities/User';
+import {User, UserStats} from '../Entities/User';
 
 export class UserDAO extends BaseDAO{
 
-    constructor(db: sqlite.Database) {
+    constructor(db: StormDB) {
         super(db, "User");
     }
 
     saveUser(user: User): Promise<number> {
+        user = {
+            name: user.name,
+            stats: {
+                gameTime: 0,
+                firstConnection: new Date(),
+                lastConnection: new Date()
+            }
+        }
         return this.saveEntry<User>(user);
     }
 
@@ -38,11 +46,20 @@ export class UserDAO extends BaseDAO{
         return this.getAllEntries<User>();
     }
 
-    async createTable(): Promise<void>{
-        await super.initTable({
-            id: ["integer"],
-            name: ["text", "not null", "unique"],
-            pk: ["id"] 
-        });
+    async getStatsById(id: number): Promise<UserStats> {
+        const u = await this.getUserById(id);
+        return u.stats!;
+    }
+
+    async updateStats(id: number, stats: UserStats): Promise<void>{
+        const u = await this.getUserById(id);
+        u.stats = {
+            ...u.stats,
+            ...{
+                gameTime: stats.gameTime,
+                lastConnection: new Date()
+            }
+        };
+        this.updateEntry<User>(id, u);
     }
 }

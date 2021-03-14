@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { HttpError } from "../utilities/errors/HttpError";
 import { NotFoundError } from "../utilities/errors/NotFoundError";
-import { AppDB } from "../model/database/AppDB";
 import { User } from "../model/database/Entities/User";
 import { BaseController } from "./BaseController";
 
@@ -13,7 +12,6 @@ export class UserController extends BaseController {
             next(new HttpError(`User "${u.name}" already exists.`, 409));
         else {
             var id = await this.db!.userDAO.saveUser(u);
-            await this.db!.userStatsDAO.initStats(id);
             u = await this.db!.userDAO.getUserById(id);
             res.locals.message = `User "${u.name}" created`
             res.locals.status = 201;
