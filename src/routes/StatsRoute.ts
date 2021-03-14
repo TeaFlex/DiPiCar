@@ -11,11 +11,9 @@ export class StatsRoute {
         const router = Router();
         const stats = new StatsController();
 
-        //Get stats of a user
         router.get('/:id', param('id').isInt(), catchError(stats.getStatsOfUser));
 
-        //Update stats of a user
-        router.put('/',checkSchema(statsSchema), bodyControl, catchError(stats.updateStatsOfUser));
+        router.put('/:id',checkSchema(statsSchema), bodyControl, catchError(stats.updateStatsOfUser));
 
         app.use('/api/stats', router);
     }
