@@ -1,4 +1,3 @@
-import {keys} from 'ts-transformer-keys';
 import StormDB from 'stormdb';
 import { AppDB } from '../AppDB';
 import {Base} from '../Entities/Base';
@@ -27,11 +26,9 @@ export abstract class BaseDAO {
     }
 
     protected async saveEntry<T extends Base>(entry: T): Promise<number> {
-        type keys = keyof T;
         entry.id = 1;
-        for(const el of this.db.get(this.tableName).value() as T[]){
+        for(const el of this.db.get(this.tableName).value() as T[])
             entry.id = (el.id ?? 0 > entry.id)? el.id! + 1: entry.id;
-        }
 
         this.db
         .get(this.tableName)
