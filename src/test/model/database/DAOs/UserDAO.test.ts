@@ -5,7 +5,7 @@ var db: AppDB;
 var user: User;
 
 beforeAll(async () => {
-    AppDB.dbPath = ':memory:';
+    //AppDB.dbPath = ':memory:';
     user = {
         id: 1,
         name: "Richard"
