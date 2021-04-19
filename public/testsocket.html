@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input#val {
+            width: 100vw;
+        }
+        .action {
+            height: 5rem;
+            width: 5rem;
+            font-size: 4rem;
+            user-select: none;
+            position: absolute;
+        }
+
+        #actions {
+            position: relative;
+            background-color: aqua;
+            width: 15rem;
+            height: 15rem;
+        }
+
+        .action#up {
+            left: 5rem;
+        }
+        .action#down {
+            left: 5rem;
+            bottom: 0;
+        }
+        .action#left {
+            top: 5rem;
+        }
+        .action#right {
+            top: 5rem;
+            right: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- <button onclick="toggleUp()">toggle up</button> -->
+    <form>
+        <input type="text" id="ip">
+        <input type="button" value="connect" id="submit">
+    </form>
+    <div id="actions">
+        <button class="action" id="left">⬅</button>
+        <button class="action" id="right">➡</button>
+        <button class="action" id="down">⬇</button>
+        <button class="action" id="up">⬆</button>
+    </div>
+    <input type="range" value="20" max="255" min="0" onmousedown="speed(this.value)" onmousemove="speed(this.value)">
+    <script>
+
+        const defaultIp = "192.168.1.101";
+        let socket = new WebSocket(`ws://${defaultIp}:8060`);
+        const buttons = document.getElementsByClassName('action');
+        const submit = document.getElementById('submit');
+        const ip = document.getElementById('ip');
+
+        const stopFunc = () => {
+            emit('stop');
+        };
+
+        for (const button of buttons) {
+            const actionFunc = () => {
+                emit(button.id);
+            };
+            button.addEventListener('mouseup', stopFunc);
+            button.addEventListener('touchend', stopFunc);
+            button.addEventListener('mousedown', actionFunc);
+            button.addEventListener('touchstart', actionFunc);
+        }
+        submit.addEventListener('click', () => {
+            socket.close();
+            try {
+                socket = new WebSocket(`ws://${ip.value ?? defaultIp}:8060`);
+            } catch (error) {
+                console.log(error.message);
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            const ev = e.key.replace(/Arrow/gm, '').toLowerCase();
+            emit(ev);
+        });
+
+        document.addEventListener('keyup', (e) => {
+            emit('stop');
+        });
+        function speed(obj) {
+            emit('stop', obj);
+        }
+        // function toggleUp() {
+        //     up_val = (up_val)? 0 : 1;
+        //     socket.send("up", up_val);
+        // }
+
+        function emit(direction, speed = null) {
+            socket.send(JSON.stringify({
+                direction,
+                speed
+            }));
+        }
+    </script>
+</body>
+</html>

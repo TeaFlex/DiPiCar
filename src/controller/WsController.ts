@@ -7,6 +7,7 @@ export class Ws_controller {
 
     private ws_server: Server;
     private pistream: any;
+    private gpio: GPIO_control;
 
     constructor(ws_server: Server) {
         this.ws_server = ws_server;
@@ -22,14 +23,24 @@ export class Ws_controller {
             limit: 1
         });
 
+        this.gpio = GPIO_control.getInstance();
+        this.gpio.stop();
         this.ws_server.on("connection", this.new_client);
     }
 
-    new_client(socket: any, req: any) {
+    new_client = (socket: any, req: any) => {
         socket.on("message", (data: any) => {
             try {
                 data = JSON.parse(data);
-                console.log(data.request);
+                console.log(data);
+
+                if(data.speed)
+                    this.gpio.speed(data.speed);
+                
+                if(data.direction !== 'stop' && data.direction !== 'stop')
+                    (this.gpio as any)[data.direction]();
+                else
+                    this.gpio.stop();
             } catch (error) {
                 logger.info("GPIO CONTROL: Unsupported request");
             }

@@ -7,28 +7,34 @@ import helmet from 'helmet';
 import { UsersRoute } from './routes/UsersRoute';
 import { StatsRoute } from './routes/StatsRoute';
 import { errorHandler } from './middlewares/errorHandlers';
-import {logger} from './utilities/logger/Logger';
+import { logger } from './utilities/logger/Logger';
 import successHandler from './middlewares/successHandler';
 import logHandler from './middlewares/logHandler';
 import { Ws_controller } from './controller/WsController';
 import dotenv from 'dotenv';
+import path from 'path';
+import { Path } from './utilities/Path';
 
 class Main {
     constructor() {
 
         if(process.env.NODE_ENV === 'production') {
-            dotenv.config();
+            dotenv.config({path: path.resolve(process.cwd(), 'production.env')});
+        }
+        if(process.env.NODE_ENV === 'development') {
+            dotenv.config({path: path.resolve(process.cwd(), 'development.env')});
         }
 
+        const p = new Path();
+        
         const port = parseInt(process.env.PORT!) | 8060;
 
         const app = express();
         const server = createServer(app);
 
-        
         app.use(express.static('public'));
         app.use(cors());
-        app.use(helmet());
+        app.use(helmet())
         app.use(express.json());
         
         MainRoute.init(app);

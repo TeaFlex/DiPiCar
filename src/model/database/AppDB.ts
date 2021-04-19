@@ -1,10 +1,11 @@
 import {UserDAO} from './DAOs/UserDAO';
-import fs from 'fs';
+import fs from 'fs/promises';
 import StormDB from 'stormdb';
+import { resolvePath, Path } from '../../utilities/Path';
 
 export class AppDB {
 
-    public static dbPath: string = './data/dbapp.json';
+    public static dbFile: string = 'dbapp.json';
     private static db: StormDB;
     private static appDB: AppDB;
     //Only DAO attributes can be non static.
@@ -18,11 +19,13 @@ export class AppDB {
 
     public static async getInstance(): Promise<AppDB> {
         if(AppDB.appDB == null){ 
-            if(!fs.existsSync('./data'))
-                fs.mkdirSync('./data');
-            const engine = new StormDB.localFileEngine(this.dbPath, {
-                serialize: (data: any) => JSON.stringify(data, undefined, 4)
-            });
+            await fs.mkdir(Path.env.dbPath , {recursive: true});
+            const engine = new StormDB.localFileEngine(
+                resolvePath(Path.env.dbPath, this.dbFile), 
+                {
+                    serialize: (data: any) => JSON.stringify(data, undefined, 4)
+                }
+            );
             this.db = new StormDB(engine);
             AppDB.appDB = new AppDB();
             this.db.default(this.structure);

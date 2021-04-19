@@ -1,6 +1,7 @@
 import winston, { format } from "winston";
+import { resolvePath, Path } from "../Path";
 
-export const logger: winston.Logger = winston.createLogger({
+export const logger = winston.createLogger({
     format: format.combine(
         format.timestamp(),
         format.splat(),
@@ -10,8 +11,8 @@ export const logger: winston.Logger = winston.createLogger({
         })
     ),
     transports: [
-        new winston.transports.File({ level: 'error', filename: `logs/dipicar-error.log`}),
-        new winston.transports.File({ filename: 'logs/dipicar-combined-logs.log'}),
+        new winston.transports.File({ level: 'error', filename: resolvePath(Path.env.logPath, 'dipicar-error.log')}),
+        new winston.transports.File({ filename: resolvePath(Path.env.logPath, 'dipicar-combined-logs.log')}),
         new winston.transports.Console()
     ]
 });
