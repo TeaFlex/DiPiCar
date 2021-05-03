@@ -17,8 +17,8 @@ export class AppDB {
         this.userDAO = new UserDAO(AppDB.db);
     }
 
-    public static async getInstance(): Promise<AppDB> {
-        if(AppDB.appDB == null){ 
+    public static async getInstance() {
+        if(!AppDB.appDB){ 
             await fs.mkdir(Path.env.dbPath , {recursive: true});
             const engine = new StormDB.localFileEngine(
                 resolvePath(Path.env.dbPath, this.dbFile), 
@@ -32,5 +32,13 @@ export class AppDB {
             await this.db.save();
         }
         return this.appDB;
+    }
+
+    public static async deleteDatabase() {
+        try {
+            return await fs.rm(resolvePath(Path.env.dbPath, this.dbFile));
+        } catch (error) {
+            return false;
+        }
     }
 }

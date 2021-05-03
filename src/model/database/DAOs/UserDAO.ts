@@ -15,7 +15,8 @@ export class UserDAO extends BaseDAO{
                 gameTime: 0,
                 firstConnection: new Date(),
                 lastConnection: new Date()
-            }
+            },
+            storage: {}
         }
         return this.saveEntry<User>(user);
     }
@@ -26,11 +27,9 @@ export class UserDAO extends BaseDAO{
 
     async doesUserNameExist(name: string): Promise<boolean> {
         try {
-            if(await this.getUserByName(name) === undefined)
-                return new Promise((resolve) => resolve(false));
-            return new Promise((resolve) => resolve(true));
+            return !!(await this.getUserByName(name));
         } catch (error) {
-            return new Promise((resolve) => resolve(false));
+            return false;
         }
     }
 
@@ -47,8 +46,7 @@ export class UserDAO extends BaseDAO{
     }
 
     async getStatsById(id: number): Promise<UserStats> {
-        const u = await this.getUserById(id);
-        return u.stats!;
+        return (await this.getUserById(id)).stats!;
     }
 
     async updateStats(id: number, stats: UserStats): Promise<void>{
@@ -60,6 +58,31 @@ export class UserDAO extends BaseDAO{
                 lastConnection: new Date()
             }
         };
-        this.updateEntry<User>(id, u);
+        await this.updateEntry<User>(id, u);
+    }
+
+    async getUserStorage(id: number) {
+        return (await this.getUserById(id)).storage ?? {};
+    }
+
+    async clearUserStorage(id: number) {
+        const u = await this.getUserById(id);
+        u.storage = {};
+        await this.updateEntry<User>(id, u);
+    }
+
+    async mergeToUserStorage(id: number, obj: {[key: string]: any}) {
+        const u = await this.getUserById(id);
+        u.storage = {
+            ...u.storage ?? {},
+            ...obj
+        };
+        await this.updateEntry<User>(id, u);
+    }
+
+    async deleteKeyFromUserStorage(id: number, key: string) {
+        const u = await this.getUserById(id);
+        delete (u.storage ?? {})[key];
+        await this.updateEntry<User>(id, u);
     }
 }
