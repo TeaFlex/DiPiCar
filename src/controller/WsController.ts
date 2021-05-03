@@ -5,14 +5,16 @@ import {logger} from '../utilities/logger/Logger';
 
 export class Ws_controller {
 
-    private ws_server: Server;
-    private pistream: any;
+    private wsServer: Server;
+    private pistream: PiStreamServer;
     private gpio: GPIO_control;
 
-    constructor(ws_server: Server) {
-        this.ws_server = ws_server;
+    constructor(wsServer?: Server, port = 8061) {
+        this.wsServer = wsServer ?? new Server({port});
+
         PiStreamServer.log = logger;
-        this.pistream = new PiStreamServer(this.ws_server, {
+
+        this.pistream = new PiStreamServer(this.wsServer, {
             videoOptions: {
                 height: 280, 
                 width: 560, 
@@ -23,27 +25,25 @@ export class Ws_controller {
             limit: 1
         });
 
+        this.newClient = this.newClient.bind(this);
+        this.handleData = this.handleData.bind(this);
+
         this.gpio = GPIO_control.getInstance();
-        this.gpio.stop();
-        this.ws_server.on("connection", this.new_client);
+        this.wsServer.on("connection", this.newClient);
     }
 
-    new_client = (socket: any, req: any) => {
-        socket.on("message", (data: any) => {
-            try {
-                data = JSON.parse(data);
-                console.log(data);
-
-                if(data.speed)
-                    this.gpio.speed(data.speed);
-                
-                if(data.direction !== 'stop' && data.direction !== 'stop')
-                    (this.gpio as any)[data.direction]();
-                else
-                    this.gpio.stop();
-            } catch (error) {
-                logger.info("GPIO CONTROL: Unsupported request");
-            }
-        });
+    newClient (socket: any, req: any) {
+        socket.on("message", this.handleData);
+    }
+    
+    handleData(data: string) {
+        try {
+            this.gpio.movement(JSON.parse(data));
+        } catch (error) {
+            if(error instanceof SyntaxError)
+                logger.info(`GPIO CONTROL: Unsupported request (${data}), skipping...`);
+            else
+                logger.error(error.stack);
+        }
     }
 }
