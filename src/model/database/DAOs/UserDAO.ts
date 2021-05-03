@@ -25,6 +25,11 @@ export class UserDAO extends BaseDAO{
         return this.deleteEntry(id);
     }
 
+    async deleteMultipleUsers(...ids: number[]) {
+        for (const id of ids) 
+            await this.deleteUser(id);
+    }
+
     async doesUserNameExist(name: string): Promise<boolean> {
         try {
             return !!(await this.getUserByName(name));

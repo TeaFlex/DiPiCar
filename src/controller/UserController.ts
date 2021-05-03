@@ -7,34 +7,32 @@ import { BaseController } from "./BaseController";
 export class UserController extends BaseController {
 
     initUser = async (req: Request, res: Response, next: NextFunction) => {
-        var u: User = req.body;
+        const u: User = req.body;
         if(await this.db!.userDAO.doesUserNameExist(u.name))
             next(new HttpError(`User "${u.name}" already exists.`, 409));
         else {
-            var id = await this.db!.userDAO.saveUser(u);
-            u = await this.db!.userDAO.getUserById(id);
+            const id = await this.db!.userDAO.saveUser(u);
             res.locals.message = `User "${u.name}" created`
             res.locals.status = 201;
-            res.locals.json = u;
+            res.locals.json = await this.db!.userDAO.getUserById(id);;
             next();
         }
-    }
+    };
 
     getUser = async (req: Request, res: Response, next: NextFunction) => {
-        var id = parseInt(req.params["id"], 10);
+        const id = parseInt(req.params["id"], 10);
         if (!await this.db!.userDAO.getUserById(id))
             next(new NotFoundError(`User of id "${id}" doesn't exist.`));
         else {
-            var json = await this.db!.userDAO.getUserById(id);
             res.locals.message = `User "${id}" sent.`
             res.locals.status = 200;
-            res.locals.json = json;
+            res.locals.json = await this.db!.userDAO.getUserById(id);
             next();
         }
-    }
+    };
 
     getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
-        var json = await this.db!.userDAO.getAllUsers();
+        const json = await this.db!.userDAO.getAllUsers();
         if(json.length == 0) {
             res.locals.status = 204;
             res.locals.message = 'There\'s no user to send.';
@@ -45,11 +43,10 @@ export class UserController extends BaseController {
             res.locals.json = json;
         }
         next();
-    }
+    };
 
     deleteUser = async (req: Request, res: Response, next: NextFunction) => {
-        //TODO: Token needed
-        var id = parseInt(req.params["id"], 10);
+        const id = parseInt(req.params["id"], 10);
         if(!await this.db!.userDAO.getUserById(id))
             next(new NotFoundError(`User of id "${id}" doesn't exist.`));
         else {
@@ -58,5 +55,5 @@ export class UserController extends BaseController {
             res.locals.status = 200;
             next();
         }
-    }
+    };
 }

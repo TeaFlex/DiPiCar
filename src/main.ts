@@ -7,6 +7,7 @@ import helmet from 'helmet';
 import { UsersRoute } from './routes/UsersRoute';
 import { StatsRoute } from './routes/StatsRoute';
 import { errorHandler } from './middlewares/errorHandlers';
+import { StorageRoute } from './routes/StorageRoute';
 import { logger } from './utilities/logger/Logger';
 import successHandler from './middlewares/successHandler';
 import logHandler from './middlewares/logHandler';
@@ -40,6 +41,7 @@ class Main {
         MainRoute.init(app);
         UsersRoute.init(app);
         StatsRoute.init(app);
+        StorageRoute.init(app);
 
         app.use(errorHandler);
         app.use(successHandler);

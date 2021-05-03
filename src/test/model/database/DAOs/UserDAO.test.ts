@@ -52,17 +52,27 @@ describe("User in database", async function() {
         assert.typeOf(dbu?.stats?.lastConnection, "Date");
     });
 
-    it("Generates user storage dynamically", async () => {  
+    it("Creates a working user storage", async () => {  
         const uid = await db.userDAO.saveUser(u);
-
         await db.userDAO.mergeToUserStorage(uid, {
-            myKey: "some random infos"
+            myKey: "some random infos",
+            otherKey: "other infos",
+            someKey: 123
         });
-        await db.userDAO.deleteKeyFromUserStorage(uid, "myKey");
-        const ulist = await db.userDAO.getAllUsers();
-        const dbu = ulist.find(v=>v.id === uid);
 
-        console.log(await db.userDAO.getUserStorage(uid));
+        let udb = await db.userDAO.getUserById(uid);
+        assert.strictEqual(udb.storage.myKey, "some random infos");
+        assert.strictEqual(udb.storage.otherKey, "other infos");
+        assert.strictEqual(udb.storage.someKey, 123);
         
+        await db.userDAO.deleteKeyFromUserStorage(uid, "myKey");
+        
+        udb = await db.userDAO.getUserById(uid);
+        assert.isUndefined(udb.storage.myKey);
+
+        await db.userDAO.clearUserStorage(uid);
+
+        udb = await db.userDAO.getUserById(uid);
+        assert.isEmpty(udb.storage);   
     });
 });
