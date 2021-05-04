@@ -11,3 +11,4 @@ build/
 package-lock.json
 yarn.lock
 data/
+*.bak

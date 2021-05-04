@@ -1,13 +1,15 @@
 import {Server} from 'ws';
-import {GPIO_control} from '../model/gpio/Gpio_control';
+import {GPIO_control} from '../model';
 import {ImageEffects, PiStreamServer} from 'pistreamer';
-import {logger} from '../utilities/logger/Logger';
+import {logger} from '../utilities';
 
-export class Ws_controller {
+export class WsController {
 
     private wsServer: Server;
     private pistream: PiStreamServer;
     private gpio: GPIO_control;
+    private limit = 1;
+    private wsClients: any[] = [];
 
     constructor(wsServer?: Server, port = 8061) {
         this.wsServer = wsServer ?? new Server({port});
@@ -22,7 +24,7 @@ export class Ws_controller {
                 vFlip: true,
                 hFlip: true
             },
-            limit: 1
+            limit: this.limit
         });
 
         this.newClient = this.newClient.bind(this);
@@ -33,7 +35,10 @@ export class Ws_controller {
     }
 
     newClient (socket: any, req: any) {
-        socket.on("message", this.handleData);
+        if(this.wsServer.clients.size <= this.limit) 
+            socket.on("message", this.handleData);
+        else 
+            logger.info(`Limit of ${this.limit} user(s) reached.`);
     }
     
     handleData(data: string) {

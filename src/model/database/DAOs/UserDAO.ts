@@ -1,6 +1,6 @@
 import StormDB from 'stormdb';
 import {BaseDAO} from './BaseDAO';
-import {User, UserStats} from '../Entities/User';
+import {User, UserStats} from '../Entities';
 
 export class UserDAO extends BaseDAO{
 

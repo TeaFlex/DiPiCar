@@ -1,5 +1,5 @@
 import { createServer } from 'http';
-import { Server } from 'ws';
+import { Server as WsServer } from 'ws';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -13,7 +13,7 @@ import {
 } from './routes';
 import { responseHandler, sendHandler } from './middlewares';
 import { logger, Path } from './utilities';
-import { Ws_controller } from './controller';
+import { WsController } from './controller';
 
 class Main {
     constructor() {
@@ -45,8 +45,8 @@ class Main {
         app.use(responseHandler);
         app.use(sendHandler);
         
-        const ws_server = new Server({server});
-        const ws_controller = new Ws_controller(ws_server);
+        const wsServer = new WsServer({server});
+        const wsController = new WsController(wsServer);
         
         server.listen(port, () => {
             logger.info(`The app is running and listening to the port ${port}.`);

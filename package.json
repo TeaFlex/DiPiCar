@@ -33,10 +33,10 @@
     "ts-mocha": "^8.0.0"
   },
   "scripts": {
-    "start": "tsc && NODE_ENV=production sudo node ./dist/main.js",
+    "start": "cti ./src/**/ && tsc && NODE_ENV=production sudo node ./dist/main.js",
     "test": "ts-mocha ./src/test/**/*.test.ts",
-    "build": "rm -rf ./dist && tsc && node build.script.js",
-    "dev": "tsc && NODE_ENV=development sudo node ./dist/main.js"
+    "build": "rm -rf ./dist && cti ./src/**/ && tsc && node build.script.js",
+    "dev": "cti ./src/**/ && NODE_ENV=development nodemon"
   },
   "author": "Teaflex",
   "license": "ISC",

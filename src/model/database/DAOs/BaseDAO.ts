@@ -1,6 +1,6 @@
 import StormDB from 'stormdb';
 import { AppDB } from '../AppDB';
-import {Base} from '../Entities/Base';
+import {Base} from '../Entities';
 
 export abstract class BaseDAO {
 
