@@ -11,16 +11,16 @@ export class UsersRoute {
         const router = Router();
         const user = new UserController();
 
-        //Get all users
+        //Gets all users
         router.get('/', catchError(user.getAllUsers));
 
-        //Get a User by id
+        //Gets a User by id
         router.get('/:id', param('id').isInt(), catchError(user.getUser));
 
-        //Post a user from JSON
+        //Posts a user from JSON
         router.post('/', checkSchema(userSchema), bodyControl, catchError(user.initUser));
 
-        //Delete a User
+        //Deletes a User
         router.delete('/:id', param('id').isInt(), catchError(user.deleteUser));
 
         app.use('/api/users', router);
