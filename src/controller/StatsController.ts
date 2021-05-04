@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { NotFoundError } from "../utilities/errors/NotFoundError";
-import { UserStats } from "../model/database/Entities/User";
+import { NotFoundError } from "../utilities/errors";
+import { UserStats } from "../model/database/Entities";
 import { BaseController } from "./BaseController";
+import { HttpSuccess } from "../utilities";
 
 export class StatsController extends BaseController {
 
@@ -10,10 +11,8 @@ export class StatsController extends BaseController {
         if (!await this.db!.userDAO.doesEntryExist(id))
             next(new NotFoundError(`Stats of id "${id}" doesn't exist.`));
         else {
-            res.locals.message = `Stats of user "${id}" sent.`
-            res.locals.status = 200;
-            res.locals.json = await this.db!.userDAO.getStatsById(id);
-            next();
+            const data = await this.db!.userDAO.getStatsById(id);
+            next(new HttpSuccess(`Stats of user "${id}" sent.`, data));
         }
     }
     
@@ -24,9 +23,7 @@ export class StatsController extends BaseController {
             next(new NotFoundError(`Stats of id "${id}" doesn't exist.`));
         else {
             await this.db!.userDAO.updateStats(id, s);
-            res.locals.message = `Stats of user "${id}" updated.`
-            res.locals.status = 200;
-            next();
+            next(new HttpSuccess(`Stats of user "${id}" updated.`));
         }
     }
 }

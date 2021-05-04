@@ -1,7 +1,7 @@
 import { Express, Router } from "express";
 import { body, param } from "express-validator";
 import { StorageController } from "../controller/StorageController";
-import { catchError } from "../middlewares/errorHandlers";
+import { catchError } from "../middlewares/responseHandlers";
 
 export class StorageRoute {
     static init(app: Express) {

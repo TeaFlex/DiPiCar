@@ -1,6 +1,7 @@
 import { BaseController } from "./BaseController";
 import { NextFunction, Request, Response } from "express";
-import { NotFoundError } from "../utilities/errors/NotFoundError";
+import { NotFoundError } from "../utilities/errors";
+import { HttpNoContent, HttpSuccess } from "../utilities/successes";
 
 export class StorageController extends BaseController {
 
@@ -9,10 +10,11 @@ export class StorageController extends BaseController {
         if (!await this.db!.userDAO.doesEntryExist(id!))
             next(new NotFoundError(`Storage of id "${id}" doesn't exist.`));
         else {
-            res.locals.message = `Storage of user "${id}" sent.`;
-            res.locals.status = 200;
-            res.locals.json = await this.db!.userDAO.getUserStorage(id);
-            next();
+            const data = await this.db!.userDAO.getUserStorage(id);
+            let success = new HttpSuccess(`Storage of user "${id}" sent.`, data);
+            if(!Object.keys(data).length)
+                success = new HttpNoContent(`Storage of user "${id}" is empty.`);
+            next(success);
         }
     };
 
@@ -23,9 +25,7 @@ export class StorageController extends BaseController {
             next(new NotFoundError(`Storage of id "${id}" doesn't exist.`));
         else {
             await this.db!.userDAO.mergeToUserStorage(id, s);
-            res.locals.message = `Storage of user "${id}" updated.`;
-            res.locals.status = 200;
-            next();
+            next(new HttpSuccess(`Storage of user "${id}" updated.`));
         }
     };
 
@@ -38,9 +38,7 @@ export class StorageController extends BaseController {
             next(new NotFoundError(`Key "${key}" in storage of id "${id}" doesn't exist.`));
         else {
             await this.db!.userDAO.deleteKeyFromUserStorage(id, key);
-            res.locals.message = `Key "${key}" in storage of user "${id}" deleted.`;
-            res.locals.status = 200;
-            next();
+            next(new HttpSuccess(`Key "${key}" in storage of user "${id}" deleted.`));
         }
     }
 
@@ -50,9 +48,7 @@ export class StorageController extends BaseController {
             next(new NotFoundError(`Storage of id "${id}" doesn't exist.`));
         else {
             await this.db!.userDAO.clearUserStorage(id);
-            res.locals.message = `Storage of user "${id}" cleared.`;
-            res.locals.status = 200;
-            next();
+            next(new HttpSuccess(`Storage of user "${id}" cleared.`));
         }
     }
 }

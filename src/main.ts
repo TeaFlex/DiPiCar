@@ -1,20 +1,19 @@
-import {createServer} from 'http';
-import {Server} from 'ws';
-import {MainRoute} from './routes/MainRoute';
+import { createServer } from 'http';
+import { Server } from 'ws';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import { UsersRoute } from './routes/UsersRoute';
-import { StatsRoute } from './routes/StatsRoute';
-import { errorHandler } from './middlewares/errorHandlers';
-import { StorageRoute } from './routes/StorageRoute';
-import { logger } from './utilities/logger/Logger';
-import successHandler from './middlewares/successHandler';
-import logHandler from './middlewares/logHandler';
-import { Ws_controller } from './controller/WsController';
 import dotenv from 'dotenv';
 import path from 'path';
-import { Path } from './utilities/Path';
+import { 
+    MainRoute, 
+    UsersRoute, 
+    StatsRoute, 
+    StorageRoute 
+} from './routes';
+import { responseHandler, sendHandler } from './middlewares';
+import { logger, Path } from './utilities';
+import { Ws_controller } from './controller';
 
 class Main {
     constructor() {
@@ -43,9 +42,8 @@ class Main {
         StatsRoute.init(app);
         StorageRoute.init(app);
 
-        app.use(errorHandler);
-        app.use(successHandler);
-        app.use(logHandler);
+        app.use(responseHandler);
+        app.use(sendHandler);
         
         const ws_server = new Server({server});
         const ws_controller = new Ws_controller(ws_server);

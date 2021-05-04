@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from "express";
-import { HttpError } from "../utilities/errors/HttpError";
-import { NotFoundError } from "../utilities/errors/NotFoundError";
-import { User } from "../model/database/Entities/User";
+import { json, NextFunction, Request, Response } from "express";
+import { HttpError, NotFoundError } from "../utilities/errors";
+import { User } from "../model/database/Entities";
 import { BaseController } from "./BaseController";
+import { HttpSuccess, HttpCreated, HttpNoContent } from "../utilities/successes";
 
 export class UserController extends BaseController {
 
@@ -12,10 +12,8 @@ export class UserController extends BaseController {
             next(new HttpError(`User "${u.name}" already exists.`, 409));
         else {
             const id = await this.db!.userDAO.saveUser(u);
-            res.locals.message = `User "${u.name}" created`
-            res.locals.status = 201;
-            res.locals.json = await this.db!.userDAO.getUserById(id);;
-            next();
+            const data = await this.db!.userDAO.getUserById(id);
+            next(new HttpCreated(`User "${u.name}" created`, data));
         }
     };
 
@@ -24,25 +22,14 @@ export class UserController extends BaseController {
         if (!await this.db!.userDAO.getUserById(id))
             next(new NotFoundError(`User of id "${id}" doesn't exist.`));
         else {
-            res.locals.message = `User "${id}" sent.`
-            res.locals.status = 200;
-            res.locals.json = await this.db!.userDAO.getUserById(id);
-            next();
+            const data = await this.db!.userDAO.getUserById(id);
+            next(new HttpSuccess(`User "${id}" sent.`, data));
         }
     };
 
     getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
-        const json = await this.db!.userDAO.getAllUsers();
-        if(json.length == 0) {
-            res.locals.status = 204;
-            res.locals.message = 'There\'s no user to send.';
-        }
-        else{
-            res.locals.message = `All users sent.`
-            res.locals.status = 200;
-            res.locals.json = json;
-        }
-        next();
+        const data = await this.db!.userDAO.getAllUsers();
+        next((!data.length)? new HttpNoContent('There\'s no user to send.') : new HttpSuccess(`All users sent.`, data));
     };
 
     deleteUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -51,9 +38,7 @@ export class UserController extends BaseController {
             next(new NotFoundError(`User of id "${id}" doesn't exist.`));
         else {
             await this.db!.userDAO.deleteUser(id);
-            res.locals.message = `User of id "${id}" deleted.`
-            res.locals.status = 200;
-            next();
+            next(new HttpSuccess(`User of id "${id}" deleted.`));
         }
     };
 }

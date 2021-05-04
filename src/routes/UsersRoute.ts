@@ -2,7 +2,7 @@ import { Express, Router } from "express";
 import { UserController } from "../controller/UserController";
 import { bodyControl, userSchema } from "../middlewares/bodyControl";
 import { checkSchema, param} from "express-validator";
-import { catchError } from "../middlewares/errorHandlers";
+import { catchError } from "../middlewares/responseHandlers";
 
 export class UsersRoute {
     

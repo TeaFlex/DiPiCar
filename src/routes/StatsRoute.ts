@@ -2,7 +2,7 @@ import { Express, Router } from "express";
 import { StatsController } from "../controller/StatsController";
 import { bodyControl, statsSchema } from "../middlewares/bodyControl";
 import { checkSchema, param } from "express-validator";
-import { catchError } from "../middlewares/errorHandlers";
+import { catchError } from "../middlewares/responseHandlers";
 
 export class StatsRoute {
     
