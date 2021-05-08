@@ -37,7 +37,7 @@
   "scripts": {
     "start": "cti ./src-e ./src/test && tsc && NODE_ENV=production sudo node ./dist/main.js",
     "test": "ts-mocha ./src/test/**/*.test.ts",
-    "build": "rm -rf ./dist ./build && tsc && node build.script.js",
+    "build": "sudo rm -rf ./dist ./build && tsc && node scripts/building/build.js",
     "dev": "NODE_ENV=development nodemon"
   },
   "author": "Teaflex",

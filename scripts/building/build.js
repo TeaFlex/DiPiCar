@@ -11,13 +11,12 @@ compile({
         "./scripts/**/*",
         "./public/*",
         "./dist/**/*",
-        "./configuration_files/**/*"
+        "./configuration_files/**/*",
+        "./node_modules/pigpio"
     ],
     loglevel: "info",
 })
 .then(() => {
     console.log("🏁 Build complete !");
 })
-.catch((error) => {
-    console.error(error);
-});
+.catch(console.error);

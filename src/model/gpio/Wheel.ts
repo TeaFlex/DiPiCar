@@ -1,3 +1,5 @@
+import { initPigpio } from "../../utilities";
+initPigpio();
 import { Gpio } from "pigpio";
 
 export class Wheel {

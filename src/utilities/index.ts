@@ -4,3 +4,4 @@ export * from './errors';
 export * from './logger';
 export * from './successes';
 export * from './Path';
+export * from './initPigpio';
