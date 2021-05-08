@@ -1,11 +1,10 @@
-import StormDB from 'stormdb';
 import {BaseDAO} from './BaseDAO';
 import {User, UserStats} from '../Entities';
 
 export class UserDAO extends BaseDAO{
 
-    constructor(db: StormDB) {
-        super(db, "User");
+    constructor() {
+        super("User");
     }
 
     saveUser(user: User): Promise<number> {

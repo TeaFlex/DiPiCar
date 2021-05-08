@@ -1,14 +1,11 @@
-import StormDB from 'stormdb';
 import { AppDB } from '../AppDB';
 import {Base} from '../Entities';
 
 export abstract class BaseDAO {
 
     protected tableName: string;
-    protected db: StormDB;
 
-    constructor(db: StormDB, tableName: string) {
-        this.db = db;
+    constructor(tableName: string) {
         this.tableName = tableName;
         const table: any = {};
         table[this.tableName] = [];
@@ -19,57 +16,55 @@ export abstract class BaseDAO {
     }
     
     public async doesEntryExist(rowid: number): Promise<boolean> {
-        return (this.db
-            .get(this.tableName).value() as Base[])
-            .find((v) => v.id === rowid) != null;
+        return !!await this.getEntryById<Base>(rowid);
     }
 
     protected async saveEntry<T extends Base>(entry: T): Promise<number> {
         entry.id = 1;
-        for(const el of this.db.get(this.tableName).value() as T[])
+        for(const el of AppDB.db.get(this.tableName).value() as T[])
             entry.id = (el.id ?? 0 > entry.id)? el.id! + 1: entry.id;
 
-        this.db
+        AppDB.db
             .get(this.tableName)
             .push(entry)
-        await this.db.save();
+        await AppDB.db.save();
         return entry.id!;
     }
 
     protected async deleteEntry(rowid: number): Promise<void> {
-        const purged = (this.db
+        const purged = (AppDB.db
             .get(this.tableName)
             .value() as Base[])
             .filter(v => v.id != rowid);
 
-        this.db.set(this.tableName, purged);
-        return this.db.save()!;
+        AppDB.db.set(this.tableName, purged);
+        return AppDB.db.save()!;
     }
 
     protected async getEntryById<T extends Base>(rowid: number): Promise<T> {
-        return (this.db.get(this.tableName).value() as T[])
+        return (AppDB.db.get(this.tableName).value() as T[])
             .find(v => v.id === rowid)!;
     }
 
     protected async getEntryByColumn<T>(column: string, value: string): Promise<T> {
-        return (this.db.get(this.tableName).value() as T[])
+        return (AppDB.db.get(this.tableName).value() as T[])
             .find((v: any) => v[column] === value)!;
     }
 
     protected async getAllEntries<T extends Base>(): Promise<Array<T>> {
-        return (this.db.get(this.tableName).value() as T[]);
+        return (AppDB.db.get(this.tableName).value() as T[]);
     }
 
     protected async updateEntry<T extends Base>(rowid: number, updatedEntry: T): Promise<void> {
-        const updateIndex = (this.db
+        const updateIndex = (AppDB.db
             .get(this.tableName)
             .value() as T[])
             .findIndex(v => v.id === rowid);
 
-        this.db
+        AppDB.db
             .get(this.tableName)
             .set(updateIndex, updatedEntry);
 
-        return this.db.save()!;
+        return AppDB.db.save()!;
     }
 }

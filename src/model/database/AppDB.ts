@@ -6,7 +6,7 @@ import { resolvePath, Path } from '../../utilities/Path';
 export class AppDB {
 
     public static dbFile: string = 'dbapp.json';
-    private static db: StormDB;
+    private static database: StormDB;
     private static appDB: AppDB;
     //Only DAO attributes can be non static.
     public userDAO: UserDAO;
@@ -14,7 +14,11 @@ export class AppDB {
 
     private constructor() { 
         //DAOs
-        this.userDAO = new UserDAO(AppDB.db);
+        this.userDAO = new UserDAO();
+    }
+
+    public static get db() {
+        return this.database ?? null;
     }
 
     public static async getInstance() {
@@ -26,10 +30,10 @@ export class AppDB {
                     serialize: (data: any) => JSON.stringify(data, undefined, 4)
                 }
             );
-            this.db = new StormDB(engine);
-            AppDB.appDB = new AppDB();
-            this.db.default(this.structure);
-            await this.db.save();
+            this.database = new StormDB(engine);
+            this.appDB = new AppDB();
+            this.database.default(this.structure);
+            await this.database.save();
         }
         return this.appDB;
     }

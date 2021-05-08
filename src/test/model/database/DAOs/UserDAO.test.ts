@@ -75,4 +75,17 @@ describe("User in database", async function() {
         udb = await db.userDAO.getUserById(uid);
         assert.isEmpty(udb.storage);   
     });
+
+    it("Gets user stats from stats method after creation", async () => {        
+        const uid = await db.userDAO.saveUser(u);
+        const stats = await db.userDAO.getStatsById(uid);
+
+        assert.isObject(stats);
+        assert.isNotEmpty(stats);
+        assert.strictEqual(stats.gameTime, 0);
+        assert.isDefined(stats.firstConnection);
+        assert.isDefined(stats.lastConnection);
+        assert.typeOf(stats.firstConnection, "Date");
+        assert.typeOf(stats.lastConnection, "Date");
+    });
 });

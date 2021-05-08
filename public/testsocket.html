@@ -5,24 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        input#val {
-            width: 100vw;
-        }
-        .action {
-            height: 5rem;
-            width: 5rem;
-            font-size: 4rem;
-            user-select: none;
-            position: absolute;
-        }
-
-        #actions {
-            position: relative;
-            background-color: aqua;
-            width: 15rem;
-            height: 15rem;
-        }
-
         .action#up {
             left: 5rem;
         }
@@ -37,6 +19,10 @@
             top: 5rem;
             right: 0;
         }
+        #actions > * {
+            -webkit-appearance: slider-vertical;
+            margin: 0;
+        }
 
     </style>
 </head>
@@ -44,67 +30,78 @@
     <!-- <button onclick="toggleUp()">toggle up</button> -->
     <form>
         <input type="text" id="ip">
-        <input type="button" value="connect" id="submit">
+        <input type="button" value="connect" id="connect">
     </form>
     <div id="actions">
-        <button class="action" id="left">⬅</button>
-        <button class="action" id="right">➡</button>
-        <button class="action" id="down">⬇</button>
-        <button class="action" id="up">⬆</button>
+        <input type="range" value="0" max="255" min="-255" id="x" title="x">
+        <input type="range" value="0" max="255" min="-255" id="y" title="y">
+        <input type="range" value="255" max="255" min="0" id="speed" title="speed">
     </div>
-    <input type="range" value="20" max="255" min="0" onmousedown="speed(this.value)" onmousemove="speed(this.value)">
+    <input type="button" value="send" id="send">
+
+    <div>
+        <button id="startStream" onclick="player.playStream()">Start stream</button>
+        <button id="stopStream" onclick="player.stopStream()">Stop stream</button>
+        <button id="disconnect" onclick="player.disconnect()">Disconnect</button>
+        <button id="pauseStream" onclick="player.pauseStream()">toggle Pause</button>
+    </div>
+
+    <script src="./http-live-player.js"></script>
     <script>
 
-        const defaultIp = "192.168.1.101";
-        let socket = new WebSocket(`ws://${defaultIp}:8060`);
+        const defaultIp = location.host;
+        //let socket = new WebSocket(`ws://${defaultIp}:8061`);
         const buttons = document.getElementsByClassName('action');
-        const submit = document.getElementById('submit');
+        const connect = document.getElementById('connect');
         const ip = document.getElementById('ip');
 
-        const stopFunc = () => {
-            emit('stop');
-        };
+        const canvas = document.createElement("canvas");
+        let player = new WSAvcPlayer(canvas, "webgl", 1, 35);
+        player.connect(`ws://${defaultIp}`);
+        let socket = player.ws;
 
-        for (const button of buttons) {
-            const actionFunc = () => {
-                emit(button.id);
-            };
-            button.addEventListener('mouseup', stopFunc);
-            button.addEventListener('touchend', stopFunc);
-            button.addEventListener('mousedown', actionFunc);
-            button.addEventListener('touchstart', actionFunc);
-        }
-        submit.addEventListener('click', () => {
+        const send = document.getElementById("send");
+        const ix = document.getElementById("x");
+        const iy = document.getElementById("y");
+        const ispeed = document.getElementById("speed");
+
+        connect.addEventListener('click', () => {
             socket.close();
+            player.disconnect();
             try {
-                socket = new WebSocket(`ws://${ip.value ?? defaultIp}:8060`);
+                const address = `ws://${ip.value ?? defaultIp}:8060`;
+                socket = new WebSocket(address);
+                player.connect(address);
             } catch (error) {
                 console.log(error.message);
             }
         });
 
-        document.addEventListener('keydown', (e) => {
-            const ev = e.key.replace(/Arrow/gm, '').toLowerCase();
-            emit(ev);
+        send.addEventListener('click', () => {
+            //emit(x, y, speed);
+            console.log(ix.value, iy.value, ispeed.value);
+            emit(ix.value, iy.value, ispeed.value);
         });
 
-        document.addEventListener('keyup', (e) => {
-            emit('stop');
-        });
-        function speed(obj) {
-            emit('stop', obj);
-        }
-        // function toggleUp() {
-        //     up_val = (up_val)? 0 : 1;
-        //     socket.send("up", up_val);
-        // }
-
-        function emit(direction, speed = null) {
+        function emit(x = 0, y = 0, speed = 0) {
             socket.send(JSON.stringify({
-                direction,
+                x,
+                y,
                 speed
             }));
         }
+
+
+        window.player = player;
+        document.getElementById('startStream').addEventListener('click', () => {
+            document.body.appendChild(canvas);
+        });
+        document.getElementById('stopStream').addEventListener('click', () => {
+            document.body.removeChild(canvas);
+        });
+        document.getElementById('disconnect').addEventListener('click', () => {
+            document.body.removeChild(canvas);
+        });
     </script>
 </body>
 </html>
