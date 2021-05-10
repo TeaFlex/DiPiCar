@@ -33,10 +33,9 @@
     "ts-mocha": "^8.0.0"
   },
   "scripts": {
-    "start": "cti ./src-e ./src/test && tsc && NODE_ENV=production sudo node ./dist/main.js",
+    "start": "nodemon",
     "test": "ts-mocha ./src/test/**/*.test.ts",
-    "build": "sudo rm -rf ./dist ./build && tsc && node scripts/building/build.js",
-    "dev": "NODE_ENV=development nodemon"
+    "build": "sudo rm -rf ./dist ./build && tsc && node scripts/building/build.js"
   },
   "author": "Teaflex",
   "license": "ISC",

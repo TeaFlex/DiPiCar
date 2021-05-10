@@ -37,8 +37,11 @@ export class WsController {
     newClient (socket: any, req: any) {
         if(this.wsServer.clients.size <= this.limit) 
             socket.on("message", this.handleData);
-        else 
-            logger.info(`Limit of ${this.limit} user(s) reached.`);
+        else {
+            const message = `Limit of ${this.limit} user(s) reached.`;
+            socket.send(JSON.stringify({ code: "LIMIT_REACHED", message }));
+            logger.info(message);
+        }
     }
     
     handleData(data: string) {

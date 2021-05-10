@@ -4,7 +4,6 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
-import path from 'path';
 import { 
     MainRoute, 
     UsersRoute, 
@@ -14,19 +13,16 @@ import {
 import { responseHandler, sendHandler } from './middlewares';
 import { logger, Path } from './utilities';
 import { WsController } from './controller';
+import { join } from 'path';
 
 class Main {
     constructor() {
-
-        if(process.env.NODE_ENV === 'production') {
-            dotenv.config({path: path.resolve(process.cwd(), 'production.env')});
-        }
-        if(process.env.NODE_ENV === 'development') {
-            dotenv.config({path: path.resolve(process.cwd(), 'development.env')});
-        }
-
-        const p = new Path();
         
+        if(process.env.NODE_ENV === 'development') 
+            dotenv.config({path: join(process.cwd(), 'development.env')});
+        else
+            dotenv.config({path: join(process.cwd(), 'production.env')});
+            
         const port = parseInt(process.env.PORT!) | 8060;
 
         const app = express();

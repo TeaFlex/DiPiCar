@@ -2,5 +2,8 @@
     "watch": ["src"],
     "ext": "ts,json",
     "ignore": ["src/**/*.spec.ts"],
-    "exec": "sudo ts-node ./src/main.ts"
+    "exec": "sudo NODE_ENV=development ts-node ./src/main.ts",
+    "events": {
+        "restart": "sudo kill -9 $(cat /var/run/pigpio.pid)"
+    }
 }

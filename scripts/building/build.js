@@ -7,14 +7,14 @@ compile({
     targets: "linux-arm64-14.15.4",
     build: true,
     resources: [
-        "./*.env",
+        "./production.env",
         "./scripts/**/*",
         "./public/*",
         "./dist/**/*",
         "./configuration_files/**/*",
-        "./node_modules/pigpio"
+        "./node_modules/pigpio/build/Release/pigpio.node"
     ],
-    loglevel: "info",
+    loglevel: "info",  
 })
 .then(() => {
     console.log("🏁 Build complete !");
