@@ -16,7 +16,7 @@ path = os.path.dirname(os.path.abspath(__file__))
 for service in conf_files:
     #Copy of conf files
     print("Configuration of {} in {}...".format(service, conf_files[service]))
-    os.system("sudo cp {}/../../configuration_files/{}.conf {}".format(path, service, conf_files[service]))
+    os.system("sudo cp {}/confs/{}.conf {}".format(path, service, conf_files[service]))
 
     #Special configuration(s)
     #HOSTAPD
