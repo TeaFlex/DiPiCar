@@ -2,3 +2,4 @@
 
 export * from './database';
 export * from './gpio';
+export * from './network';
