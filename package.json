@@ -35,7 +35,7 @@
   "scripts": {
     "start": "nodemon",
     "test": "ts-mocha ./src/test/**/*.test.ts",
-    "build": "sudo rm -rf ./dist ./build && tsc && node scripts/building/build.js"
+    "build": "sudo rm -rf ./dist ./build && tsc && scripts/building/buildBin.js && scripts/building/buildPackage.py"
   },
   "author": "Teaflex",
   "license": "ISC",

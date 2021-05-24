@@ -1,9 +1,13 @@
+#!/usr/bin/node
+
 const { compile } = require('nexe');
+const { join } = require('path');
+const buildInfos = require('./buildInfos.json');
 
 console.log("🚗 Starting the build...");
 compile({
     input:"./dist/main.js",
-    output:"./build/dipicar_srv",
+    output: join("./build/dipicar", buildInfos["binPath"], "dipicar_srv"),
     targets: "linux-arm64-14.15.4",
     build: true,
     resources: [
@@ -11,7 +15,6 @@ compile({
         "./scripts/**/*",
         "./public/*",
         "./dist/**/*",
-        "./configuration_files/**/*",
         "./node_modules/pigpio/build/Release/pigpio.node"
     ],
     loglevel: "info",  
