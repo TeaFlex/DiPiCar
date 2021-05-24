@@ -87,5 +87,3 @@ export class WpaOperations {
         return result;
     }
 }
-
-WpaOperations.getInterface().then(console.log);

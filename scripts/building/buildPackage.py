@@ -39,13 +39,14 @@ with open(path.join(debiandir, "control"), 'w') as control:
     Package: {}
     Version: {}
     Maintainer: {}
-    Architecture: arm
+    Architecture: {}
     Description: {} 
     Depends: {}
     """.format(
         package["name"],
         package["version"],
         package["author"],
+        infos["architecture"],
         package["description"],
         ', '.join(map(str, infos["dependencies"]))
     )
@@ -55,14 +56,27 @@ with open(path.join(debiandir, "control"), 'w') as control:
 postinst = path.join(debiandir, "postinst")
 with open(postinst, 'w') as control:
     script = """
-    ln -s {0} {1}
-    {0}/scritps/installation/services_config.py
+    #Creation of a link to the binary
+    ln -s {0}/dipicar_srv /usr/local/bin
+
+    #Running of the configuration script
+    {0}/scripts/installation/services_config.py
     """.format(
-        path.join('/', infos["binPath"], 'dipicar_srv'),
         path.join('/', infos["binPath"])
     )
     control.write(re.sub(r"^[\s]+", "", script, flags=re.M))
 chmod(postinst, mode)
+
+#Writing of postrm
+postrm = path.join(debiandir, "postrm")
+with open(postrm, 'w') as control:
+    script = """
+    #Deletion of a link to the binary
+    rm /usr/local/bin/dipicar_srv 
+
+    """
+    control.write(re.sub(r"^[\s]+", "", script, flags=re.M))
+chmod(postrm, mode)
 
 #Wrinting configuration file
 with open(path.join(installdir, "dipicar.conf.json"), 'w') as config:
@@ -73,4 +87,4 @@ with open(path.join(installdir, "dipicar.conf.json"), 'w') as config:
 #Build deb package
 system("dpkg-deb --build {}".format(builddir))
 
-print("Build done !")
+print("Package build done !")

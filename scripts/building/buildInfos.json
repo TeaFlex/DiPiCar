@@ -1,4 +1,5 @@
 {
     "dependencies": ["hostapd", "dnsmasq", "pigpio"],
-    "binPath":"usr/lib/dipicar"
+    "binPath":"usr/lib/dipicar",
+    "architecture": "armhf"
 }

@@ -31,9 +31,4 @@ for service in conf_files:
 
 #Enjoy !
 print("Configuration done !")
-
-print("The machine will reboot in...")
-for x in range(5, 0, -1):
-    print(x)
-    time.sleep(1)
-os.system("sudo reboot")
+print("Please reboot your system.")

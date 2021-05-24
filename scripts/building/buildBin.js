@@ -4,7 +4,7 @@ const { compile } = require('nexe');
 const { join } = require('path');
 const buildInfos = require('./buildInfos.json');
 
-console.log("🚗 Starting the build...");
+console.log("🚗 Starting the binary build...");
 compile({
     input:"./dist/main.js",
     output: join("./build/dipicar", buildInfos["binPath"], "dipicar_srv"),
@@ -12,7 +12,6 @@ compile({
     build: true,
     resources: [
         "./production.env",
-        "./scripts/**/*",
         "./public/*",
         "./dist/**/*",
         "./node_modules/pigpio/build/Release/pigpio.node"
@@ -20,6 +19,6 @@ compile({
     loglevel: "info",  
 })
 .then(() => {
-    console.log("🏁 Build complete !");
+    console.log("🏁 Binary build complete !");
 })
 .catch(console.error);
