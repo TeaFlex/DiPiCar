@@ -1,3 +1,4 @@
 {
+    "dependencies": ["hostapd", "dnsmasq", "pigpio"],
     "binPath":"usr/lib/dipicar"
 }

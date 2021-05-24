@@ -2,6 +2,10 @@
 
 import os
 
+#NOTE: This script isn't used anymore in production.
+#It's still there to any dev that want to contribute to the project,
+#run this script and you'll have all the dependencies for dipicar.
+
 #Each services to install
 services = ["curl", "hostapd", "dnsmasq", "nodejs", "git", "pigpio"]
 
