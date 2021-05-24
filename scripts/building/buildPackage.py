@@ -55,11 +55,20 @@ with open(path.join(debiandir, "control"), 'w') as control:
 postinst = path.join(debiandir, "postinst")
 with open(postinst, 'w') as control:
     script = """
-    ln -s /{0} /usr/local/bin
-    /{0}/scritps/installation/services_config.py
-    """.format(path.join(infos["binPath"], 'dipicar_srv'))
+    ln -s {0} {1}
+    {0}/scritps/installation/services_config.py
+    """.format(
+        path.join('/', infos["binPath"], 'dipicar_srv'),
+        path.join('/', infos["binPath"])
+    )
     control.write(re.sub(r"^[\s]+", "", script, flags=re.M))
 chmod(postinst, mode)
+
+#Wrinting configuration file
+with open(path.join(installdir, "dipicar.conf.json"), 'w') as config:
+    config.write(json.dumps({
+        "interface": "wlan0"
+    }))
 
 #Build deb package
 system("dpkg-deb --build {}".format(builddir))
