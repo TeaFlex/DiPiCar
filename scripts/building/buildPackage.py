@@ -56,6 +56,7 @@ postinst = path.join(debiandir, "postinst")
 with open(postinst, 'w') as control:
     script = """
     ln -s /{} /usr/local/bin
+    /{}/scritps/installation/services_config.py
     """.format(path.join(infos["binPath"], 'dipicar_srv'))
     control.write(re.sub(r"^[\s]+", "", script, flags=re.M))
 chmod(postinst, mode)
