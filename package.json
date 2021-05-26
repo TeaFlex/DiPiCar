@@ -33,9 +33,10 @@
     "ts-mocha": "^8.0.0"
   },
   "scripts": {
+    "confdev": "sudo ./scripts/installation/services_installation.py",
     "start": "nodemon",
     "test": "ts-mocha ./src/test/**/*.test.ts",
-    "build": "sudo rm -rf ./dist ./build && tsc && scripts/building/buildBin.js && scripts/building/buildPackage.py"
+    "build": "sudo rm -rf ./dist ./build && tsc && scripts/buildBin.js && scripts/buildPackage.py"
   },
   "author": "Teaflex",
   "license": "ISC",

@@ -7,7 +7,7 @@ import os
 #run this script and you'll have all the dependencies for dipicar.
 
 #Each services to install
-services = ["curl", "hostapd", "dnsmasq", "nodejs", "git", "pigpio"]
+services = ["curl", "hostapd", "dnsmasq", "nodejs", "git", "pigpio", "debmake"]
 
 #Update and upgrade first
 os.system("sudo apt-get update -y && sudo apt-get upgrade -y")

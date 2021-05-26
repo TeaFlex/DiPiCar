@@ -1,0 +1,14 @@
+#!/bin/sh
+# If this exists, it is installed into lib/systemd/system/dipicar.service in dipicar
+# See dh_systemd_enable(1).
+[Unit]
+Description=dipicar
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/lib/dipicar/scripts/start.sh
+
+[Install]
+WantedBy=multi-user.target

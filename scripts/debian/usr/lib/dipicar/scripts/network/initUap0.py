@@ -7,7 +7,7 @@ import json
 # Modified verison of pugbot's script (https://www.raspberrypi.org/forums/viewtopic.php?t=211542)
 
 try:
-    with open("../dipicar.conf.json") as c:
+    with open("../../dipicar.conf.json") as c:
         conf = json.load(c)
     interface = conf["interface"]
 except Exception:
