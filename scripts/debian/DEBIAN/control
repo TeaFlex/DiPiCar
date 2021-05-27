@@ -1,7 +1,2 @@
-Source: dipicar
 Section: unknown
 Priority: optional
-Maintainer: Teaflex <teaflex.dev@hotmail.com>
-Package: dipicar
-Architecture: armhf
-Depends: hostapd, dnsmasq, pigpio
