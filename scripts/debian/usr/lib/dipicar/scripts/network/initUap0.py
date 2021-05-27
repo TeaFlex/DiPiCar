@@ -6,12 +6,21 @@ import json
 
 # Modified verison of pugbot's script (https://www.raspberrypi.org/forums/viewtopic.php?t=211542)
 
+defaultConf = {
+    "interface": "wlan0"
+}
+
+conf = None
+
 try:
-    with open("../../dipicar.conf.json") as c:
+    with open("/etc/dipicar/dipicar.conf.json") as c:
         conf = json.load(c)
-    interface = conf["interface"]
-except Exception:
-    interface = "wlan0"
+    conf = {**defaultConf, **conf}
+    print("Parameters used: {}".format(conf))
+except Exception as e:
+    print(e)
+    print("Configuration file not found, default values will be used.")
+    conf = defaultConf
 
 services = ["hostapd", "dhcpcd", "dnsmasq"]
 
@@ -27,7 +36,7 @@ print("Adding uap0 interface...")
 system("""
 iw dev {} interface add uap0 type __ap
 ifconfig uap0 up
-""".format(interface))
+""".format(conf["interface"]))
 
 for service in services:
     print("Starting {} service...".format(service))

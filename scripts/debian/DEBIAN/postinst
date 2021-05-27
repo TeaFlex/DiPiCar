@@ -1,4 +1,5 @@
 #!/bin/sh
+
 #Running of the configuration script
 /usr/lib/dipicar/scripts/installation/services_config.py
 

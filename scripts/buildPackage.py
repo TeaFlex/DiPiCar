@@ -37,10 +37,10 @@ with open(path.join(debiandir, "control"), 'a') as control:
     control.write(filterScript(script))
 
 #Wrinting configuration file
-with open(path.join(installdir, "dipicar.conf.json"), 'w') as config:
-    config.write(json.dumps({
-        "interface": "wlan0"
-    }))
+# with open(path.join(installdir, "dipicar.conf.json"), 'w') as config:
+#     config.write(json.dumps({
+#         "interface": "wlan0"
+#     }))
 
 #Build deb package
 system("dpkg-deb --build {}".format(builddir))

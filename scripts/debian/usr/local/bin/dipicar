@@ -1,0 +1,19 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          dipicar
+# Required-Start:    $all
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:
+# Short-Description: Starts the dipicar server
+### END INIT INFO
+
+if [ "$EUID" -ne 0 ]
+  then echo "You must be root to run this script."
+  exit
+fi
+
+INSTALLDIR="/usr/lib/dipicar/"
+
+${INSTALLDIR}scripts/network/initUap0.py
+cd ${INSTALLDIR} && ./dipicar_srv
