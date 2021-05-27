@@ -3,9 +3,8 @@ import { wifiChannels } from "../../enums/wifiChannels";
 
 export class WpaOperations {
 
-    public static readonly interface = "wlan0";
     public static readonly channel = 7;
-    private static command = `wpa_cli -i ${WpaOperations.interface}`;
+    private static command = `wpa_cli -i ${WpaOperations.getInterface()}`;
 
     public static async addNetwork(ssid: string, passphrase: string) {        
         if(await this.getNetworkId(ssid))
@@ -81,9 +80,12 @@ export class WpaOperations {
             .filter(v => v.ssid !== '');
     }
 
-    public static async getInterface() {
-        const result = JSON.parse(await exec("ip -j link show"));
-        console.log(result);
-        return result;
+    public static getInterface(confPath?: string) {
+        try {
+            const conf = require(confPath ?? "/etc/dipicar/dipicar.conf.json");
+            return conf["interface"] as string;
+        } catch (error) {
+            return "wlan0"
+        }
     }
 }

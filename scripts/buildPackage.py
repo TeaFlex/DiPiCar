@@ -25,12 +25,12 @@ controlFile = {
     "Depends": ', '.join(infos["dependencies"])
 }
 
-#deb package directory
+#Important dirs
 basedir = path.join(currentPath, "../")
 builddir = path.join(basedir, "build/{}-{}".format(package["name"], package["version"]))
 debiandir = path.join(builddir, "DEBIAN")
 
-#copy of debian package content
+#Copy of debian package content
 system("cp -r {}/debian/* {}".format(currentPath, builddir))
 
 #Writing of control
