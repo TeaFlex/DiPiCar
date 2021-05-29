@@ -6,7 +6,7 @@ export class HttpError extends Error {
     constructor(message?: string, status?: number) {
         super(message);
         this.shortmsg = message;
-        this.status = status;
-        this.name = `HTTP ERROR [code ${status}]`;
+        this.status = status ?? 500;
+        this.name = `HTTP ERROR [code ${this.status}]`;
     }
 }

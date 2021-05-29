@@ -3,8 +3,9 @@ import { UserController } from "../controller/UserController";
 import { bodyControl, userSchema } from "../middlewares/bodyControl";
 import { checkSchema, param} from "express-validator";
 import { catchError } from "../middlewares/responseHandlers";
+import { BaseRoute } from "./BaseRoute";
 
-export class UsersRoute {
+export class UsersRoute extends BaseRoute {
     
     static init(app: Express): void {
 

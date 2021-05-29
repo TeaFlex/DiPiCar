@@ -32,7 +32,7 @@ describe("WPA operations", async function () {
 
     it("Adds an network", async () => {
         const ssid = "Test";
-        const passphrase = "IncrediblePassword"
+        const passphrase = "IncrediblePassword";
 
         await WpaOperations.addNetwork(ssid, passphrase);
 
@@ -52,6 +52,30 @@ describe("WPA operations", async function () {
 
         const netId = await WpaOperations.getNetworkId(ssid);
         const netObj = (await WpaOperations.getNetworkList())
+            .find(n => n.ssid === ssid);
+        
+        assert.isNull(netId);
+        assert.isUndefined(netObj);
+    });
+
+    it("Adds an network then removes it by id", async () => {
+        const ssid = "Test";
+        const passphrase = "IncrediblePassword";
+
+        await WpaOperations.addNetwork(ssid, passphrase);
+
+        let netId = await WpaOperations.getNetworkId(ssid);
+        let netObj = (await WpaOperations.getNetworkList())
+            .find(n => n.ssid === ssid);
+        
+        assert.isNotNull(netId);
+        assert.isDefined(netObj);
+        assert.strictEqual(ssid, netObj?.ssid);
+
+        await WpaOperations.removeNetworkById(netId!);
+
+        netId = await WpaOperations.getNetworkId(ssid);
+        netObj = (await WpaOperations.getNetworkList())
             .find(n => n.ssid === ssid);
         
         assert.isNull(netId);

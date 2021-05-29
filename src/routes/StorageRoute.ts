@@ -2,8 +2,9 @@ import { Express, Router } from "express";
 import { body, param } from "express-validator";
 import { StorageController } from "../controller/StorageController";
 import { catchError } from "../middlewares/responseHandlers";
+import { BaseRoute } from "./BaseRoute";
 
-export class StorageRoute {
+export class StorageRoute extends BaseRoute {
     static init(app: Express) {
 
         const router = Router();

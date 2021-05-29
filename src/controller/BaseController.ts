@@ -1,6 +1,6 @@
 import { AppDB } from "../model/database/AppDB";
 
-export class BaseController {
+export abstract class BaseController {
 
     protected db?: AppDB;
 

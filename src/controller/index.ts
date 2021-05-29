@@ -5,3 +5,4 @@ export * from './StatsController';
 export * from './StorageController';
 export * from './UserController';
 export * from './WsController';
+export * from './NetworkController';

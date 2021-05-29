@@ -1,6 +1,7 @@
 import { Router, Express, Response, Request } from 'express';
+import { BaseRoute } from './BaseRoute';
 
-export class MainRoute {
+export class MainRoute extends BaseRoute {
 
     static init(app: Express){
 

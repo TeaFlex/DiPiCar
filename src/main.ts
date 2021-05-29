@@ -4,12 +4,8 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
-import { 
-    MainRoute, 
-    UsersRoute, 
-    StatsRoute, 
-    StorageRoute 
-} from './routes';
+import * as routes from './routes';
+import { BaseRoute } from './routes';
 import { responseHandler, sendHandler } from './middlewares';
 import { logger, Path } from './utilities';
 import { WsController } from './controller';
@@ -33,10 +29,10 @@ class Main {
         app.use(helmet())
         app.use(express.json());
         
-        MainRoute.init(app);
-        UsersRoute.init(app);
-        StatsRoute.init(app);
-        StorageRoute.init(app);
+        for (const key in routes) {
+            if(key !== "BaseRoute")
+                (routes as any)[key].init(app);
+        }
 
         app.use(responseHandler);
         app.use(sendHandler);

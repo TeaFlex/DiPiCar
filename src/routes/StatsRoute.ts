@@ -3,8 +3,9 @@ import { StatsController } from "../controller/StatsController";
 import { bodyControl, statsSchema } from "../middlewares/bodyControl";
 import { checkSchema, param } from "express-validator";
 import { catchError } from "../middlewares/responseHandlers";
+import { BaseRoute } from "./BaseRoute";
 
-export class StatsRoute {
+export class StatsRoute extends BaseRoute {
     
     static init(app: Express): void {
 

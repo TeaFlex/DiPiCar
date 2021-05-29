@@ -21,8 +21,10 @@ controlFile = {
     "Package": package["name"],
     "Source": package["name"],
     "Maintainer": package["author"],
+    "Description": package["description"],
     "Version": package["version"],
-    "Depends": ', '.join(infos["dependencies"])
+    "Depends": ', '.join(infos["dependencies"]),
+    "Architecture": infos["architecture"]
 }
 
 #Important dirs

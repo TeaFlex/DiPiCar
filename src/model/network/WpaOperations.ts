@@ -35,6 +35,17 @@ export class WpaOperations {
         return exec(`${this.command} save config`);
     }
 
+    public static async removeNetworkById(id: number) {
+        const net = (await this.getNetworkList())
+            .find(v=>v.id === id);
+        if(!net)
+            throw new Error(`Network of id ${id} does not exist.`);
+        const result = await exec(`${this.command} remove_network ${net.id}`);
+        if(!result.includes("OK"))
+            throw new Error(`Deleting network "${net.ssid}" failed.`);
+        return exec(`${this.command} save config`);
+    }
+
     public static async getNetworkList() {
         return (await exec(`${this.command} list_network`))
             .replace(/.+\n/, '')
@@ -43,7 +54,7 @@ export class WpaOperations {
             .map(v => {
                 const temp = v.split('\t');
                 return {
-                    id: temp[0],
+                    id: parseInt(temp[0], 10),
                     ssid: temp[1],
                     bssid: temp[2],
                     flags0: temp[3]
@@ -85,7 +96,7 @@ export class WpaOperations {
             const conf = require(confPath ?? "/etc/dipicar/dipicar.conf.json");
             return conf["interface"] as string;
         } catch (error) {
-            return "wlan0"
+            return "wlan0";
         }
     }
 }
