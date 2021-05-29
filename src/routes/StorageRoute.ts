@@ -22,6 +22,6 @@ export class StorageRoute extends BaseRoute {
         //Clears the whole storage of a given user
         router.purge('/:id', param('id').isInt(), catchError(store.clearUserStorage));
 
-        app.use('/api/store', router);
+        app.use(this.getFullURI("store"), router);
     }
 }

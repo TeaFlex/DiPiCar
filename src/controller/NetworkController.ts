@@ -47,7 +47,7 @@ export class NetworkController extends BaseController {
         }
     } 
 
-    removeNetworkBySSID =  async (req: Request, res: Response, next: NextFunction) => {
+    removeNetworkBySSID = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const ssid = req.params["ssid"];
             await WpaOperations.removeNetwork(ssid);
@@ -58,6 +58,21 @@ export class NetworkController extends BaseController {
             else
                 next(new HttpError(error.message));
         }
-    } 
+    }
+
+    getIPs = async (req: Request, res: Response, next: NextFunction) => {
+        let iftype = req.params["type"] ?? null;
+        const infos = await WpaOperations.getIPs();
+        if(infos.length) {
+            if(iftype === "ap") iftype = "access point";
+            const result = (iftype)? infos.find(v=>v.type === iftype) : infos;
+            if(result)
+                next(new HttpSuccess("IP(s) sent.", result));
+            else
+                next(new NotFoundError(`Verify if the value is "client" or "ap". If so, check if your interfaces are correctly configured.`));
+        }
+        else
+            next(new HttpNoContent("No IP to send."));
+    }
 
 }

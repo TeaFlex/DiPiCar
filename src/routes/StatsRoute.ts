@@ -18,6 +18,6 @@ export class StatsRoute extends BaseRoute {
         //Updates stats by id
         router.put('/:id',checkSchema(statsSchema), bodyControl, catchError(stats.updateStatsOfUser));
 
-        app.use('/api/stats', router);
+        app.use(this.getFullURI("stats"), router);
     }
 }

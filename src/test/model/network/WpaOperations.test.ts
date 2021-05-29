@@ -81,4 +81,13 @@ describe("WPA operations", async function () {
         assert.isNull(netId);
         assert.isUndefined(netObj);
     });
+
+    it("Gets the ips of the used interface and uap0", async () => {
+        //NOTE: initUap0.py must have been executed before running this test.
+        const result = await WpaOperations.getIPs();
+        
+        assert.isArray(result);
+        assert.isDefined(result);
+        assert.strictEqual(result.length, 2);
+    });
 });

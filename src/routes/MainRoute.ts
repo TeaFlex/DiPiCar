@@ -25,6 +25,6 @@ export class MainRoute extends BaseRoute {
             }
         });
 
-        app.use('/api', router);
+        app.use(this.getFullURI(), router);
     }
 }

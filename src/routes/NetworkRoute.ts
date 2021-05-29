@@ -16,13 +16,16 @@ export class NetworkRoute extends BaseRoute {
         //Gets scanned access points networks
         router.get('/scan', catchError(net.getAccessPoints));
 
-        //Save a network
+        //Gets the network infos of interfaces used by the app
+        router.get('/ip/:type?', catchError(net.getIPs));
+
+        //Saves a network
         router.post('/',checkSchema(networkSchema), bodyControl, catchError(net.addNetwork));
 
-        //Remove a network
+        //Removes a network
         router.delete('/:id', param("id").isInt(), catchError(net.removeNetworkById));
 
-        app.use('/api/network', router);
+        app.use(this.getFullURI("network"), router);
     }
 
 }

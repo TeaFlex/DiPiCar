@@ -24,6 +24,6 @@ export class UsersRoute extends BaseRoute {
         //Deletes a User
         router.delete('/:id', param('id').isInt(), catchError(user.deleteUser));
 
-        app.use('/api/users', router);
+        app.use(this.getFullURI("users"), router);
     }
 }
