@@ -104,17 +104,12 @@ export class WpaOperations {
         return (JSON.parse(await exec("ip -j a")) as any[])
             .filter(v=>v.ifname === this.getInterface() || v.ifname === "uap0")
             .map(v=> {
-                const v4 = (v.addr_info as any[]).find(info=>info.family === "inet");
-                const v6 = (v.addr_info as any[]).find(info=>info.family === "inet6");
+                const getinfos = (type: string) => (v.addr_info as any[]).find(info=>info.family === type);
                 return {
                     ifname: v.ifname,
                     type: (v.ifname === this.getInterface())? "client" : "access point",
-                    inet4: {
-                        ...v4
-                    },
-                    inet6: {
-                        ...v6
-                    }
+                    inet4: { ...getinfos("inet") },
+                    inet6: { ...getinfos("inet6") }
                 }
             })
     }
