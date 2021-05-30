@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 
-import os, time
+from os import path
+from subprocess import call
+from shutil import copyfile
 
 #Configuration files path and their name
 conf_files = {
@@ -10,24 +12,24 @@ conf_files = {
 }
 
 #Path where the script is
-path = os.path.dirname(os.path.abspath(__file__))
+basePath = path.dirname(path.abspath(__file__))
 
 #Copy of the content of each configured files to the correct location
 for service in conf_files:
     #Copy of conf files
-    print("Configuration of {} in {}...".format(service, conf_files[service]))
-    os.system("sudo cp {}/confs/{}.conf {}".format(path, service, conf_files[service]))
+    print("Configuration of %s in %s..." %(service, conf_files[service]))
+    copyfile(path.join(basePath, "confs", service+".conf"), conf_files[service])
 
     #Special configuration(s)
     #HOSTAPD
     if(service == "hostapd"):
         with open('/etc/default/hostapd', "w") as f:
             f.write("#CONF\nDAEMON_CONF=\"/etc/hostapd/hostapd.conf\"\n")
-        os.system("sudo systemctl unmask {}".format(service))
+        call(["systemctl", "unmask", service])
 
     #Reload and enabling
-    print("Reload of service \"{}\"...".format(service))
-    os.system("sudo service {} reload && sudo systemctl enable {}".format(service, service))
+    print("Reload of service \"%s\"..." %service)
+    call(["service", service, "reload", "&&", "systemctl", "enable", service])
 
 #Enjoy !
 print("Configuration done !")

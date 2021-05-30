@@ -5,7 +5,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import * as routes from './routes';
-import { BaseRoute } from './routes';
 import { responseHandler, sendHandler } from './middlewares';
 import { logger, Path } from './utilities';
 import { WsController } from './controller';
