@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 
 #from subprocess import run
-from os import path, system
+from os import path
 import json, re
+from subprocess import call
+from distutils.dir_util import copy_tree, remove_tree
 
 print("Building package...")
 
@@ -33,7 +35,7 @@ builddir = path.join(basedir, "build/{}-{}".format(package["name"], package["ver
 debiandir = path.join(builddir, "DEBIAN")
 
 #Copy of debian package content
-system("cp -r {}/debian/* {}".format(currentPath, builddir))
+copy_tree(path.join(currentPath, "debian"), builddir)
 
 #Writing of control
 with open(path.join(debiandir, "control"), 'a') as control:
@@ -43,7 +45,10 @@ with open(path.join(debiandir, "control"), 'a') as control:
     control.write(re.sub(r"^[\s]+", "", script, flags=re.M))
 
 #Build deb package
-system("dpkg-deb --build {}".format(builddir))
+call(["dpkg-deb", "--build", builddir])
+
+#Cleaning up...
+remove_tree(builddir)
 
 print("Package build done !")
 

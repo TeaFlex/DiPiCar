@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
-from os import system
+
+from subprocess import call
 from time import sleep
 import json
 
@@ -11,6 +12,8 @@ defaultConf = {
 }
 
 conf = None
+
+apifname = "uap0"
 
 try:
     with open("/etc/dipicar/dipicar.conf.json") as c:
@@ -24,23 +27,26 @@ except Exception as e:
 
 services = ["hostapd", "dhcpcd", "dnsmasq"]
 
-print("Stopping network services")
-system("systemctl daemon-reload")
-for service in services:
-    system("systemctl stop {}.service".format(service))
-
-print("Removing uap0 interface...")
-system("iw dev uap0 del")
-
-print("Adding uap0 interface...")
-system("""
-iw dev {} interface add uap0 type __ap
-ifconfig uap0 up
-""".format(conf["interface"]))
+print("Reloading daemons...")
+call(["systemctl", "daemon-reload"])
 
 for service in services:
-    print("Starting {} service...".format(service))
-    system("systemctl start {}.service".format(service))
+    print("Stopping %s..." %service)
+    call(["systemctl", "stop", service+".service"])
+
+print("Removing %s interface..." %apifname)
+deluap = call(["iw", "dev", apifname, "del"])
+if(deluap == -19):
+    print("%s does not exist, skipping." %apifname)
+
+print("Adding %s interface..." %apifname)
+call(["iw", "dev", conf["interface"], "interface", "add", apifname, "type", "__ap"])
+call(["ifconfig", apifname, "up"])
+
+
+for service in services:
+    print("Starting %s service..." %service)
+    call(["systemctl", "start", service+".service"])
     sleep(10)
 
 print("DONE")
