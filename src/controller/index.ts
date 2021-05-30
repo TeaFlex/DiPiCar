@@ -1,6 +1,7 @@
 // created from 'create-ts-index'
 
 export * from './BaseController';
+export * from './MainController';
 export * from './StatsController';
 export * from './StorageController';
 export * from './UserController';

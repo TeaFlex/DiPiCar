@@ -1,29 +1,21 @@
 import { Router, Express, Response, Request } from 'express';
 import { BaseRoute } from './BaseRoute';
+import { MainController } from '../controller';
+import { catchError, hostnameSchema } from '../middlewares';
+import { checkSchema } from 'express-validator';
 
 export class MainRoute extends BaseRoute {
 
     static init(app: Express){
 
         const router = Router();
+        const main = new MainController();
         
-        //Status of the app (200 if everything OK)
-        router.get('/', (req: Request, res: Response) => {
-            res.status(200).send({
-                pid: process.pid,
-                uptime: process.uptime()
-            });
-        });
+        //Status of the app
+        router.get('/', catchError(main.getStatus));
 
-        //Post of config (LAN mode only)
-        router.post('/config', (req: Request, res: Response) => {
-            if(!req.body) res.status(500).send({error:'Incomplete configuration'});
-            else{
-                var infos = req.body;
-                console.log(`Hostname: ${infos['hostname']}\nSSID: ${infos['ssid']}\nPassword: ${infos['wpa']}`);
-                res.status(200).send();
-            }
-        });
+        //Change the hostname of the computer
+        router.put('/', checkSchema(hostnameSchema), catchError(main.changeHostname));
 
         app.use(this.getFullURI(), router);
     }

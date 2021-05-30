@@ -46,6 +46,25 @@ export const networkSchema: Record<string, ParamSchema> = {
     }
 };
 
+export const hostnameSchema: Record<string, ParamSchema> = {
+    hostname: {
+        isString: true,
+        trim: true,
+        isLowercase: true,
+        matches: {
+            options: /^[^\s\W]+$/gm,
+            errorMessage: "Hostname must not contain any space or special chars."
+        },
+        isLength: {
+            errorMessage: "Hostname must be between 5 and 10 chars.",
+            options: {
+                min: 5,
+                max: 10
+            }
+        }
+    }
+};
+
 export const bodyControl = (req: Request, res: Response, next: NextFunction) => {
     if(!validationResult(req).isEmpty())
         next(new HttpError("Request Error.", 400));

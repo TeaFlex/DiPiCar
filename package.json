@@ -35,7 +35,7 @@
   "scripts": {
     "confdev": "sudo ./scripts/installation/services_installation.py",
     "start": "nodemon",
-    "test": "ts-mocha ./src/test/**/*.test.ts",
+    "test": "sudo ts-mocha ./src/test/**/*.test.ts",
     "build": "sudo rm -rf ./dist ./build && tsc && scripts/buildBin.js && scripts/buildPackage.py"
   },
   "author": "Teaflex",
