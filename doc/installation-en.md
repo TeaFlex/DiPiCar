@@ -6,9 +6,9 @@ You must have built your car before installing the software !
 
 #### (LAN mode)
 
-If you want to benefit of the LAN mode, it's highly recommanded to follow the steps below first. You can also perform them after the full installation but we can not guarantee that will work correctly.
+If you want to benefit of the LAN mode, it's highly recommanded to follow the steps below first. You can also perform them after the full installation but we can not guarantee that it will work correctly.
 
-Fristly, you have to connect the Raspberry pi the network that you want the car to be connected to. 
+Fristly, you have to connect the Raspberry pi to the network that you want the car to be connected to. 
 
 1. Use the command `sudo raspi-config`.
 2. Go to *System Options > Wireless LAN*.
@@ -43,7 +43,7 @@ After that, all the configuration scripts will run automatically. You'll then be
 sudo systemctl enable dipicar.service
 ```
 
-and reboot you Rasberry pi.
+and reboot your Rasberry pi.
 
 ```
 sudo reboot

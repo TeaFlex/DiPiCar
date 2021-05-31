@@ -5,10 +5,11 @@ DiPiCar is an API aimed at controlling a car built by the user. This supports vi
 ## Documentation
 
 - REST API documentation: [here](https://documenter.getpostman.com/view/16024598/TzY1gGLM)
-- Installation: [english](/doc/installation-en.md) [french](/doc/installation-fr.md)
-- Full guide (requirement, build, installation): [english](https://dipihub.netlify.app/en/docs/build) [french](https://dipihub.netlify.app/fr/docs/build)
+- Installation: [english](/doc/installation-en.md) or [french](/doc/installation-fr.md)
+- Full guide (requirement, build, installation): [english](https://dipihub.netlify.app/en/#/docs/build) or [french](https://dipihub.netlify.app/fr/#/docs/build)
 
 ## Links
 
-- The site of the project: [DipiHub](https://dipihub.netlify.app/)🏠
+- The site of the project: [DipiHub](https://dipihub.netlify.app/en/#/)🏠
 - Module of streaming : [PiStreamer](https://www.npmjs.com/package/pistreamer)🎥
+- Official client: [DiPiLink](https://github.com/Iucapad/dipilink)⚛
