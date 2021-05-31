@@ -1,4 +1,4 @@
-# Installation of DiPiCar
+# Installation de DiPiCar
  
 ### Prérequis
 
