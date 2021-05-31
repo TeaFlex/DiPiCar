@@ -28,7 +28,7 @@ wget https://github.com/TeaFlex/DiPiCar/releases/download/[version]/dipicar-[ver
 ### Activer le module caméra
 Après le téléchargement, vous devez activer le module caméra afin de pouvoir partager le flux vidéo. Executez `sudo raspi-config` et ensuite allez dans *Interface Options > Camera > "Yes"* et enfin redémarrez avec `sudo reboot`.
 
-### Install the package
+### Installer le paquet
 Lorsque votre Raspberry pi a redémarré, vous pouvez alors procéder à l'installation du paquet précédement téléchargé. Dans le même dossier que le paquet, éxecutez ceci:
 >Remplacez [version] par la version que vous avez téléchargée.
 
