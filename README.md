@@ -16,7 +16,7 @@ Coming soon !
 
 ## Documentation
 
-Coming soon !
+- REST API documentation: [here](https://documenter.getpostman.com/view/16024598/TzY1gGLM)
 
 ## Links
 
