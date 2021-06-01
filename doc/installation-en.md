@@ -37,13 +37,13 @@ When your Raspberry pi has reboot, you can then proceed to the installation of t
 sudo apt install ./dipicar-[version].deb
 ```
 
+**IMPORTANT**: We strongly advise you to change the access point password after the dipicar installation. Not modifying it will not break the application but it's recommended to do so for security purpose. To do this, run `sudo nano /etc/hostapd/hostapd.conf` and modify the `wpa_passphrase` field.
+
 After that, all the configuration scripts will run automatically. You'll then be able to enable the dipicar sevice like this:
 
 ```
 sudo systemctl enable dipicar.service
 ```
-
-**IMPORTANT**: We strongly advise you to change the access point password after the dipicar installation. Not modifying it will not break the application but it's recommended to do so for security purpose. To do this, run `sudo nano /etc/hostapd/hostapd.conf` and modify the `wpa_passphrase` field.
 
 You may now reboot your Rasberry pi.
 
