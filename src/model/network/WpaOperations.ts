@@ -1,10 +1,19 @@
 import { promisifiedExec as exec } from "../../utilities/promisifiedExec";
 import { wifiChannels } from "../../enums/wifiChannels";
+import { confReader, dipicarConfReader } from "../../utilities";
 
 export class WpaOperations {
 
-    public static readonly channel = 7;
     private static command = `wpa_cli -i ${WpaOperations.getInterface()}`;
+
+    private static get channel() {
+        const defaultChannel = 7;
+        try {
+            return confReader("/etc/hostapd/hostapd.conf").channel ?? defaultChannel;
+        } catch (error) {
+            return defaultChannel;
+        }
+    }
 
     public static async addNetwork(ssid: string, passphrase: string) {        
         if(await this.getNetworkId(ssid))
@@ -92,12 +101,8 @@ export class WpaOperations {
     }
 
     public static getInterface(confPath?: string) {
-        try {
-            const conf = require(confPath ?? "/etc/dipicar/dipicar.conf.json");
-            return conf["interface"] as string;
-        } catch (error) {
-            return "wlan0";
-        }
+        const conf = dipicarConfReader(confPath);
+        return conf["interface"] as string;
     }
 
     public static async getIPs() {

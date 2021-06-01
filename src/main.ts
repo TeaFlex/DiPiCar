@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 import * as routes from './routes';
 import { responseHandler, sendHandler } from './middlewares';
-import { logger, Path } from './utilities';
+import { confReader, dipicarConfReader, logger, Path } from './utilities';
 import { WsController } from './controller';
 import { join } from 'path';
 
@@ -18,7 +18,7 @@ class Main {
         else
             dotenv.config({path: join(process.cwd(), 'production.env')});
             
-        const port = parseInt(process.env.PORT!) | 8060;
+        const port = dipicarConfReader().port;
 
         const app = express();
         const server = createServer(app);

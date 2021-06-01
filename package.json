@@ -1,6 +1,6 @@
 {
   "name": "dipicar",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "DiPiCar is an API aimed at controlling a car built by the user. This supports video streaming between the server and the client (if the car is equipped with a camera module).",
   "main": "dist/main.js",
   "dependencies": {
