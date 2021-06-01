@@ -13,3 +13,6 @@ The following fields can be modified:
 
 ## hostapd.conf
 DiPiCar read the hostapd configuration file to know the right wifi channel to use. If you want to change this channel, modify of add the line `channel=[any number from 1 to 14]`.  The default value used by the app is `7`.
+
+You can also change the ssid and the password of your car by modifying the value of fields `ssid` and
+`wpa_passphrase` (the password changement is highly recommanded).

@@ -36,6 +36,10 @@ Lorsque votre Raspberry pi a redémarré, vous pouvez alors procéder à l'insta
 sudo apt install ./dipicar-[version].deb
 ```
 
+*IMPORTANT*: Nous vous conseillons fortement de modifier le mot de passe du point d'accès après
+l'installation de hostapd. Ne pas le modifier ne changera rien au bon fonctionnement de l'application
+mais il est recommandé de le faire par mesure de sécurité. Pour ce faire, faites `sudo nano /etc/hostapd/hostapd.conf` et modifiez le champ `wpa_passphrase`.
+
 Après ça, tous les scripts de configuration seront executés automatiquement. Vous aurez alors la capacité d'activer le service dipicar comme ceci:
 
 ```
