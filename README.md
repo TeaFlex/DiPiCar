@@ -20,5 +20,5 @@ Coming soon !
 
 ## Links
 
-- The site of the project: [DipiHub](https://dipihub.netlify.app/fr/)🏠
+- The site of the project: [Dipi Hub](https://dipihub.netlify.app/fr/)🏠
 - Module of streaming : [PiStreamer](https://www.npmjs.com/package/pistreamer)🎥
