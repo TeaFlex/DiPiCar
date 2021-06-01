@@ -16,3 +16,5 @@ DiPiCar read the hostapd configuration file to know the right wifi channel to us
 
 You can also change the ssid and the password of your car by modifying the value of fields `ssid` and
 `wpa_passphrase` (the password changement is highly recommanded).
+
+For more details, please consult [the hostapd documentation](https://wireless.wiki.kernel.org/en/users/documentation/hostapd)
