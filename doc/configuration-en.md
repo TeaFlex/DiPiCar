@@ -6,7 +6,7 @@ You can access the configuration file at `/etc/dipicar/dipicar.conf.json`.
 
 The following fields can be modified:
 
-| Field | Purpose | Default value |
+| Field | Description | Default value |
 |--|--|--|
 | interface | Modifies the used interface as an access point. (wip) | "wlan0"  |
 | port | Port which DiPiCar listen to. | 8060 |
