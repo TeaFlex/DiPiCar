@@ -106,6 +106,9 @@ export class WpaOperations {
     }
 
     public static async getIPs() {
+        const currentNet = (await WpaOperations.getNetworkList())
+            .find(v=>v.flags0.includes("CURRENT"));
+
         return (JSON.parse(await exec("ip -j a")) as any[])
             .filter(v=>v.ifname === this.getInterface() || v.ifname === "uap0")
             .map(v=> {
@@ -113,6 +116,7 @@ export class WpaOperations {
                 return {
                     ifname: v.ifname,
                     type: (v.ifname === this.getInterface())? "client" : "access point",
+                    connectedTo: (v.ifname !== "uap0")? currentNet : "none",
                     inet4: { ...getinfos("inet") },
                     inet6: { ...getinfos("inet6") }
                 }
