@@ -3,21 +3,16 @@ import { Server as WsServer } from 'ws';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import dotenv from 'dotenv';
 import * as routes from './routes';
 import { responseHandler, sendHandler } from './middlewares';
-import { confReader, dipicarConfReader, logger, Path } from './utilities';
+import { dipicarConfReader, logger, readDotEnv } from './utilities';
 import { WsController } from './controller';
-import { join } from 'path';
 
 class Main {
-    constructor() {
+    main() {
         
-        if(process.env.NODE_ENV === 'development') 
-            dotenv.config({path: join(process.cwd(), 'development.env')});
-        else
-            dotenv.config({path: join(process.cwd(), 'production.env')});
-            
+        readDotEnv((process.env.NODE_ENV === 'development')? 'development.env': 'production.env');
+       
         const port = dipicarConfReader().port;
 
         const app = express();
@@ -45,4 +40,4 @@ class Main {
     }
 }
 
-const main = new Main();
+new Main().main();
