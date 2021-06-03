@@ -15,13 +15,19 @@ function errorHandler (err: HttpError, req: Request, res: Response, next: NextFu
     const errors = validationResult(req);
     res.locals.status = err.status || 500;
     res.locals.message = `${err.name} => ${err.message || message}`;
-    res.locals.json = {
-        requestErrors: errors.array(),
-        serverError: {
-            status: res.locals.status, 
-            message: err.message
-        }
-    }
+    res.locals.json = {};
+    const incomingErr = {
+        status: res.locals.status, 
+        message: err.message
+    };
+
+    if(errors.array().length)
+        res.locals.json.inputErrors = errors.array();
+    
+    if(incomingErr.status >= 500)
+        res.locals.json.serverError = incomingErr;
+    else if(incomingErr.status < 500 && incomingErr.status >= 400)
+        res.locals.json.clientError = incomingErr;
     
     next();
 }
