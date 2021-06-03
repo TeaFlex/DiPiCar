@@ -82,6 +82,30 @@ describe("WPA operations", async function () {
         assert.isUndefined(netObj);
     });
 
+    it("Adds an network without a passphrase and then removes it", async () => {
+        const ssid = "Test";
+        const passphrase = "";
+
+        await WpaOperations.addNetwork(ssid, passphrase);
+
+        let netId = await WpaOperations.getNetworkId(ssid);
+        let netObj = (await WpaOperations.getNetworkList())
+            .find(n => n.ssid === ssid);
+        
+        assert.isNotNull(netId);
+        assert.isDefined(netObj);
+        assert.strictEqual(ssid, netObj?.ssid);
+
+        await WpaOperations.removeNetworkById(netId!);
+
+        netId = await WpaOperations.getNetworkId(ssid);
+        netObj = (await WpaOperations.getNetworkList())
+            .find(n => n.ssid === ssid);
+        
+        assert.isNull(netId);
+        assert.isUndefined(netObj);
+    });
+
     it("Gets the ips of the used interface and uap0", async () => {
         //NOTE: initUap0.py must have been executed before running this test.
         const result = await WpaOperations.getIPs();

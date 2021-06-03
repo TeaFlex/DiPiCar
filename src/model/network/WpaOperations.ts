@@ -18,16 +18,18 @@ export class WpaOperations {
     public static async addNetwork(ssid: string, passphrase: string) {        
         if(await this.getNetworkId(ssid))
             throw new Error(`SSID "${ssid}" already exists.`);
-        if(passphrase.length < 8)
-            throw new Error("Passphrase must contain at least 8 chars.");
             
         const netId = (await exec(`${this.command} add_network`)).trim();
-        const steps = [
+        let steps = [
             `${this.command} set_network ${netId} ssid \\"${ssid}\\"`,
             `${this.command} set_network ${netId} psk \\"${passphrase}\\"`,
             `${this.command} set_network ${netId} frequency ${wifiChannels[this.channel]}`,
             `${this.command} enable_network ${netId}`
         ];
+
+        if(!passphrase.length) 
+            steps = steps.filter((v, index)=>index !== 1); 
+
         const results = await Promise.all(steps.map(v=>exec(v)));
         if(results.find(v=>!v.includes("OK")))
             throw new Error(`Adding network "${ssid}" failed.`);
