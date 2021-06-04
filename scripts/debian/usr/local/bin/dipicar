@@ -15,5 +15,9 @@ fi
 
 INSTALLDIR="/usr/lib/dipicar/"
 
-${INSTALLDIR}scripts/network/initUap0.py
+if [ -n "$1" ] && [ "$1" = '--config' ]
+  then 
+    ${INSTALLDIR}scripts/network/initUap0.py
+    ${INSTALLDIR}scripts/network/iptablesConfig.py
+fi
 cd ${INSTALLDIR} && ./dipicar_srv

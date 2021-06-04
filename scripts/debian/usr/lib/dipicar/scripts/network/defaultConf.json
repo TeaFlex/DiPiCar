@@ -1,0 +1,6 @@
+{
+    "interface":"wlan0",
+    "secureInterface": true,
+    "whitelist": [],
+    "port": 8060
+}
