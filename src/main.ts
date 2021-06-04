@@ -1,4 +1,4 @@
-import { createServer } from 'http';
+import { createServer } from 'https';
 import { Server as WsServer } from 'ws';
 import express from 'express';
 import cors from 'cors';
@@ -7,6 +7,8 @@ import * as routes from './routes';
 import { responseHandler, sendHandler } from './middlewares';
 import { dipicarConfReader, logger, readDotEnv } from './utilities';
 import { WsController } from './controller';
+import { join } from 'path';
+import { readFileSync } from 'fs';
 
 class Main {
     main() {
@@ -16,7 +18,10 @@ class Main {
         const port = dipicarConfReader().port;
 
         const app = express();
-        const server = createServer(app);
+        const server = createServer({
+            key: readFileSync("./creds/key.pem"),
+            cert: readFileSync("./creds/cert.pem")
+        }, app);
 
         app.use(express.static('public'));
         app.use(cors());
