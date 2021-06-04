@@ -46,10 +46,18 @@ Après ça, tous les scripts de configuration seront executés automatiquement. 
 sudo systemctl enable dipicar.service
 ```
 
-Vous pouvez dès lors redémarrer votre Rasberry pi.
+...et redémarrer votre Rasberry pi.
 
 ```
 sudo reboot
 ```
+
+Ou alors démarrer le server directement:
+
+```
+sudo dipicar --config
+```
+
+>Note: Sans le paramètre "config", seul le serveur démarrera.
 
 Bonne conduite ! 🚗
