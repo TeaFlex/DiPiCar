@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from subprocess import call
-from os import geteuid, path
+from os import geteuid, path, mkdir
 from json import load
 
 #NOTE: Run this scripts to get all the dependencies
@@ -29,3 +29,6 @@ for service in services:
     if(service == "nodejs"):
         call(["curl", "-sL", nodeURL, "|", "bash", "-"])
     call(["apt-get", "install", "-y", service])
+
+mkdir("creds")
+call(["scripts/debian/usr/lib/dipicar/scripts/installation/ssl_keys_gen.py", "./creds"])
