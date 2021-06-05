@@ -5,15 +5,15 @@ import cors from 'cors';
 import helmet from 'helmet';
 import * as routes from './routes';
 import { responseHandler, sendHandler } from './middlewares';
-import { dipicarConfReader, logger, readDotEnv } from './utilities';
+import { dipicarConfReader, logger, readDotEnv, initLogger } from './utilities';
 import { WsController } from './controller';
-import { join } from 'path';
 import { readFileSync } from 'fs';
 
 class Main {
     main() {
         
         readDotEnv((process.env.NODE_ENV === 'development')? 'development.env': 'production.env');
+        initLogger();
        
         const port = dipicarConfReader().port;
 

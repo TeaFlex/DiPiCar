@@ -14,4 +14,6 @@ ${SCRIPTS_PATH}/ssl_keys_gen.py
 #Add cron job for ssl key generation
 ln -s ${SCRIPTS_PATH}/ssl_keys_gen.py /etc/cron.monthly/ssl_keys_gen.py
 
+echo "Please reboot your system."
+
 exit 0
