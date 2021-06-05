@@ -7,6 +7,6 @@ iw dev uap0 del
 rm /etc/cron.monthly/ssl_keys_gen.py
 
 #removal of log and data folders
-rm -rf /var/log/dipicar /var/dipicar
+rm -rf /var/log/dipicar /var/local/dipicar
 
 exit 0
