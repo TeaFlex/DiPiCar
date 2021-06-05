@@ -35,9 +35,7 @@ for service in services:
     call(["systemctl", "stop", service+".service"])
 
 print("Removing %s interface..." %apifname)
-deluap = call(["iw", "dev", apifname, "del"])
-if(deluap == -19):
-    print("%s does not exist, skipping." %apifname)
+call(["iw", "dev", apifname, "del"])
 
 print("Adding %s interface..." %apifname)
 call(["iw", "dev", conf["interface"], "interface", "add", apifname, "type", "__ap"])

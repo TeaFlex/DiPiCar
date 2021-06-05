@@ -60,7 +60,7 @@ for rule in policy:
     call(["iptables", "-P", rule, policy[rule]])
 
 for ifobj in interfaces:
-    print("Configuring access for %s..." %ifobj["ifname"])
+    print("Configuring access rules for %s..." %ifobj["ifname"])
     #Allows only the port of listening
     for port in ifobj["whitelist"]:
         for type in ["udp", "tcp"]:
