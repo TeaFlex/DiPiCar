@@ -36,4 +36,3 @@ call(["systemctl", "enable", "dipicar"])
 
 #Enjoy !
 print("Configuration done !")
-print("Please reboot your system.")
