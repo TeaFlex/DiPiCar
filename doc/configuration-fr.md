@@ -15,6 +15,17 @@ Les champs suivants peuvent être modifiés:
 
 >Note: La sécurité de l'interface uap0 ne peut être modifée par le fichier de configuration, seulement celle de l'interface donnée dans ce dernier le peut. 
 
+## dossier creds
+Vous pouvez accéder à ce dossier depuis `/etc/dipicar/creds`.
+
+Ce répertoire a pour but de contenir les fichier d'identification utilisés par le serveur dipicar pour offrir une liaison HTTPS. Si les fichiers `key.pem` et `cert.pem` n'y sont pas présents (ou que le serveur rencontre une erreur lors de la lecture de ces derniers), le serveur se rabattra sur une liaison HTTP.
+
+Pour créer rapidement ces fichiers, vous pouvez utiliser la commande suivante:
+
+```
+sudo /usr/lib/dipicar/scripts/installation/ssl_gen_keys.py
+```
+
 ## hostapd.conf
 DiPiCar lit le fichier de configuration de hostapd pour connaître le bon canal wifi à utiliser. Si vous voulez changer la valeur de ce canal, modifiez ou ajoutez la ligne `channel=[any number from 1 to 14]`. La valeur par défaut utilisée par l'application est `7`.
 
