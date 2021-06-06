@@ -18,7 +18,7 @@ Les champs suivants peuvent être modifiés:
 ## dossier creds
 Vous pouvez accéder à ce dossier depuis `/etc/dipicar/creds`.
 
-Ce répertoire a pour but de contenir les fichier d'identification utilisés par le serveur dipicar pour offrir une liaison HTTPS. Si les fichiers `key.pem` et `cert.pem` n'y sont pas présents (ou que le serveur rencontre une erreur lors de la lecture de ces derniers), le serveur se rabattra sur une liaison HTTP.
+Ce répertoire a pour but de contenir les fichiers d'identification utilisés par le serveur dipicar pour offrir une liaison HTTPS. Si les fichiers `key.pem` et `cert.pem` n'y sont pas présents (ou que le serveur rencontre une erreur lors de la lecture de ces derniers), le serveur se rabattra sur une liaison HTTP.
 
 Pour créer rapidement ces fichiers, vous pouvez utiliser la commande suivante:
 
