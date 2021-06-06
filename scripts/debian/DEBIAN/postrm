@@ -4,9 +4,9 @@
 iw dev uap0 del
 
 #removal of cron job
-rm /etc/cron.monthly/ssl_keys_gen.py
+#rm /etc/cron.monthly/ssl_keys_gen.py
 
-#removal of log and data folders
-rm -rf /var/log/dipicar /var/local/dipicar
+#removal of log, data and lib folders
+rm -rf /var/log/dipicar /var/local/dipicar /usr/lib/dipicar
 
 exit 0

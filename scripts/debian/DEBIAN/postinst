@@ -9,10 +9,10 @@ cat /usr/lib/dipicar/scripts/network/defaultConf.json > /etc/dipicar/dipicar.con
 ${SCRIPTS_PATH}/services_config.py
 
 #Generation of app creds
-${SCRIPTS_PATH}/ssl_keys_gen.py
+#${SCRIPTS_PATH}/ssl_keys_gen.py
 
 #Add cron job for ssl key generation
-ln -s ${SCRIPTS_PATH}/ssl_keys_gen.py /etc/cron.monthly/ssl_keys_gen.py
+#ln -s ${SCRIPTS_PATH}/ssl_keys_gen.py /etc/cron.monthly/ssl_keys_gen.py
 
 echo "Please reboot your system."
 
