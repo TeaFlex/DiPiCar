@@ -1,0 +1,5 @@
+This folder is used to store dipicar credentials.
+Put your credentials here in order to secure the dipicar server.
+You must however name the files like so:
+-key file: "key.pem"
+-cert file: "cert.pem"
