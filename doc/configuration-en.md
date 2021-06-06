@@ -28,7 +28,7 @@ sudo /usr/lib/dipicar/scripts/installation/ssl_gen_keys.py
 ```
 
 ## hostapd.conf
-You can access this file at `/etc/hostapd/hostapd.conf`
+You can access this file at `/etc/hostapd/hostapd.conf`.
 
 DiPiCar read the hostapd configuration file to know the right wifi channel to use. If you want to change this channel, modify of add the line `channel=[any number from 1 to 14]`.  The default value used by the app is `7`.
 
