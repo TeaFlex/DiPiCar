@@ -2,8 +2,9 @@ import {Server} from 'ws';
 import {GPIO_control} from '../model';
 import {ImageEffects, PiStreamServer} from 'pistreamer';
 import {logger} from '../utilities';
+import { BaseController } from './BaseController';
 
-export class WsController {
+export class WsController extends BaseController {
 
     private wsServer: Server;
     private pistream: PiStreamServer;
@@ -12,6 +13,7 @@ export class WsController {
     private wsClients: any[] = [];
 
     constructor(wsServer?: Server, port = 8061) {
+        super();
         this.wsServer = wsServer ?? new Server({port});
 
         PiStreamServer.log = logger;
