@@ -28,9 +28,11 @@ for service in conf_files:
         call(["systemctl", "unmask", service])
 
     #Reload and enabling
-    print("Reload of service \"%s\"..." %service)
-    call(["service", service, "reload", "&&", "systemctl", "enable", service])
+    print("Start of service \"%s\"..." %service)
+    call(["systemctl", "enable", service])
+
+print("Enabling dipicar...")
+call(["systemctl", "enable", "dipicar"])
 
 #Enjoy !
 print("Configuration done !")
-print("Please reboot your system.")

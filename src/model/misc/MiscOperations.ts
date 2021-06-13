@@ -1,4 +1,4 @@
-import { writeFileSync } from "fs";
+import { stat, truncate , appendFile} from 'fs/promises';
 import { promisifiedExec as exec } from "../../utilities";
 
 export class MiscOperations {
@@ -21,8 +21,14 @@ export class MiscOperations {
     }
 
     static async changeHostname(newName: string) {
-        await exec(`hostname -b ${newName}`);
+        const hostsPath = "/etc/hosts";
+        await exec(`hostnamectl set-hostname ${newName}`);
         if((await this.getHostname()) !== newName)
             throw new Error("Something went wrong, hostname hasn't been changed.");
+
+        const toChange = (await exec(`tail -n 1 ${hostsPath}`)).replace('\n', '').length+1;
+        const fSize = (await stat(hostsPath)).size;
+        await truncate(hostsPath, fSize - toChange);
+        await appendFile(hostsPath, `127.0.1.1\t${newName}\n`);
     }
 }

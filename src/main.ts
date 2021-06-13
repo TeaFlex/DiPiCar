@@ -1,27 +1,51 @@
-import { createServer } from 'http';
+import { 
+    createServer as createHttpsServer, 
+    Server as HttpsServer
+} from 'https';
+import {
+    createServer as createHttpServer, 
+    Server as HttpServer 
+} from 'http';
 import { Server as WsServer } from 'ws';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import dotenv from 'dotenv';
 import * as routes from './routes';
 import { responseHandler, sendHandler } from './middlewares';
-import { logger, Path } from './utilities';
+import { 
+    dipicarConfReader, 
+    logger, 
+    readDotEnv, 
+    initLogger, 
+    appPath 
+} from './utilities';
 import { WsController } from './controller';
+import { readFileSync } from 'fs';
 import { join } from 'path';
 
 class Main {
-    constructor() {
+    main() {
         
-        if(process.env.NODE_ENV === 'development') 
-            dotenv.config({path: join(process.cwd(), 'development.env')});
-        else
-            dotenv.config({path: join(process.cwd(), 'production.env')});
-            
-        const port = parseInt(process.env.PORT!) | 8060;
+        readDotEnv((process.env.NODE_ENV === 'development')? 'development.env': 'production.env');
+        initLogger();
+       
+        const port = dipicarConfReader().port;
 
         const app = express();
-        const server = createServer(app);
+
+        let server: HttpServer | HttpsServer;
+
+        try {
+            server = createHttpsServer({
+                key: readFileSync(join(appPath().credsPath, "key.pem")),
+                cert: readFileSync(join(appPath().credsPath, "cert.pem"))
+            }, app);
+        } catch (error) {
+            logger.error(error.message);
+            logger.info("Creating an HTTP server instead...");
+            server = createHttpServer(app);
+        }
+
 
         app.use(express.static('public'));
         app.use(cors());
@@ -40,9 +64,10 @@ class Main {
         const wsController = new WsController(wsServer);
         
         server.listen(port, () => {
-            logger.info(`The app is running and listening to the port ${port}.`);
+            const serverType = (server instanceof HttpsServer)?"HTTPS": "HTTP";
+            logger.info(`${serverType} server is running and listening to the port ${port}.`);
         });
     }
 }
 
-const main = new Main();
+new Main().main();

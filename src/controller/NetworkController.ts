@@ -27,10 +27,8 @@ export class NetworkController extends BaseController {
             await WpaOperations.addNetwork(net.ssid, net.passphrase);
             next(new HttpCreated(`Network "${net.ssid}" added.`));
         } catch (error) {
-            if((error.message as string).includes("not exist"))
-                next(new NotFoundError(error.message));
-            else
-                next(new HttpError(error.message));
+            const code = ((error.message as string).includes("exists"))? 409 : 500; 
+            next(new HttpError(error.message, code));
         }
     } 
 

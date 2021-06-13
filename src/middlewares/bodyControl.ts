@@ -35,14 +35,7 @@ export const networkSchema: Record<string, ParamSchema> = {
         }
     }, 
     passphrase: {
-        isString: true,
-        isLength: {
-            errorMessage: "SSID must be between 5 and 60 chars.",
-            options: {
-                min: 5,
-                max: 60
-            }
-        }
+        isString: true
     }
 };
 
@@ -50,18 +43,18 @@ export const hostnameSchema: Record<string, ParamSchema> = {
     hostname: {
         isString: true,
         trim: true,
-        isLowercase: true,
+        isLength: {
+            errorMessage: "Hostname must be between 2 and 15 chars.",
+            options: {
+                min: 2,
+                max: 15
+            }
+        },
         matches: {
             options: /^[^\s\W]+$/gm,
             errorMessage: "Hostname must not contain any space or special chars."
         },
-        isLength: {
-            errorMessage: "Hostname must be between 5 and 10 chars.",
-            options: {
-                min: 5,
-                max: 10
-            }
-        }
+        
     }
 };
 

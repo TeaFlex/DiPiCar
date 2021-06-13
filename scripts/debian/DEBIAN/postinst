@@ -1,6 +1,19 @@
 #!/bin/sh
 
+SCRIPTS_PATH="/usr/lib/dipicar/scripts/installation"
+
+#Copying the content of the default configuration file
+cat /usr/lib/dipicar/scripts/network/defaultConf.json > /etc/dipicar/dipicar.conf.json
+
 #Running of the configuration script
-/usr/lib/dipicar/scripts/installation/services_config.py
+${SCRIPTS_PATH}/services_config.py
+
+#Generation of app creds
+#${SCRIPTS_PATH}/ssl_keys_gen.py
+
+#Add cron job for ssl key generation
+#ln -s ${SCRIPTS_PATH}/ssl_keys_gen.py /etc/cron.monthly/ssl_keys_gen.py
+
+echo "Please reboot your system."
 
 exit 0

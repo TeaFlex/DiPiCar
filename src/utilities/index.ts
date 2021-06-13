@@ -6,3 +6,5 @@ export * from './successes';
 export * from './Path';
 export * from './initPigpio';
 export * from './promisifiedExec';
+export * from './confReader';
+export * from './readDotEnv';
