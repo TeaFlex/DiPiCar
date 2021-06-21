@@ -31,4 +31,8 @@ export class MiscOperations {
         await truncate(hostsPath, fSize - toChange);
         await appendFile(hostsPath, `127.0.1.1\t${newName}\n`);
     }
+
+    static getServerTimestamp() {
+        return new Date();
+    }
 }

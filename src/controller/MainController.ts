@@ -8,7 +8,8 @@ export class MainController extends BaseController {
     getStatus = async (req: Request, res: Response, next: NextFunction) => {
         const data = { 
             hostname: await MiscOperations.getHostname(),
-            ...MiscOperations.getProcessInfos()
+            timestamp: MiscOperations.getServerTimestamp(),
+            ...MiscOperations.getProcessInfos(),
         };
         next(new HttpSuccess("API status sent.", data));
     }
