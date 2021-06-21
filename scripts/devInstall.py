@@ -33,6 +33,3 @@ for service in services:
 
 #install global npm packages
 call(["npm","i", "--global"] + npmPackages)
-
-mkdir("creds")
-call(["scripts/debian/usr/lib/dipicar/scripts/installation/ssl_keys_gen.py", "./creds"])
