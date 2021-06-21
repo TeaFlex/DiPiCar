@@ -35,3 +35,12 @@ npm run test
 
 Maintenant il vous suffit just d'apporter vos fonctionnalités à DiPiCar ! Vous pouvez lancer le projet avec `npm start` et nodemon s'occupera de tout lorsque vous ferez des changements dans le code.
 Si vous voulez construire le package debian, vous pouvez utiliser `npm run build` et un fichier .deb appparaîtra à l'intérieur d'un dossier "build".
+
+5. **Travailler avec HTTPS**
+
+Afin de générer facilement des certificats, utilisez la commande suivante:
+```
+npm run genssl
+```
+Vous pourrez alors, au prochain `npm start`, profiter d'une connexion HTTPS.
+> Note: les certificats générés peuvent être remplacés par n'importe quel autre certificat.

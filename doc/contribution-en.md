@@ -35,3 +35,12 @@ npm run test
 
 Now you just need to add your features to the project ! You can start the project with `npm start` and nodemon will got you covered when you'll make a change in the code.
 If you want to build your own debian package, you can run `npm run build` and a .deb file will spawn inside a "build" folder.
+
+5. **Work with HTTPS**
+
+To easily generate certificate, use the followinf command:
+```
+npm run genssl
+```
+You will then, at the next `npm start`, benefit a HTTPS connection.
+> Note: generated certificates can be replaced by any other certificate.
