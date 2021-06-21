@@ -17,7 +17,7 @@ Afin de contrôler les moteurs, vous devez donner une abcisse (X), une ordonnée
 |--|--|--|
 | `x` | -255 à 255 | Détermine si la voiture doit tourner à droite (positif) ou à gauche (négatif). |
 | `y` | -255 à 255 | Détermine si la voiture doit aller en avant (positif) ou en arrière (négatif). |
-| `speed` (optionnal) | 0 à 255 | Fixe La vitesse des moteurs. Si elle est omise, la vitesse sera calculée avec `x` et `y`. |
+| `speed` (optionnal) | 0 à 255 | Fixe la vitesse des moteurs. Si elle est omise, la vitesse sera calculée avec `x` et `y`. |
 
 Les champs ci-dessus doivent être envoyé au serveur au fromat JSON, comme tel:
 ```js
