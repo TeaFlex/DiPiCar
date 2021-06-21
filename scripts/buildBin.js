@@ -16,7 +16,8 @@ compile({
         "./production.env",
         "./public/*",
         "./dist/**/*",
-        "./node_modules/pigpio/build/Release/pigpio.node"
+        "./node_modules/pigpio/build/Release/pigpio.node",
+        "./scripts/debian/usr/lib/dipicar/scripts/network/defaultConf.json"
     ],
     loglevel: "info",  
 })

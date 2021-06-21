@@ -2,7 +2,7 @@ import { readFileSync } from "fs";
 import { defaultConf } from "../enums";
 
 
-export function dipicarConfReader(path?: string): typeof defaultConf {
+export function dipicarConfReader(path?: string) {
     try {
         return {
             ...defaultConf, 

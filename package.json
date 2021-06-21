@@ -1,6 +1,6 @@
 {
   "name": "dipicar",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "DiPiCar is an API aimed at controlling a car built by the user. This supports video streaming between the server and the client (if the car is equipped with a camera module).",
   "main": "dist/main.js",
   "dependencies": {
@@ -28,16 +28,15 @@
     "@types/ws": "^7.4.0",
     "chai": "^4.3.4",
     "mocha": "^8.3.2",
-    "nexe": "^4.0.0-beta.17",
+    "nexe": "^4.0.0-beta.18",
     "nodemon": "^2.0.7",
     "ts-mocha": "^8.0.0"
   },
   "scripts": {
-    "confdev": "sudo ./scripts/installation/services_installation.py",
     "start": "nodemon",
-    "test": "sudo ts-mocha ./src/test/**/*.test.ts",
+    "test": "sudo ./scripts/debian/usr/lib/dipicar/scripts/network/initUap0.py && sudo ts-mocha ./src/test/**/*.test.ts",
     "build": "sudo rm -rf ./dist ./build && tsc && scripts/buildBin.js && scripts/buildPackage.py",
-    "dev:install": "sudo scripts/devInstall.py"
+    "genssl": "mkdir creds && ./scripts/debian/usr/lib/dipicar/scripts/installation/ssl_keys_gen.py ./creds"
   },
   "author": "Teaflex",
   "license": "ISC",

@@ -15,8 +15,8 @@ export class WpaOperations {
         }
     }
 
-    public static async addNetwork(ssid: string, passphrase: string) {        
-        if(await this.getNetworkId(ssid))
+    public static async addNetwork(ssid: string, passphrase: string) {    
+        if(await this.getNetworkId(ssid) !== null)
             throw new Error(`SSID "${ssid}" already exists.`);
             
         const netId = (await exec(`${this.command} add_network`)).trim();
@@ -75,7 +75,7 @@ export class WpaOperations {
 
     public static async getNetworkId(ssid: string) {
         const result = (await this.getNetworkList())
-            .find(v=>v.ssid === ssid);   
+            .find(v=>v.ssid === ssid);
         return (result)? result.id : null;
     }
 
