@@ -1,1 +1,1 @@
-export const defaultConf = require("../../scripts/debian/usr/lib/dipicar/scripts/network/defaultConf.json");
+export const defaultConf: Record<string, any> = require("../../scripts/debian/usr/lib/dipicar/scripts/network/defaultConf.json");
