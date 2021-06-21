@@ -1,6 +1,1 @@
-export const defaultConf = {
-    interface: "wlan0",
-    port: 8060,
-    secureInterface: true,
-    whitelist: [],
-}
+export const defaultConf = require("../../scripts/debian/usr/lib/dipicar/scripts/network/defaultConf.json");
