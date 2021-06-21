@@ -33,11 +33,9 @@
     "ts-mocha": "^8.0.0"
   },
   "scripts": {
-    "confdev": "sudo ./scripts/installation/services_installation.py",
     "start": "nodemon",
-    "test": "sudo ts-mocha ./src/test/**/*.test.ts",
-    "build": "sudo rm -rf ./dist ./build && tsc && scripts/buildBin.js && scripts/buildPackage.py",
-    "dev:install": "sudo scripts/devInstall.py"
+    "test": "sudo ./scripts/debian/usr/lib/dipicar/scripts/network/initUap0.py && sudo ts-mocha ./src/test/**/*.test.ts",
+    "build": "sudo rm -rf ./dist ./build && tsc && scripts/buildBin.js && scripts/buildPackage.py"
   },
   "author": "Teaflex",
   "license": "ISC",

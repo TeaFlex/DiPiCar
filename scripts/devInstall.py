@@ -19,7 +19,7 @@ with open(path.join(path.dirname(__file__), './buildInfos.json')) as f:
 
 #Each services to install plus the dependencies
 services = ["curl",  "nodejs", "git"] + infos["dependencies"]
-npmPackages = ["ts-node"]
+npmPackages = ["ts-node", "ts-mocha", "mocha", "typescript"]
 
 #Update and upgrade first
 call(["apt-get", "update"])
@@ -32,8 +32,7 @@ for service in services:
     call(["apt-get", "install", "-y", service])
 
 #install global npm packages
-for package in npmPackages:
-    call(["npm","i", "--global", package])
+call(["npm","i", "--global"] + npmPackages)
 
 mkdir("creds")
 call(["scripts/debian/usr/lib/dipicar/scripts/installation/ssl_keys_gen.py", "./creds"])
