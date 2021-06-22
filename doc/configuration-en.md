@@ -26,7 +26,7 @@ offer HTTPS. If it doesn't contain either of `key.pem` and `cert.pem` files (or 
 To easily create these files, you can run this command:
 
 ```
-sudo /usr/lib/dipicar/scripts/installation/ssl_gen_keys.py
+sudo /usr/lib/dipicar/scripts/installation/ssl_keys_gen.py
 ```
 
 ## hostapd.conf
