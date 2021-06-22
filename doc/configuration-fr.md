@@ -12,6 +12,8 @@ Les champs suivants peuvent être modifiés:
 | port | Port auquel l'application DiPiCar écoute. | 8060 |
 | secureInterface | Applique ou non une sécurité sur l'interface précisée dans le fichier. | `true` |
 | whitelist | Liste des ports à ne pas bloquer lors de la sécurisation (si "secureInterface" est `true`)  | `[]` |
+| rightMotor | Configuration des pins utilisées par le moteur de droite. |`{"forwards": 19,"backwards": 26, "pwm": 13}` |
+| leftMotor | Configuration des pins utilisées par le moteur de gauche. |`{"forwards": 22,"backwards": 27, "pwm": 17}` |
 
 >Note: La sécurité de l'interface uap0 ne peut être modifée par le fichier de configuration, seulement celle de l'interface donnée dans ce dernier le peut. 
 

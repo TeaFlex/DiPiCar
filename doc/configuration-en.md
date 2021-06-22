@@ -12,6 +12,8 @@ The following fields can be modified:
 | port | Port which DiPiCar listen to. | 8060 |
 | secureInterface | Apply security rules on the interface given in the file. | `true` |
 | whitelist | List of ports to whitelist (only if "secureInterface" is `true`)  | `[]` |
+| rightMotor | Configuration of the pins used for the right motor. |`{"forwards": 19,"backwards": 26, "pwm": 13}` |
+| leftMotor | Configuration of the pins used for the left motor. |`{"forwards": 22,"backwards": 27, "pwm": 17}` |
 
 >Note: uap0 security can not be modified trought the configuration file, only the one of the given interface can be.
 
