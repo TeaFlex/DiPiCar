@@ -22,6 +22,7 @@ import {
 import { WsController } from './controller';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { exit } from 'process';
 
 class Main {
     main() {
@@ -42,7 +43,7 @@ class Main {
             }, app);
         } catch (error) {
             logger.error(error.message);
-            logger.info("Creating an HTTP server instead...");
+            logger.warn("Creating an HTTP server instead...");
             server = createHttpServer(app);
         }
 
@@ -70,4 +71,9 @@ class Main {
     }
 }
 
-new Main().main();
+try {
+    new Main().main();
+} catch (error) {
+    logger.error(error.message)
+    exit(-1);
+}
