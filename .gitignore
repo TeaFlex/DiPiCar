@@ -13,3 +13,5 @@ yarn.lock
 data/
 *.bak
 *.pem
+http-live-player.json
+creds/
