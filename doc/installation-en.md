@@ -54,9 +54,9 @@ sudo reboot
 Or you can start the server:
 
 ```
-sudo dipicar --config
+sudo dipicar fullStart
 ```
 
->Note: Without the config parameter, only the server will start.
+>Note: You can also replace `fullStart` by `start` to only launch the web server.
 
 Enjoy the ride ! 🚗

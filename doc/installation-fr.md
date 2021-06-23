@@ -55,9 +55,8 @@ sudo reboot
 Ou alors démarrer le server directement:
 
 ```
-sudo dipicar --config
+sudo dipicar fullStart
 ```
 
->Note: Sans le paramètre "config", seul le serveur démarrera.
-
+> Note: Vous pouvez aussi remplacer `fullStart` par `start` pour ne lancer que le serveur web. 
 Bonne conduite ! 🚗
