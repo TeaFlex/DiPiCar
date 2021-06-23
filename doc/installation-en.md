@@ -57,6 +57,6 @@ Or you can start the server:
 sudo dipicar fullStart
 ```
 
->Note: You can also replace `fullStart` by `start` to only launch the web server.
+> Note: You can also replace `fullStart` by `start` to only launch the web server.
 
 Enjoy the ride ! 🚗
