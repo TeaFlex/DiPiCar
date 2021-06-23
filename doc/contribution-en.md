@@ -38,7 +38,7 @@ If you want to build your own debian package, you can run `npm run build` and a 
 
 5. **Work with HTTPS**
 
-To easily generate certificate, use the followinf command:
+To easily generate certificate, use the following command:
 ```
 npm run genssl
 ```
