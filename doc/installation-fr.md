@@ -58,6 +58,6 @@ Ou alors démarrer le server directement:
 sudo dipicar fullStart
 ```
 
-> Note: Vous pouvez aussi remplacer `fullStart` par `start` pour ne lancer que le serveur web. 
+> Note: Vous pouvez aussi remplacer `fullStart` par `start` pour ne lancer que le serveur de l'API. 
 
 Bonne conduite ! 🚗
