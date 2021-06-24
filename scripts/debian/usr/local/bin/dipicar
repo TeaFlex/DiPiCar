@@ -37,6 +37,10 @@ class Dipicar:
   def fullStart():
     Dipicar.config()
     Dipicar.start()
+  
+  @staticmethod
+  def genSSL():
+    call(["{}scripts/installation/ssl_keys_gen.py".format(INSTALLDIR)])
 
 Dipicar.commands = dir(Dipicar)[26:]
 

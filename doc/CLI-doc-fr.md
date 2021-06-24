@@ -16,3 +16,4 @@ Voici une liste des différentes commandes possibles:
 | `start` | Démarre seulement le serveur de l'API. |
 | `configure` | Effectue seulement la configuration et sécurisation des interfaces sans fil. |
 | `version` (par défaut) | Affiche la version installée du service. |
+| `genSSL` | Génère un certificat basique dans `/etc/dipicar/creds/`. |

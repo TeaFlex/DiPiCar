@@ -25,7 +25,7 @@ Ce répertoire a pour but de contenir les fichiers d'identification utilisés pa
 Pour créer rapidement ces fichiers, vous pouvez utiliser la commande suivante:
 
 ```
-sudo /usr/lib/dipicar/scripts/installation/ssl_keys_gen.py
+sudo dipicar genSSL
 ```
 
 ## hostapd.conf
