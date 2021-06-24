@@ -16,4 +16,4 @@ Here's a list of all the possible command:
 | `start` | Only starts the API server. |
 | `configure` | Only configures and secures the wireless interfaces. |
 | `version` (default) | Shows the installed version of the service. |
-| `genSSL` | Generate a basic certificate in `/etc/dipicar/creds/`. |
+| `genSSL` | Generates a basic certificate in `/etc/dipicar/creds/`. |
