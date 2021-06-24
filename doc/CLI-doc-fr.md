@@ -10,7 +10,7 @@ sudo dipicar [commande]
 
 Voici une liste des différentes commandes possibles:
 
-| Command | Description |
+| Commande | Description |
 |--|--|
 | `fullStart` | Configure et sécurise les interfaces sans fil et ensuite démarre le serveur de l'API. |
 | `start` | Démarre seulement le serveur de l'API. |
