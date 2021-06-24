@@ -45,6 +45,8 @@ After that, all the configuration scripts will run automatically. You'll then be
 sudo reboot
 ```
 
+> Note: By default, the dipicar service is automatically launched when starting the Raspberry Pi.
+
 Or you can directly start the server:
 
 ```

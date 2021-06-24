@@ -46,6 +46,8 @@ Après ça, tous les scripts de configuration seront executés automatiquement. 
 sudo reboot
 ```
 
+> Note: Par défaut, le service dipicar est lancé automatiquement au démarrage de la machine.
+
 Ou alors démarrer le server directement:
 
 ```
