@@ -36,7 +36,7 @@ export class GPIO_control {
         } catch (error) {            
             logger.error(error.message);
             if(useDefault)
-                throw new Error("Default configuration compromised.");
+                throw new Error("Default configuration may be compromised.");
             this.initWheels(true);
         }
     }
