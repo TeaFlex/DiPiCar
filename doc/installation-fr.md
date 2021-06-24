@@ -40,13 +40,7 @@ sudo apt install ./dipicar-[version].deb
 l'installation de dipicar. Ne pas le modifier ne changera rien au bon fonctionnement de l'application
 mais il est recommandé de le faire par mesure de sécurité. Pour ce faire, faites `sudo nano /etc/hostapd/hostapd.conf` et modifiez le champ `wpa_passphrase`.
 
-Après ça, tous les scripts de configuration seront executés automatiquement. Vous aurez alors la capacité d'activer le service dipicar comme ceci:
-
-```
-sudo systemctl enable dipicar.service
-```
-
-...et redémarrer votre Rasberry pi.
+Après ça, tous les scripts de configuration seront executés automatiquement. Vous pourrez alors redémarrer votre Rasberry pi.
 
 ```
 sudo reboot
