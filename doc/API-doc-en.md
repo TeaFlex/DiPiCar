@@ -10,7 +10,7 @@ All the infos for the REST operations can be found [here](https://documenter.get
 
 The WebSocket link is for controlling the video stream and the motors of the car.
 
-All the requests to control the video stream are [here](https://github.com/TeaFlex/PiStreamer/blob/HEAD/doc/DOCUMENTATION-en.md#websocket-events)
+All the requests to control the video stream are [here](https://github.com/TeaFlex/PiStreamer/blob/HEAD/doc/DOCUMENTATION-en.md#websocket-events).
 
 In order to control the motors, you must give an abscissa (X), an ordinate (Y) and, optionally, a speed. There are some infos:
 | Field | Range | Purpose |  

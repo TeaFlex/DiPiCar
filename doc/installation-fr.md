@@ -58,6 +58,6 @@ Ou alors démarrer le server directement:
 sudo dipicar fullStart
 ```
 
-> Note: Vous pouvez aussi remplacer `fullStart` par `start` pour ne lancer que le serveur de l'API. 
+> Note: Vous pouvez aussi remplacer `fullStart` par `start` pour ne lancer que le serveur de l'API. Plus d'infos [ici](https://github.com/TeaFlex/DiPiCar/blob/master/doc/CLI-doc-fr.md).
 
 Bonne conduite ! 🚗
