@@ -7,3 +7,4 @@ export * from './StorageController';
 export * from './UserController';
 export * from './WsController';
 export * from './NetworkController';
+export * from './AuthController';

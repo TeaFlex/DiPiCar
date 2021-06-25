@@ -6,3 +6,4 @@ export * from './StatsRoute';
 export * from './StorageRoute';
 export * from './UsersRoute';
 export * from './NetworkRoute';
+export * from "./AuthRoute";
