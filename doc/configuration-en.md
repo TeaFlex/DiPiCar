@@ -1,4 +1,4 @@
-# Configuration of Dipicar
+# Configuration of DiPi Car
 
   
 ## dipicar.conf.json
@@ -20,7 +20,7 @@ The following fields can be modified:
 ## creds folder
 You can access the credentials folder at `/etc/dipicar/creds`.
 
-This directory has for purpose to contain the credentials used by the dipicar server to
+This directory has for purpose to contain the credentials used by the DiPi Car server to
 offer HTTPS. If it doesn't contain either of `key.pem` and `cert.pem` files (or if any error related to the reading of these files occurs), the server will fallback to HTTP.
 
 To easily create these files, you can run this command:
