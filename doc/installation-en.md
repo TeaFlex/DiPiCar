@@ -37,7 +37,7 @@ When your Raspberry pi has reboot, you can then proceed to the installation of t
 sudo apt install ./dipicar-[version].deb
 ```
 
-**IMPORTANT**: We strongly advise you to change the access point password after the DiPi Car installation. Not modifying it will not break the application but it's recommended to do so for security purpose. To do this, run `sudo nano /etc/hostapd/hostapd.conf` and modify the `wpa_passphrase` field.
+**IMPORTANT**: We strongly advise you to change the access point password after installing dipicar. Not modifying it will not break the application but it's recommended to do so for security purpose. To do this, run `sudo nano /etc/hostapd/hostapd.conf` and modify the `wpa_passphrase` field.
 
 After that, all the configuration scripts will run automatically. You'll then be able to reboot your Rasberry pi.
 
@@ -55,4 +55,4 @@ sudo dipicar fullStart
 
 > Note: You can also replace `fullStart` by `start` to only launch the API server. More infos [here](https://github.com/TeaFlex/DiPiCar/blob/master/doc/CLI-doc-en.md).
 
-Prepare for the ride ! 🚗
+Prepare for the ride! 🚗
