@@ -1,6 +1,6 @@
 # CLI documentation
 
-You can run all components of DiPiCar separately by using the CLI.
+You can run all components of DiPi Car separately by using the CLI.
 The base command needs at least one argument, or else it will show by default the installed version of the service.
 
 ```sh
