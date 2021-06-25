@@ -1,6 +1,6 @@
 # Contribute to the project
 
-If you want to help us in the development of DiPiCar, you can follow these few steps in order to have a ready-to-go project.
+If you want to help us in the development of DiPi Car, you can follow these few steps in order to have a ready-to-go project.
 
 > Note: This project must be developed on a Raspberry Pi of any model.
 
