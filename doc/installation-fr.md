@@ -1,4 +1,4 @@
-# Installation de DiPiCar
+# Installation de DiPi Car
  
 ### Prérequis
 
@@ -16,9 +16,9 @@ Tout d'abord, vous devez connecter le Raspberry pi au réseau sur lequel vous vo
 5. Entrez le mot de passe de votre point d'accès.
 6. Enfin, redémarrez votre Raspberry pi en éxecutant `sudo reboot`.
 
-### Télécharger DiPiCar
+### Télécharger DiPi Car
 Vous devez tout d'abord télécharger le paquet via GitHub. Vous pouvez accéder à toutes les releases [ici](https://github.com/TeaFlex/DiPiCar/releases).
-Nous vous suggérons d'utiliser wget pour télécharger DiPiCar directement sur votre Raspberry Pi, comme tel:
+Nous vous suggérons d'utiliser wget pour télécharger DiPi Car directement sur votre Raspberry Pi, comme tel:
 > Remplacez tous les [version] par le numéro de version qui vous intéresse.
 
 ```
@@ -56,4 +56,4 @@ sudo dipicar fullStart
 
 > Note: Vous pouvez aussi remplacer `fullStart` par `start` pour ne lancer que le serveur de l'API. Plus d'infos [ici](https://github.com/TeaFlex/DiPiCar/blob/master/doc/CLI-doc-fr.md).
 
-Bonne conduite ! 🚗
+Préparez-vous à prendre la route ! 🚗
