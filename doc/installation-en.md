@@ -1,4 +1,4 @@
-# Installation of DiPiCar
+# Installation of DiPi Car
  
 ### Prerequisites 
 
@@ -17,9 +17,9 @@ Fristly, you have to connect the Raspberry pi to the network that you want the c
 5. Enter the password of the access point.
 6. Finally, reboot your Raspberry pi by running `sudo reboot`.
 
-### Download DiPiCar
+### Download DiPi Car
 You must first download the package trougth GitHub. You can access all the releases [here](https://github.com/TeaFlex/DiPiCar/releases).
-We suggest you to use wget to download DiPiCar directly to your Raspberry pi, as such:
+We suggest you to use wget to download DiPi Car directly to your Raspberry pi, as such:
 > Replace all [version] by the release that you're interested in.
 
 ```
@@ -37,7 +37,7 @@ When your Raspberry pi has reboot, you can then proceed to the installation of t
 sudo apt install ./dipicar-[version].deb
 ```
 
-**IMPORTANT**: We strongly advise you to change the access point password after the dipicar installation. Not modifying it will not break the application but it's recommended to do so for security purpose. To do this, run `sudo nano /etc/hostapd/hostapd.conf` and modify the `wpa_passphrase` field.
+**IMPORTANT**: We strongly advise you to change the access point password after the DiPi Car installation. Not modifying it will not break the application but it's recommended to do so for security purpose. To do this, run `sudo nano /etc/hostapd/hostapd.conf` and modify the `wpa_passphrase` field.
 
 After that, all the configuration scripts will run automatically. You'll then be able to reboot your Rasberry pi.
 
@@ -55,4 +55,4 @@ sudo dipicar fullStart
 
 > Note: You can also replace `fullStart` by `start` to only launch the API server. More infos [here](https://github.com/TeaFlex/DiPiCar/blob/master/doc/CLI-doc-en.md).
 
-Enjoy the ride ! 🚗
+Prepare for the ride ! 🚗
