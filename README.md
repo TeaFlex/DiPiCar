@@ -1,6 +1,6 @@
-# Dipicar 🚗
+# DiPi Car 🚗
 
-DiPiCar is an API aimed at controlling a car built by the user. This supports video streaming between the server and the client (if the car is equipped with a camera module).
+DiPi Car is an API aimed at controlling a car built by the user. This supports video streaming between the server and the client (if the car is equipped with a camera module).
 
 ## Documentation
 
@@ -12,6 +12,6 @@ DiPiCar is an API aimed at controlling a car built by the user. This supports vi
 
 ## Links
 
-- The web site of the project: [DipiHub](https://dipihub.netlify.app/en/#/)🏠
+- The website of the project: [DiPi Hub](https://dipihub.netlify.app/en/#/)🏠
 - Module of streaming : [PiStreamer](https://www.npmjs.com/package/pistreamer)🎥
-- Official client: [DiPiLink](https://github.com/Iucapad/dipilink)⚛
+- Official client: [DiPi Link](https://github.com/Iucapad/dipilink)🎮
