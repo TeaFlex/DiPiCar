@@ -6,7 +6,8 @@ After=network.target
 Type=simple
 RemainAfterExit=yes
 Restart=always
-ExecStart=/usr/local/bin/dipicar --config
+ExecStart=/usr/local/bin/dipicar fullStart
+ExecReload=/usr/local/bin/dipicar config
 
 [Install]
 WantedBy=multi-user.target

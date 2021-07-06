@@ -1,13 +1,25 @@
 import { readFileSync } from "fs";
 import { defaultConf } from "../enums";
+import merge from "lodash.merge";
 
+type MotorConf = {
+    forwards: number,
+    backwards: number,
+    pwm: number
+};
 
-export function dipicarConfReader(path?: string) {
+export interface DipicarConf {
+    interface?: string;
+    secureInterface?: boolean;
+    whitelist?: number[];
+    port?: number;
+    rightMotor?: MotorConf;
+    leftMotor?: MotorConf;
+}
+
+export function dipicarConfReader(path?: string): DipicarConf {
     try {
-        return {
-            ...defaultConf, 
-            ...require(path ?? "/etc/dipicar/dipicar.conf.json")
-        };
+        return merge(defaultConf, require(path ?? "/etc/dipicar/dipicar.conf.json"));
     } catch (error) {
         return defaultConf;
     }

@@ -1,4 +1,4 @@
-# Installation of DiPiCar
+# Installation of DiPi Car
  
 ### Prerequisites 
 
@@ -17,9 +17,9 @@ Fristly, you have to connect the Raspberry pi to the network that you want the c
 5. Enter the password of the access point.
 6. Finally, reboot your Raspberry pi by running `sudo reboot`.
 
-### Download DiPiCar
+### Download DiPi Car
 You must first download the package trougth GitHub. You can access all the releases [here](https://github.com/TeaFlex/DiPiCar/releases).
-We suggest you to use wget to download DiPiCar directly to your Raspberry pi, as such:
+We suggest you to use wget to download DiPi Car directly to your Raspberry pi, as such:
 > Replace all [version] by the release that you're interested in.
 
 ```
@@ -37,26 +37,22 @@ When your Raspberry pi has reboot, you can then proceed to the installation of t
 sudo apt install ./dipicar-[version].deb
 ```
 
-**IMPORTANT**: We strongly advise you to change the access point password after the dipicar installation. Not modifying it will not break the application but it's recommended to do so for security purpose. To do this, run `sudo nano /etc/hostapd/hostapd.conf` and modify the `wpa_passphrase` field.
+**IMPORTANT**: We strongly advise you to change the access point password after installing dipicar. Not modifying it will not break the application but it's recommended to do so for security purpose. To do this, run `sudo nano /etc/hostapd/hostapd.conf` and modify the `wpa_passphrase` field.
 
-After that, all the configuration scripts will run automatically. You'll then be able to enable the dipicar sevice like this:
-
-```
-sudo systemctl enable dipicar.service
-```
-
-...and reboot your Rasberry pi.
+After that, all the configuration scripts will run automatically. You'll then be able to reboot your Rasberry pi.
 
 ```
 sudo reboot
 ```
 
-Or you can start the server:
+> Note: By default, the dipicar service is automatically launched when starting the Raspberry Pi.
+
+Or you can directly start the server:
 
 ```
-sudo dipicar --config
+sudo dipicar fullStart
 ```
 
->Note: Without the config parameter, only the server will start.
+> Note: You can also replace `fullStart` by `start` to only launch the API server. More infos [here](https://github.com/TeaFlex/DiPiCar/blob/master/doc/CLI-doc-en.md).
 
-Enjoy the ride ! 🚗
+Prepare for the ride! 🚗

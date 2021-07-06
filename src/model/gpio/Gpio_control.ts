@@ -1,15 +1,16 @@
 import { Wheel } from "./Wheel";
 import { Coordinates } from "./Coordinates";
+import { dipicarConfReader, logger } from "../../utilities";
+import { defaultConf } from "../../enums";
 
 export class GPIO_control {
 
     private static instance: GPIO_control;
-    private leftWheel: Wheel;
-    private rightWheel: Wheel;
+    private leftWheel?: Wheel;
+    private rightWheel?: Wheel;
 
     private constructor() {
-        this.rightWheel = new Wheel(19, 26, 13);
-        this.leftWheel = new Wheel(22, 27, 17);
+        this.initWheels();
 
         this.movement = this.movement.bind(this);
         this.speed = this.speed.bind(this);
@@ -23,9 +24,26 @@ export class GPIO_control {
         return this.instance;
     }
 
+    initWheels(useDefault = false) {
+        try {
+            if(useDefault)
+                logger.warn("Default motor pins will be used.");
+            const right = (!useDefault)? dipicarConfReader().rightMotor! : defaultConf.rightMotor!;
+            const left = (!useDefault)? dipicarConfReader().leftMotor! : defaultConf.leftMotor!;
+            
+            this.rightWheel = new Wheel(right.forwards, right.backwards, right.pwm);
+            this.leftWheel = new Wheel(left.forwards, left.backwards, left.pwm);
+        } catch (error) {            
+            logger.error(error.message);
+            if(useDefault)
+                throw new Error("Default configuration may be compromised.");
+            this.initWheels(true);
+        }
+    }
+
     speed(speed: number) {
-        this.rightWheel.setSpeed(speed);
-        this.leftWheel.setSpeed(speed);
+        this.rightWheel!.setSpeed(speed);
+        this.leftWheel!.setSpeed(speed);
     }
 
     movement(coord: Coordinates) {
@@ -49,30 +67,30 @@ export class GPIO_control {
         else {
             //forward
             if(coord.y >= 0) {
-                this.leftWheel.goForward();
-                this.rightWheel.goForward();
+                this.leftWheel!.goForward();
+                this.rightWheel!.goForward();
             }
             //backward
             else {
-                this.leftWheel.goBackward();
-                this.rightWheel.goBackward();
+                this.leftWheel!.goBackward();
+                this.rightWheel!.goBackward();
             }
             //right
             if(coord.x >= 0) { 
-                this.leftWheel.setSpeed(speed);
-                this.rightWheel.setSpeed(speed-coord.x);
+                this.leftWheel!.setSpeed(speed);
+                this.rightWheel!.setSpeed(speed-coord.x);
             }
             //left
             else {
-                this.leftWheel.setSpeed(speed+coord.x);
-                this.rightWheel.setSpeed(speed);
+                this.leftWheel!.setSpeed(speed+coord.x);
+                this.rightWheel!.setSpeed(speed);
             }
         }
     }
 
     stop() {
         this.speed(0);
-        this.leftWheel.stop();
-        this.rightWheel.stop();
+        this.leftWheel!.stop();
+        this.rightWheel!.stop();
     }
 }

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/python3
 ### BEGIN INIT INFO
 # Provides:          dipicar
 # Required-Start:    $all
@@ -8,16 +8,62 @@
 # Short-Description: Starts the dipicar server
 ### END INIT INFO
 
-if [ "$EUID" -ne 0 ]
-  then echo "You must be root to run this script."
-  exit
-fi
+from os import geteuid, chdir
+from sys import argv
+from subprocess import call
+from re import match
 
-INSTALLDIR="/usr/lib/dipicar/"
+INSTALLDIR = "/usr/lib/dipicar/"
 
-if [ -n "$1" ] && [ "$1" = '--config' ]
-  then 
-    ${INSTALLDIR}scripts/network/initUap0.py
-    ${INSTALLDIR}scripts/network/iptablesConfig.py
-fi
-cd ${INSTALLDIR} && ./dipicar_srv
+class Dipicar:
+
+  commands = []
+
+  @staticmethod
+  def config():
+    call(["{}scripts/network/initUap0.py".format(INSTALLDIR)])
+    call(["{}scripts/network/iptablesConfig.py".format(INSTALLDIR)])
+  
+  @staticmethod
+  def version():
+    call(["apt", "list", "dipicar"])
+  
+  @staticmethod
+  def start():
+    chdir(INSTALLDIR)
+    call(["./dipicar_srv"])
+
+  @staticmethod
+  def fullStart():
+    Dipicar.config()
+    Dipicar.start()
+  
+  @staticmethod
+  def genSSL():
+    call(["{}scripts/installation/ssl_keys_gen.py".format(INSTALLDIR)])
+
+Dipicar.commands = dir(Dipicar)[26:]
+
+if(geteuid() != 0):
+  print("You must run this script as root.")
+  exit(0)
+
+if (len(argv) > 2):
+  print("This command only accept 1 argument.")
+  exit(0)
+
+if (len(argv) < 2):
+  command = "version"
+else:
+  command = argv[1]
+
+if command not in Dipicar.commands:
+  print("You must use one of these commands: %s." %(", ".join(Dipicar.commands)))
+  exit(0)
+
+try:
+  getattr(Dipicar, command)()
+except KeyboardInterrupt:
+  exit(0)
+except Exception:
+  exit(-1)

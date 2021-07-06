@@ -10,7 +10,7 @@ Toutes les infos concernant ces requêtes se trouvent [ici](https://documenter.g
 
 La liaison Websocket a pour but de gérer le flux vidéo et le contrôle des moteurs.
 
-Tous les évènements de contrôle de flux se trouvent [ici](https://github.com/TeaFlex/PiStreamer/blob/HEAD/doc/DOCUMENTATION-fr.md#evènements-websocket)
+Tous les évènements de contrôle de flux se trouvent [ici](https://github.com/TeaFlex/PiStreamer/blob/HEAD/doc/DOCUMENTATION-fr.md#evènements-websocket).
 
 Afin de contrôler les moteurs, vous devez donner une abcisse (X), une ordonnée (Y) et, optionnellement, une vitesse. Voici quelques infos:
 | Champ | Valeurs acceptées | Description |  

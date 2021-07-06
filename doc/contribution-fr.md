@@ -1,6 +1,6 @@
 # Contribuer au projet
 
-Si vous voulez nous aider dans le développement de DiPiCar, vous pouvez suivre les étapes ci-dessous afin d'obtenir un projet paré pour la contribution.
+Si vous voulez nous aider dans le développement de DiPi Car, vous pouvez suivre les étapes ci-dessous afin d'obtenir un projet paré pour la contribution.
 
 > Note: Ce projet doit être développé sur un Raspberry Pi de n'importe quel modèle.
 
@@ -33,7 +33,7 @@ npm run test
 
 4. **Commencer à contribuer**
 
-Maintenant il vous suffit just d'apporter vos fonctionnalités à DiPiCar ! Vous pouvez lancer le projet avec `npm start` et nodemon s'occupera de tout lorsque vous ferez des changements dans le code.
+Maintenant il vous suffit juste d'apporter vos fonctionnalités à DiPi Car ! Vous pouvez lancer le projet avec `npm start` et nodemon s'occupera de tout lorsque vous ferez des changements dans le code.
 Si vous voulez construire le package debian, vous pouvez utiliser `npm run build` et un fichier .deb appparaîtra à l'intérieur d'un dossier "build".
 
 5. **Travailler avec HTTPS**

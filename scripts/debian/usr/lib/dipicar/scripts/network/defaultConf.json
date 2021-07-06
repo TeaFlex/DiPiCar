@@ -2,5 +2,15 @@
     "interface":"wlan0",
     "secureInterface": true,
     "whitelist": [],
-    "port": 8060
+    "port": 8060,
+    "rightMotor": {
+        "forwards": 19,
+        "backwards": 26,
+        "pwm": 13
+    },
+    "leftMotor": {
+        "forwards": 22,
+        "backwards": 27,
+        "pwm": 17
+    }
 }

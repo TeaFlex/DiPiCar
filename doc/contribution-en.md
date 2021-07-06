@@ -1,6 +1,6 @@
 # Contribute to the project
 
-If you want to help us in the development of DiPiCar, you can follow these few steps in order to have a ready-to-go project.
+If you want to help us in the development of DiPi Car, you can follow these few steps in order to have a ready-to-go project.
 
 > Note: This project must be developed on a Raspberry Pi of any model.
 
@@ -38,7 +38,7 @@ If you want to build your own debian package, you can run `npm run build` and a 
 
 5. **Work with HTTPS**
 
-To easily generate certificate, use the followinf command:
+To easily generate certificate, use the following command:
 ```
 npm run genssl
 ```
