@@ -1,6 +1,6 @@
 # Documentation du CLI
 
-Vous pouvez lancer les différents composants de DiPiCar séparéments à l'aide du CLI.
+Vous pouvez lancer les différents composants de DiPi Car séparéments à l'aide du CLI.
 La commande de base a besoin d'un argument, ou sinon elle affichera par défaut la version installée du service.
 
 ```sh

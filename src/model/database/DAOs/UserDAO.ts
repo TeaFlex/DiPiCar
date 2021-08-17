@@ -13,7 +13,8 @@ export class UserDAO extends BaseDAO{
             stats: {
                 gameTime: 0,
                 firstConnection: new Date(),
-                lastConnection: new Date()
+                lastConnection: new Date(),
+                clientStats:{}
             },
             storage: {}
         }

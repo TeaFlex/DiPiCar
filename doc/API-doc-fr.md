@@ -8,7 +8,7 @@ Toutes les infos concernant ces requêtes se trouvent [ici](https://documenter.g
 
 ## WebSocket
 
-La liaison Websocket a pour but de gérer le flux vidéo et le contrôle des moteurs.
+La liaison WebSocket a pour but de gérer le flux vidéo et le contrôle des moteurs.
 
 Tous les évènements de contrôle de flux se trouvent [ici](https://github.com/TeaFlex/PiStreamer/blob/HEAD/doc/DOCUMENTATION-fr.md#evènements-websocket).
 

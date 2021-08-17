@@ -10,4 +10,5 @@ export interface UserStats {
     gameTime: number;
     firstConnection?: Date;
     lastConnection: Date;
+    clientStats?: any;
 }
