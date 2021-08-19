@@ -1,25 +1,28 @@
-# Installation of DiPi Car
+# <img id="dipicar-icon" src="gitassets/icon.png" width="40" height="40"> Installation of DiPi Car
  
 ### Prerequisites 
 
 You must have built your car before installing the software !
 
-#### (LAN mode)
+#### (Local access)
+![Screenshot](screenshot.png)
 
-If you want to benefit of the LAN mode, it's highly recommanded to follow the steps below first. You can also perform them after the full installation but we can not guarantee that it will work correctly.
+If you want to benefit of the local access, it's recommended to follow the steps below first. You can also perform them after the full installation but we can not guarantee that it will work correctly. 
 
-Fristly, you have to connect the Raspberry pi to the network that you want the car to be connected to. 
+It is also possible to use the DiPi Link client to set up a network (read more [here](https://dipihub.netlify.app/en/#/docs/lknetwork)).
+
+First, you have to connect the Raspberry Pi to the network that you want the car to be connected to. 
 
 1. Use the command `sudo raspi-config`.
 2. Go to *System Options > Wireless LAN*.
 3. Select your country (if it wasn't already done).
 4. Enter the SSID of your network.
 5. Enter the password of the access point.
-6. Finally, reboot your Raspberry pi by running `sudo reboot`.
+6. Finally, reboot your Raspberry Pi by running `sudo reboot`.
 
 ### Download DiPi Car
 You must first download the package trougth GitHub. You can access all the releases [here](https://github.com/TeaFlex/DiPiCar/releases).
-We suggest you to use wget to download DiPi Car directly to your Raspberry pi, as such:
+We suggest you to use wget to download DiPi Car directly to your Raspberry Pi, as such:
 > Replace all [version] by the release that you're interested in.
 
 ```
@@ -30,7 +33,7 @@ wget https://github.com/TeaFlex/DiPiCar/releases/download/[version]/dipicar-[ver
 After downloading it, you have to enable your camera module in order to be able to stream video. Execute `sudo raspi-config` and then go to *Interface Options > Camera > "Yes"* and then reboot with `sudo reboot`.
 
 ### Install the package
-When your Raspberry pi has reboot, you can then proceed to the installation of the previously downloaded package. In the same folder as the package, run this:
+When your Raspberry Pi has reboot, you can then proceed to the installation of the previously downloaded package. In the same folder as the package, run this:
 >Replace [version] by the version that you downloaded.
 
 ```

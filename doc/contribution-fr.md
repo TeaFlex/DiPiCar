@@ -4,14 +4,19 @@ Si vous voulez nous aider dans le développement de DiPi Car, vous pouvez suivre
 
 > Note: Ce projet doit être développé sur un Raspberry Pi de n'importe quel modèle.
 
+### Prérequis 
+
+[Node.js](https://nodejs.org/) et npm doivent être installés sur votre machine avant d'installer DiPi Car.
+
 1. **Cloner le projet**
 
 Avec la commande:
 ```
 git clone https://github.com/teaflex/dipicar
 ```
-Ensuite allez sur la branche wip:
+Déplacez-vous dans le dossier et allez sur la branche *wip*:
 ```
+cd ./dipicar
 git checkout wip
 ```
 
