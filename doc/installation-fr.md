@@ -1,4 +1,6 @@
-# <img id="dipicar-icon" src="gitassets/icon.png" width="40" height="40"> Installation de DiPi Car
+# Installation de DiPi Car
+
+<p align="center"><img src="gitassets/icon.png" width="150"/></p>
  
 ### Prérequis
 
