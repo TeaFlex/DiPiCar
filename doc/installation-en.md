@@ -1,6 +1,6 @@
 # Installation of DiPi Car
 
-<p align="center"><img src="gitassets/icon.png" width="150"/></p>
+<p align="center"><img src="assets/icons/car.png" width="150"/></p>
 
  
 ### Prerequisites 
